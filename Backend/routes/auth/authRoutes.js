@@ -1,0 +1,22 @@
+
+const express = require("express");
+
+const authController = require("../../controllers/auth/authController");
+const authenticateToken = require("../../middleware/auth/authMiddleware");
+
+const router = express.Router();
+
+router.post("/register", authController.register);
+router.post("/login", authController.login);
+router.get("/google-config", authController.googleConfig);
+router.post("/google", authController.googleLogin);
+router.post("/google/set-password", authenticateToken, authController.setGooglePassword);
+router.post("/google/finish-first-session", authenticateToken, authController.finishGoogleFirstSession);
+router.post("/forgot-password", authController.forgotPassword);
+router.post("/reset-password", authController.resetPassword);
+
+router.get("/me", authenticateToken, authController.me);
+router.put("/me", authenticateToken, authController.updateMe);
+router.patch("/me/password", authenticateToken, authController.changePassword);
+
+module.exports = router;
