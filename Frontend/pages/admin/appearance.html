@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appearance Studio | Market Delivery</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="../../assets/css/pages/admin/dashboard.css">
+<style>
+:root{--studio-bg:#050505;--studio-panel:#102A23;--studio-card:#16382D;--studio-text:#F4F2E9;--studio-muted:#bdc8bd;--studio-accent:#D9F56B;--studio-border:rgba(244,242,233,.14)}
+body{background:var(--studio-bg);color:var(--studio-text)}
+.studio{max-width:1440px;margin:auto;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px}
+.studio-main,.studio-preview{min-width:0}.studio-heading{margin-bottom:22px}.studio-heading h1{color:var(--studio-accent);margin:0 0 8px}.studio-heading p{color:var(--studio-muted);margin:0;line-height:1.6}
+.studio-section{background:var(--studio-panel);border:1px solid var(--studio-border);border-radius:16px;padding:22px;margin-bottom:18px}
+.studio-section h2{font-size:18px;margin:0 0 6px}.studio-help{color:var(--studio-muted);font-size:13px;margin:0 0 18px;line-height:1.5}
+.studio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.studio-field{display:flex;flex-direction:column;gap:7px;min-width:0}.studio-field label{font-size:12px;color:var(--studio-muted);font-weight:650}
+.studio-field input,.studio-field textarea,.studio-field select{width:100%;box-sizing:border-box;border:1px solid var(--studio-border);border-radius:9px;background:#242824;color:#F4F2E9;padding:11px;font:inherit;min-width:0}
+.studio-field input[type=color]{height:46px;padding:4px;cursor:pointer}.studio-field textarea{min-height:110px;resize:vertical}.studio-field.full{grid-column:1/-1}
+.studio-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.studio-btn{border:0;border-radius:9px;padding:11px 16px;background:#D9F56B;color:#050505;font-weight:750;cursor:pointer}.studio-btn.secondary{background:#465B32;color:#F4F2E9}.studio-btn.danger{background:#242824;color:#F4F2E9;border:1px solid var(--studio-border)}
+.studio-swatches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.studio-swatch{display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.16);padding:9px;border-radius:9px;min-width:0}.studio-swatch input{width:34px;height:34px;padding:2px;border:0;background:transparent}.studio-swatch span{font-size:11px;overflow:hidden;text-overflow:ellipsis}
+.preview-card{position:sticky;top:18px;background:var(--studio-panel);border:1px solid var(--studio-border);border-radius:16px;overflow:hidden}
+.preview-head{padding:17px 18px;border-bottom:1px solid var(--studio-border);font-weight:700}.preview-body{padding:18px}.preview-hero{min-height:230px;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:center;background-size:cover;background-position:center;background-image:linear-gradient(90deg,rgba(5,5,5,.9),rgba(5,5,5,.2)),url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80')}
+.preview-hero h3{font-size:26px;line-height:1.1;margin:0 0 10px}.preview-hero p{font-size:12px;color:#eee;margin:0 0 16px}.preview-hero button{align-self:flex-start;background:var(--studio-accent);color:#050505;border:0;padding:10px 14px;border-radius:8px;font-weight:700}
+.preview-products{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.preview-product{background:var(--studio-card);border:1px solid var(--studio-border);border-radius:10px;padding:13px;font-size:12px}.preview-product strong{display:block;margin-top:8px;color:var(--studio-accent)}
+.preview-chart{margin-top:12px;background:var(--studio-card);border-radius:10px;padding:14px}.preview-bars{height:115px;display:flex;align-items:end;gap:9px;border-bottom:1px solid var(--studio-border)}.preview-bars i{flex:1;background:var(--studio-chart,#D9F56B);border-radius:5px 5px 0 0}.preview-chart small{display:block;color:var(--studio-muted);margin-top:8px}
+.studio-notice{font-size:12px;color:var(--studio-muted);line-height:1.5;margin-top:12px}
+@media(max-width:1050px){.studio{grid-template-columns:1fr}.preview-card{position:static}}
+@media(max-width:650px){.studio{padding:16px}.studio-grid{grid-template-columns:1fr}.studio-swatches{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-section{padding:16px}}
+</style>
+</head>
+<body>
+<main class="studio">
+<div class="studio-main">
+<header class="studio-heading"><h1>Appearance Studio</h1><p>Control the Market Delivery visual identity, dashboard surfaces, charts and homepage hero. Changes preview here and are saved in this browser.</p></header>
+<section class="studio-section">
+<h2>Theme colours</h2><p class="studio-help">Set the colours used across page backgrounds, navigation, cards, inputs, text, buttons, borders and charts.</p>
+<div class="studio-swatches" id="swatches"></div>
+<div class="studio-grid" style="margin-top:16px">
+<div class="studio-field"><label for="radius">Card corner radius</label><input id="radius" type="range" min="0" max="28" value="16"></div>
+<div class="studio-field"><label for="shadow">Card shadow strength</label><input id="shadow" type="range" min="0" max="60" value="24"></div>
+</div>
+</section>
+<section class="studio-section">
+<h2>Chart appearance and data</h2><p class="studio-help">Edit the preview chart's bar colour, grid colour, labels and values. This controls the visual chart template; it does not alter real order, revenue or payment records.</p>
+<div class="studio-grid">
+<div class="studio-field"><label for="chartType">Chart style</label><select id="chartType"><option value="bar">Bar chart</option><option value="line">Line-style preview</option></select></div>
+<div class="studio-field"><label for="chartGrid">Chart grid / axis colour</label><input id="chartGrid" type="color" value="#789B75"></div>
+<div class="studio-field"><label for="chartLabels">Chart labels (comma separated)</label><input id="chartLabels" value="Mon,Tue,Wed,Thu,Fri,Sat,Sun"></div>
+<div class="studio-field"><label for="chartValues">Chart values (comma separated numbers)</label><input id="chartValues" value="35,62,48,80,55,92,70"></div>
+</div>
+</section>
+<section class="studio-section">
+<h2>Homepage hero editor</h2><p class="studio-help">Edit the homepage headline, supporting text, background image, overlay strength and call-to-action labels.</p>
+<div class="studio-grid">
+<div class="studio-field full"><label for="heroTitle">Hero headline</label><input id="heroTitle" maxlength="120" value="Freshness, delivered to your doorstep."></div>
+<div class="studio-field full"><label for="heroSubtitle">Supporting text</label><textarea id="heroSubtitle">Shop fresh groceries and everyday essentials, then get them delivered straight to your doorstep.</textarea></div>
+<div class="studio-field full"><label for="heroImage">Background image URL</label><input id="heroImage" type="url" placeholder="https://example.com/hero.jpg"></div>
+<div class="studio-field"><label for="heroPrimary">Primary button label</label><input id="heroPrimary" maxlength="32" value="Shop Now"></div>
+<div class="studio-field"><label for="heroSecondary">Secondary button label</label><input id="heroSecondary" maxlength="32" value="Get Started"></div>
+<div class="studio-field"><label for="heroOverlay">Dark overlay strength</label><input id="heroOverlay" type="range" min="0" max="95" value="82"></div>
+<div class="studio-field"><label for="heroText">Hero text colour</label><input id="heroText" type="color" value="#F4F2E9"></div>
+</div>
+</section>
+<div class="studio-actions"><button class="studio-btn" id="save">Save appearance</button><button class="studio-btn secondary" id="apply">Apply preview</button><button class="studio-btn danger" id="reset">Reset brand defaults</button></div>
+<p class="studio-notice" id="notice" role="status">Saved settings are stored in this browser on this device. Database-wide sharing between administrators requires a backend settings endpoint.</p>
+</div>
+<aside class="studio-preview">
+<div class="preview-head">Live preview</div><div class="preview-body">
+<div class="preview-hero" id="heroPreview"><h3 id="heroPreviewTitle">Freshness, delivered to your doorstep.</h3><p id="heroPreviewSubtitle">Shop fresh groceries and everyday essentials.</p><button id="heroPreviewButton">Shop Now</button></div>
+<div class="preview-products"><div class="preview-product">Fresh produce<strong>KSh 250</strong></div><div class="preview-product">Available now<strong>In stock</strong></div></div>
+<div class="preview-chart"><strong>Chart preview</strong><div class="preview-bars" id="bars"></div><small id="chartCaption">Sample values · editable above</small></div>
+</div></aside>
+</main>
+<script>
+(function(){
+"use strict";
+const KEY="marketDeliveryAppearanceV1";
+const defaults={colors:{background:"#050505",navigation:"#102A23",card:"#102A23",cardAlt:"#465B32",input:"#242824",text:"#F4F2E9",muted:"#789B75",primary:"#D9F56B",secondary:"#789B75",success:"#B9E8C5",promotion:"#F2C94C",lightCard:"#F5F3DC",border:"#465B32",chart:"#D9F56B",chartGrid:"#789B75"},radius:16,shadow:24,chartType:"bar",chartLabels:"Mon,Tue,Wed,Thu,Fri,Sat,Sun",chartValues:"35,62,48,80,55,92,70",heroTitle:"Freshness, delivered to your doorstep.",heroSubtitle:"Shop fresh groceries and everyday essentials, then get them delivered straight to your doorstep.",heroImage:"",heroPrimary:"Shop Now",heroSecondary:"Get Started",heroOverlay:82,heroText:"#F4F2E9"};
+const labels={background:"Page background",navigation:"Navigation",card:"Main cards",cardAlt:"Secondary panels",input:"Input fields",text:"Main text",muted:"Muted text",primary:"Primary buttons",secondary:"Secondary accents",success:"Success status",promotion:"Promotions",lightCard:"Light cards",border:"Borders",chart:"Chart bars",chartGrid:"Chart grid"};
+let config={...defaults,colors:{...defaults.colors}};
+try{const saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved)config={...config,...saved,colors:{...defaults.colors,...saved.colors}}}catch(e){}
+const $=id=>document.getElementById(id);
+const swatches=$("swatches");
+Object.entries(labels).forEach(([key,label])=>{const wrap=document.createElement("label");wrap.className="studio-swatch";const input=document.createElement("input");input.type="color";input.value=config.colors[key];input.dataset.color=key;input.setAttribute("aria-label",label);const span=document.createElement("span");span.textContent=label;wrap.append(input,span);swatches.append(wrap)});
+function set(id,value){if($(id))$(id).value=value??""}
+function read(){config.colors={};document.querySelectorAll("[data-color]").forEach(i=>config.colors[i.dataset.color]=i.value);["radius","shadow","chartType","chartLabels","chartValues","heroTitle","heroSubtitle","heroImage","heroPrimary","heroSecondary","heroOverlay","heroText"].forEach(id=>{const el=$(id);if(el)config[id]=el.type==="range"?Number(el.value):el.value});}
+function load(){Object.entries(config.colors).forEach(([k,v])=>{const el=document.querySelector('[data-color="'+k+'"]');if(el)el.value=v});["radius","shadow","chartType","chartLabels","chartValues","heroTitle","heroSubtitle","heroImage","heroPrimary","heroSecondary","heroOverlay","heroText"].forEach(id=>set(id,config[id]));}
+function paint(){const root=document.documentElement;const c=config.colors;root.style.setProperty("--studio-bg",c.background);root.style.setProperty("--studio-panel",c.navigation);root.style.setProperty("--studio-card",c.card);root.style.setProperty("--studio-text",c.text);root.style.setProperty("--studio-muted",c.muted);root.style.setProperty("--studio-accent",c.primary);root.style.setProperty("--studio-chart",c.chart);$("heroPreview").style.backgroundImage="linear-gradient(90deg,rgba(5,5,5,"+(Number(config.heroOverlay)/100)+"),rgba(5,5,5,.18)),url('"+(config.heroImage||"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80").replace(/['\\]/g,"")+"')";$("heroPreview").style.color=config.heroText;$("heroPreviewTitle").textContent=config.heroTitle;$("heroPreviewSubtitle").textContent=config.heroSubtitle;$("heroPreviewButton").textContent=config.heroPrimary;$("heroPreviewButton").style.background=c.primary;$("heroPreviewButton").style.color=c.background;const values=config.chartValues.split(",").map(v=>Number(v.trim())).filter(v=>Number.isFinite(v)&&v>=0).slice(0,12);const max=Math.max(1,...values);$("bars").replaceChildren();values.forEach(v=>{const bar=document.createElement("i");bar.style.height=Math.max(4,v/max*100)+"%";bar.style.background=c.chart;bar.style.borderRadius=config.chartType==="line"?"999px":"5px 5px 0 0";$("bars").append(bar)});$("bars").style.borderColor=config.colors.chartGrid;$("chartCaption").textContent=config.chartLabels.split(",").slice(0,values.length).join(" · ")+" | "+values.join(", ");$("heroPreview").style.borderRadius=config.radius+"px";}
+function applyGlobal(){const c=config.colors;const root=document.documentElement;const map={"--background":c.background,"--surface":c.navigation,"--white":c.text,"--text":c.text,"--text-light":c.muted,"--primary":c.primary,"--primary-hover":c.primary,"--border":c.border,"--success":c.success,"--warning":c.promotion,"--card-background":c.card,"--input-background":c.input,"--secondary":c.secondary,"--radius":config.radius+"px","--shadow":"0 18px 50px rgba(0,0,0,"+(Number(config.shadow)/100)+")"};Object.entries(map).forEach(([k,v])=>root.style.setProperty(k,v));root.style.setProperty("--md-navigation",c.navigation);root.style.setProperty("--md-card",c.card);root.style.setProperty("--md-card-alt",c.cardAlt);root.style.setProperty("--md-input",c.input);root.style.setProperty("--md-chart",c.chart);root.style.setProperty("--md-chart-grid",c.chartGrid);}
+function syncHero(){const hero=document.querySelector(".hero");if(!hero)return;const title=hero.querySelector("h1");const p=hero.querySelector("p");const buttons=hero.querySelectorAll(".hero-actions a");if(title){title.textContent=config.heroTitle;title.style.color=config.heroText}if(p)p.textContent=config.heroSubtitle;if(buttons[0])buttons[0].textContent=config.heroPrimary;if(buttons[1])buttons[1].textContent=config.heroSecondary;hero.style.backgroundImage="linear-gradient(90deg,rgba(5,5,5,"+(Number(config.heroOverlay)/100)+") 0%,rgba(5,5,5,.2) 100%),url('"+(config.heroImage||"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=85").replace(/['\\]/g,"")+"')";}
+function save(){read();localStorage.setItem(KEY,JSON.stringify(config));paint();applyGlobal();$("notice").textContent="Appearance saved in this browser. Reload the storefront to see the homepage hero changes."; }
+function preview(){read();paint();$("notice").textContent="Preview updated. Select Save appearance to keep these settings in this browser."}
+load();paint();document.querySelectorAll("input,textarea,select").forEach(el=>el.addEventListener("input",preview));$("save").addEventListener("click",save);$("apply").addEventListener("click",preview);$("reset").addEventListener("click",()=>{config={...defaults,colors:{...defaults.colors}};load();save()});
+})();
+</script>
+</body></html>
