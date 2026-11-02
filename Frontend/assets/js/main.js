@@ -218,7 +218,7 @@ function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength
     });
     paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar", { "background-color": c.chart });
     paint(".admin-chart-grid-line,.chart-grid-line", { "border-color": c.chartGrid });
-    paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not([class*="danger"]):not([class*="delete"]):not(.btn-outline):not(.button-outline):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
+    paint('.primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not([class*="danger"]):not([class*="delete"]):not(.btn-outline):not(.button-outline):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]', {
         "background-color": c.primary, color: ink(c.primary), "border-color": c.primary
     });
     paint(".secondary-button,.btn-secondary,.button-secondary,button.secondary", {
