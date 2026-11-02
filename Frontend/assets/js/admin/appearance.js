@@ -92,8 +92,10 @@
     selectedThemeKey = "saved:" + (existing >= 0 ? existing : themes.length - 1);
     refreshThemeOptions();
     $("themeSelect").value = selectedThemeKey;
-    await save();
-    $("themeNotice").textContent = "Saved theme: " + name + ". It is available in this library.";
+    const saved = await save();
+    $("themeNotice").textContent = saved
+      ? "Saved theme: " + name + ". It is available in this library."
+      : "The theme could not be saved. Check the message above and try again.";
   }
   async function deleteSelectedTheme() {
     if (!selectedThemeKey.startsWith("saved:")) return;
@@ -105,8 +107,10 @@
     config.themes = themes;
     selectedThemeKey = "preset:market-fresh";
     refreshThemeOptions();
-    await save();
-    $("themeNotice").textContent = "Deleted saved theme: " + removed.name + ".";
+    const saved = await save();
+    $("themeNotice").textContent = saved
+      ? "Deleted saved theme: " + removed.name + "."
+      : "The theme could not be deleted. Check the message above and try again.";
   }
 
   function cloneDefaults() {
@@ -310,8 +314,10 @@
       paintPreview();
       animatePreview(button);
       notify(result?.message || "Appearance saved successfully across Market Delivery.");
+      return true;
     } catch (error) {
       notify(error.message || "Could not save appearance settings.", true);
+      return false;
     } finally {
       button.disabled = false;
       button.classList.remove("is-busy");
