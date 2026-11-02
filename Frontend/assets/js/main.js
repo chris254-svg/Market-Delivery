@@ -353,7 +353,7 @@ async function applyMarketDeliveryAppearance() {
         paint(".logo span,.admin-logo span,.admin-page-header h2,.section-label,.hero-label", { color: ink(c.background) });
 
         // Primary, secondary, destructive and promotional controls.
-        paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,.button-primary,button.primary,button:not(.secondary):not(.danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
+        paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,.button-primary,button.primary,button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not([class*="danger"]):not([class*="delete"]):not(.btn-outline):not(.button-outline):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
             "background-color": c.primary, color: ink(c.primary), "border-color": c.primary, "border-radius": Math.min(radius, 18) + "px"
         });
         paint(".secondary-button,.btn-secondary,.button-secondary,button.secondary,.admin-btn-secondary", {
