@@ -1052,3 +1052,31 @@ td { border-color: var(--border); }
   .hero h1 { font-size: clamp(38px, 10vw, 52px); }
   .features { padding: 64px 5%; }
 }
+
+
+/* Market Delivery admin theme enforcement */
+.admin-sidebar,.admin-topbar,.admin-sidebar-header,.admin-profile,
+.admin-content-card,.admin-stat-card,.admin-action,.admin-status-total {
+  background: #102A23 !important;
+  color: #F4F2E9 !important;
+  border-color: rgba(217,245,107,.18) !important;
+}
+.admin-sidebar { background: #102A23 !important; }
+.admin-logo { color: #F4F2E9 !important; }
+.admin-logo span,.admin-card-link,.admin-page-header h2 { color: #D9F56B !important; }
+.admin-nav-link,.admin-topbar h1,.admin-page-heading h1,
+.admin-card-header h3,.admin-stat-content > strong,
+.admin-table td,.admin-action strong { color: #F4F2E9 !important; }
+.admin-nav-link:hover,.admin-nav-link.active {
+  background: rgba(217,245,107,.13) !important;
+  color: #D9F56B !important;
+}
+.admin-stat-icon.orders,.admin-stat-icon.revenue,.admin-stat-icon.customers,.admin-stat-icon.restaurants,
+.admin-action-icon { background: rgba(217,245,107,.13) !important; color: #D9F56B !important; }
+.admin-status-total { background: #16382D !important; }
+.admin-table th { background: #16382D !important; color: #D9F56B !important; }
+.admin-table tbody tr:hover,.admin-action:hover { background: #1b4033 !important; }
+.admin-period-select,.admin-content-card input,.admin-content-card select,
+.admin-content-card textarea { background: #242824 !important; color: #F4F2E9 !important; border-color: rgba(244,242,233,.2) !important; }
+.admin-bar { background: #D9F56B !important; }
+.admin-stat-content small b { color: #B9E8C5 !important; }
