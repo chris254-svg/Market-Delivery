@@ -300,7 +300,7 @@ async function applyMarketDeliveryAppearance() {
                 Math.min(...surfaces.map((surface) => contrastRatio(b, surface)))
             ).reverse()[0];
         };
-        const ink = (color) => luminance(color) > 0.42 ? "#102A23" : "#F4F2E9";
+        const ink = (color) => contrastRatio("#102A23", color) >= contrastRatio("#F4F2E9", color) ? "#102A23" : "#F4F2E9";
         c.textReadable = bestReadableText(c.text, [c.background, c.navigation, c.card, c.cardAlt]);
         c.mutedReadable = bestReadableText(c.muted, [c.background, c.navigation, c.card, c.cardAlt]);
         root.style.setProperty("--white", c.textReadable);
