@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | FoodDelivery</title>
+
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/pages/restaurant/restaurant.css">
+    <link rel="stylesheet" href="../../assets/css/pages/restaurant/settings.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         RESTAURANT SIDEBAR
+    ========================== -->
+    <aside class="restaurant-sidebar" id="restaurantSidebar">
+  <div class="restaurant-sidebar-header"><a href="dashboard.html" class="restaurant-logo">Food<span>Delivery</span></a></div>
+  <div class="restaurant-profile-mini">
+    <div class="restaurant-avatar" id="restaurantSidebarAvatar">R</div>
+    <div class="restaurant-profile-info"><strong id="restaurantSidebarName">Loading restaurant…</strong><span>Restaurant</span></div>
+  </div>
+  <nav class="restaurant-navigation">
+    <p class="restaurant-nav-title">MAIN MENU</p>
+    <a href="dashboard.html" class="restaurant-nav-link"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+<a href="orders.html" class="restaurant-nav-link"><span class="nav-icon">▤</span><span>Orders</span><span class="nav-badge" hidden>0</span></a>
+<a href="earnings.html" class="restaurant-nav-link"><span class="nav-icon">▥</span><span>Earnings</span></a>
+<a href="restaurant-profile.html" class="restaurant-nav-link"><span class="nav-icon">◉</span><span>Restaurant Profile</span></a>
+<a href="settings.html" class="restaurant-nav-link active" aria-current="page"><span class="nav-icon">⚙</span><span>Settings</span></a>
+  </nav>
+  <div class="restaurant-sidebar-bottom"><a href="../../pages/auth/login.html" class="restaurant-nav-link logout-link"><span class="nav-icon">↪</span><span>Logout</span></a></div>
+</aside>
+
+
+    <!-- =========================
+         MAIN AREA
+    ========================== -->
+    <main class="restaurant-main">
+
+        <!-- TOPBAR -->
+        <header class="restaurant-topbar">
+  <div class="restaurant-topbar-left">
+    <button type="button" class="restaurant-menu-button" id="restaurantMenuButton" aria-label="Open menu">☰</button>
+    <div class="restaurant-page-heading">
+      <h1>Settings</h1>
+      <p>Manage your restaurant account and preferences.</p>
+    </div>
+  </div>
+  <div class="restaurant-topbar-right">
+    <button type="button" class="restaurant-status" id="restaurantStatusButton" aria-live="polite">
+      <span class="status-dot"></span>
+      <span class="status-text"><small>Restaurant Status</small><strong id="restaurantStatusText">Loading…</strong></span>
+    </button>
+    <button type="button" class="restaurant-notification-button" aria-label="Notifications">
+      <span>♧</span><span class="notification-badge" hidden>0</span>
+    </button>
+    <button type="button" class="restaurant-topbar-profile" aria-label="Restaurant profile">
+      <span class="topbar-avatar" id="restaurantTopbarAvatar">R</span>
+      <span class="topbar-profile-text"><strong id="restaurantTopbarName">Loading restaurant…</strong><small>Restaurant</small></span>
+      <span class="profile-arrow">⌄</span>
+    </button>
+  </div>
+</header>
+
+
+        <!-- =========================
+             CONTENT
+        ========================== -->
+        <section class="restaurant-content settings-page">
+
+            <!-- PAGE HEADER -->
+            <div class="settings-page-header">
+
+                <div>
+                    <h2>Settings</h2>
+                    <p>
+                        Restaurant and account changes are saved to your account. Browser preferences are saved on this device.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- SETTINGS LAYOUT -->
+            <div class="settings-layout">
+
+                <!-- =========================
+                     SETTINGS NAVIGATION
+                ========================== -->
+                <aside class="settings-navigation">
+
+                    <button type="button" class="settings-nav-item active" data-section="general">
+
+                        <span class="settings-nav-icon">⚙</span>
+
+                        <span>
+                            <strong>General</strong>
+                            <small>Restaurant preferences</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button" class="settings-nav-item" data-section="account">
+
+                        <span class="settings-nav-icon">◯</span>
+
+                        <span>
+                            <strong>Account</strong>
+                            <small>Account information</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button" class="settings-nav-item" data-section="notifications">
+
+                        <span class="settings-nav-icon">🔔</span>
+
+                        <span>
+                            <strong>Notifications</strong>
+                            <small>Notification preferences</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button" class="settings-nav-item" data-section="security">
+
+                        <span class="settings-nav-icon">🔒</span>
+
+                        <span>
+                            <strong>Security</strong>
+                            <small>Password and security</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button" class="settings-nav-item" data-section="orders">
+
+                        <span class="settings-nav-icon">▤</span>
+
+                        <span>
+                            <strong>Order Settings</strong>
+                            <small>Manage order preferences</small>
+                        </span>
+
+                    </button>
+
+                </aside>
+
+
+                <!-- =========================
+                     SETTINGS CONTENT
+                ========================== -->
+                <div class="settings-content">
+
+
+                    <!-- =========================
+                         GENERAL SETTINGS
+                    ========================== -->
+                    <div class="settings-section active" id="generalSection" data-settings-section="general">
+
+                        <div class="restaurant-content-card">
+
+                            <div class="restaurant-card-header">
+
+                                <div>
+                                    <h3>General Settings</h3>
+
+                                    <p>
+                                        Manage your restaurant's general preferences.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-form">
+
+                                <div class="settings-form-group">
+
+                                    <label for="restaurantName">
+                                        Restaurant Name
+                                    </label>
+
+                                    <input type="text" id="restaurantName" value=""
+                                        placeholder="Enter restaurant name">
+
+                                </div>
+
+
+                                <div class="settings-form-grid">
+
+                                    <div class="settings-form-group">
+
+                                        <label for="restaurantEmail">
+                                            Restaurant Email
+                                        </label>
+
+                                        <input type="email" id="restaurantEmail" value=""
+                                            placeholder="Enter email">
+
+                                    </div>
+
+
+                                    <div class="settings-form-group">
+
+                                        <label for="restaurantPhone">
+                                            Phone Number
+                                        </label>
+
+                                        <input type="tel" id="restaurantPhone" value=""
+                                            placeholder="Enter phone number">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="settings-form-group">
+
+                                    <label for="restaurantAddress">
+                                        Restaurant Address
+                                    </label>
+
+                                    <input type="text" id="restaurantAddress" value=""
+                                        placeholder="Restaurant address is managed by the platform"
+                                        readonly aria-readonly="true"
+                                        title="Restaurant address can only be changed by an administrator">
+
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <div class="settings-actions">
+
+                            <button type="button" class="restaurant-secondary-button" id="resetGeneralButton">
+                                Reset
+                            </button>
+
+                            <button type="button" class="restaurant-primary-button" id="saveGeneralButton">
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         ACCOUNT SETTINGS
+                    ========================== -->
+                    <div class="settings-section" id="accountSection" data-settings-section="account">
+
+                        <div class="restaurant-content-card">
+
+                            <div class="restaurant-card-header">
+
+                                <div>
+                                    <h3>Account Information</h3>
+
+                                    <p>
+                                        Manage the account associated with your restaurant.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-form">
+
+                                <div class="settings-profile">
+
+                                    <div class="settings-profile-avatar">
+                                        R
+                                    </div>
+
+                                    <div>
+
+                                        <strong id="accountDisplayName">Loading account…</strong>
+
+                                        <span>
+                                            Restaurant Administrator
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="settings-form-grid">
+
+                                    <div class="settings-form-group">
+
+                                        <label for="adminFirstName">
+                                            First Name
+                                        </label>
+
+                                        <input type="text" id="adminFirstName" value="">
+
+                                    </div>
+
+
+                                    <div class="settings-form-group">
+
+                                        <label for="adminLastName">
+                                            Last Name
+                                        </label>
+
+                                        <input type="text" id="adminLastName" value="">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="settings-form-group">
+
+                                    <label for="adminEmail">
+                                        Account Email
+                                    </label>
+
+                                    <input type="email" id="adminEmail" value="">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-actions">
+
+                            <button type="button" class="restaurant-primary-button" id="saveAccountButton">
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         NOTIFICATION SETTINGS
+                    ========================== -->
+                    <div class="settings-section" id="notificationsSection" data-settings-section="notifications">
+
+                        <div class="restaurant-content-card">
+
+                            <div class="restaurant-card-header">
+
+                                <div>
+                                    <h3>Notification Preferences</h3>
+
+                                    <p>
+                                        These preferences are stored in this browser. They do not enable email or server-side notifications unless those features are implemented.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-option-list">
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-icon">
+                                        ▤
+                                    </span>
+
+                                    <span class="settings-option-content">
+
+                                        <strong>New Orders</strong>
+
+                                        <small>
+                                            Browser preference only; order alerts must be supported by the Orders page.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="newOrderNotifications" checked>
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-icon">
+                                        ◉
+                                    </span>
+
+                                    <span class="settings-option-content">
+
+                                        <strong>Order Updates</strong>
+
+                                        <small>
+                                            Preference only; does not control server-side notifications.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="orderUpdateNotifications" checked>
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-icon">
+                                        ◈
+                                    </span>
+
+                                    <span class="settings-option-content">
+
+                                        <strong>Promotions</strong>
+
+                                        <small>
+                                            This preference is stored locally; promotional delivery is not configured here.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="promotionNotifications">
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-icon">
+                                        ✉
+                                    </span>
+
+                                    <span class="settings-option-content">
+
+                                        <strong>Email Notifications</strong>
+
+                                        <small>
+                                            This preference is stored locally; email notification delivery is not configured here.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="emailNotifications" checked>
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-actions">
+
+                            <button type="button" class="restaurant-primary-button" id="saveNotificationButton">
+                                Save Preferences
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         SECURITY SETTINGS
+                    ========================== -->
+                    <div class="settings-section" id="securitySection" data-settings-section="security">
+
+                        <div class="restaurant-content-card">
+
+                            <div class="restaurant-card-header">
+
+                                <div>
+                                    <h3>Change Password</h3>
+
+                                    <p>
+                                        Keep your restaurant account secure by using a strong password.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-form">
+
+                                <div class="settings-form-group">
+
+                                    <label for="currentPassword">
+                                        Current Password
+                                    </label>
+
+                                    <input type="password" id="currentPassword" placeholder="Enter current password">
+
+                                </div>
+
+
+                                <div class="settings-form-grid">
+
+                                    <div class="settings-form-group">
+
+                                        <label for="newPassword">
+                                            New Password
+                                        </label>
+
+                                        <input type="password" id="newPassword" placeholder="Enter new password">
+
+                                    </div>
+
+
+                                    <div class="settings-form-group">
+
+                                        <label for="confirmPassword">
+                                            Confirm New Password
+                                        </label>
+
+                                        <input type="password" id="confirmPassword" placeholder="Confirm new password">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="restaurant-content-card">
+
+                            <div class="restaurant-card-header">
+
+                                <div>
+                                    <h3>Security Options</h3>
+
+                                    <p>
+                                        Additional controls for protecting your account.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-option-list">
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-icon">
+                                        🔒
+                                    </span>
+
+                                    <span class="settings-option-content">
+
+                                        <strong>Login Notifications</strong>
+
+                                        <small>
+                                            This setting is stored locally; server-side login notifications are not implemented by this page.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="loginNotifications" checked>
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-actions">
+
+                            <button type="button" class="restaurant-primary-button" id="changePasswordButton">
+                                Update Password
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         ORDER SETTINGS
+                    ========================== -->
+                    <div class="settings-section" id="ordersSection" data-settings-section="orders">
+
+                        <div class="restaurant-content-card">
+                            <div class="restaurant-card-header">
+                                <div>
+                                    <h3>Order Display Preferences</h3>
+                                    <p>These settings are saved in this browser only. They do not enforce order limits or change preparation-time calculations on the server.</p>
+                                </div>
+                            </div>
+                        <div class="restaurant-content-card">
+
+                            <div class="restaurant-card-header">
+
+                                <div>
+                                    <h3>Order Notifications</h3>
+
+                                    <p>
+                                        Control how new orders are displayed.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-option-list">
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-content">
+
+                                        <strong>Browser Notifications</strong>
+
+                                        <small>
+                                            Allows browser permission to be requested. Actual alerts require an Orders-page notification listener.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="browserNotifications" checked>
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+
+                                <label class="settings-toggle-option">
+
+                                    <span class="settings-option-content">
+
+                                        <strong>Keep New Orders at the Top</strong>
+
+                                        <small>
+                                            Saved in this browser; the Orders page must read this preference to apply sorting.
+                                        </small>
+
+                                    </span>
+
+                                    <input type="checkbox" id="newOrdersTop" checked>
+
+                                    <span class="settings-toggle"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="settings-actions">
+
+                            <button type="button" class="restaurant-primary-button" id="saveOrderSettingsButton">
+                                Save Order Settings
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+                    <div class="settings-message" id="settingsMessage" role="alert" aria-live="polite">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="../../assets/js/api-config.js"></script>
+    <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/restaurant/notifications.js"></script>
+    <script src="../../assets/js/restaurant/settings.js"></script>
+
+</body>
+
+</html>

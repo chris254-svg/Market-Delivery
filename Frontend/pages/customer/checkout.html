@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Checkout - FoodDelivery</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/pages/customer/customer.css">
+    <link rel="stylesheet" href="../../assets/css/pages/customer/checkout.css">
+</head>
+
+<body>
+    <!-- ================= HEADER ================= -->
+    <header class="customer-header">
+  <div class="customer-header-container">
+    <a href="home.html" class="customer-logo" aria-label="FoodDelivery home">Food<span>Delivery</span></a>
+    <a href="addresses.html" class="delivery-location-link" aria-label="Manage delivery addresses"><span class="delivery-location"><span class="location-icon" aria-hidden="true">📍</span><span class="location-text"><small>Deliver to</small><strong>Select location</strong></span></span></a>
+    <nav class="customer-navigation" aria-label="Customer navigation"><a href="home.html" data-customer-nav>Home</a><a href="restaurants.html" data-customer-nav>Restaurants</a><a href="cart.html" data-customer-nav>Cart</a><a href="orders.html" data-customer-nav>Orders</a><a href="addresses.html" data-customer-nav>Addresses</a><a href="profile.html" data-customer-nav>Profile</a><a href="../auth/login.html" data-customer-logout>Logout</a></nav>
+    <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNavigation"><span aria-hidden="true">☰</span></button>
+  </div>
+  <nav class="mobile-navigation" id="mobileNavigation" aria-label="Customer navigation" aria-hidden="true"><a href="home.html" data-customer-nav>Home</a><a href="restaurants.html" data-customer-nav>Restaurants</a><a href="cart.html" data-customer-nav>Cart</a><a href="orders.html" data-customer-nav>Orders</a><a href="addresses.html" data-customer-nav>Addresses</a><a href="profile.html" data-customer-nav>Profile</a><a href="../auth/login.html" data-customer-logout>Logout</a></nav>
+</header>
+
+<main class="checkout-page">
+        <div class="checkout-container">
+            <!-- Page Header -->
+            <div class="checkout-page-header">
+                <a href="cart.html" class="back-link"> ← Back to Cart </a>
+
+                <h1>Checkout</h1>
+
+                <p>Use your device's live GPS location, review your details, and place your order.</p>
+            </div>
+
+            <!-- Checkout Layout -->
+            <div class="checkout-layout">
+                <!-- ================= LEFT COLUMN ================= -->
+                <div class="checkout-main">
+                    <!-- Delivery Information -->
+                    <section class="checkout-card">
+                        <div class="checkout-card-header">
+                            <div>
+                                <h2>Delivery Information</h2>
+
+                                <p>Where should we deliver your order?</p>
+                            </div>
+                        </div>
+
+                        <form id="checkoutForm">
+                            <!-- Full Name -->
+                            <div class="form-group">
+                                <label for="fullName"> Full Name </label>
+
+                                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name"
+                                    autocomplete="name" required />
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="phone"> Phone Number </label>
+
+                                <input type="tel" id="phone" name="phone" placeholder="e.g. 0712345678"
+                                    autocomplete="tel" required />
+                            </div>
+
+                            <div class="form-group checkout-location-tools">
+                                <button type="button" id="useCheckoutLocationButton" class="checkout-location-button">Use My Current Location</button>
+                                <small id="checkoutLocationStatus" role="status" aria-live="polite">Live GPS location is required. Manual address entry and saved-address selection are not available at checkout.</small>
+                            </div>
+
+                            <div class="form-group checkout-live-location-instruction">
+                                <p><strong>Delivery fee requires your live location.</strong> Select <em>Use My Current Location</em> and allow GPS access. Your delivery fee and order total will be calculated after your live location is captured.</p>
+                            </div>
+                            <input type="hidden" id="address" name="address" value="" />
+                            <input type="hidden" id="area" name="area" value="" />
+
+                            <!-- Delivery Notes -->
+                            <div class="form-group">
+                                <label for="deliveryNotes">
+                                    Delivery Notes
+                                    <span class="optional"> Optional </span>
+                                </label>
+
+                                <textarea id="deliveryNotes" name="deliveryNotes" rows="3"
+                                    placeholder="Any instructions for the rider? Example : 'Password Hostel, Ground floor, room no. 2'"></textarea>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Payment Method -->
+                    <section class="checkout-card">
+                        <div class="checkout-card-header">
+                            <div>
+                                <h2>Payment Method</h2>
+
+                                <p>Choose how you want to pay for your order.</p>
+                            </div>
+                        </div>
+
+                        <div class="payment-methods">
+                            <!-- M-Pesa -->
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="mpesa" />
+
+                                <span class="payment-option-content">
+                                    <span class="payment-icon"> M </span>
+
+                                    <span class="payment-details">
+                                        <strong> M-Pesa </strong>
+
+                                        <small> Pay securely using an M-Pesa PIN prompt </small>
+                                    </span>
+                                </span>
+                            </label>
+
+                            <!-- Cash -->
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="cash" checked />
+
+                                <span class="payment-option-content">
+                                    <span class="payment-icon"> KSh </span>
+
+                                    <span class="payment-details">
+                                        <strong> Cash on Delivery </strong>
+
+                                        <small> Pay when your order arrives </small>
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Order Confirmation -->
+                    <section class="checkout-card">
+                        <div class="checkout-card-header">
+                            <div>
+                                <h2>Order Confirmation</h2>
+
+                                <p>Review your information before placing the order.</p>
+                            </div>
+                        </div>
+
+                        <label class="confirmation-checkbox">
+                            <input type="checkbox" id="confirmOrder" required />
+
+                            <span>
+                                I confirm that my delivery information is correct and I want
+                                to place this order.
+                            </span>
+                        </label>
+
+                        <!-- Message -->
+                        <div id="checkoutMessage" class="checkout-message" role="alert"></div>
+
+                        <!-- Place Order -->
+                        <button type="submit" form="checkoutForm" id="placeOrderButton" class="place-order-button">
+                            Place Order
+                        </button>
+                    </section>
+                </div>
+
+                <!-- ================= RIGHT COLUMN ================= -->
+                <aside class="checkout-sidebar">
+                    <!-- Order Summary -->
+                    <section class="order-summary-card">
+                        <div class="order-summary-header">
+                            <h2>Your Order</h2>
+
+                            <a href="cart.html"> Edit </a>
+                        </div>
+
+                        <!-- Cart items are rendered by checkout.js. -->
+                        <div class="checkout-restaurant" hidden></div>
+                        <div class="checkout-items"><div class="checkout-empty"><strong>Loading your cart...</strong><span>Your current cart items will appear here.</span></div></div>
+
+                        <div class="summary-calculations"><div class="summary-row"><span>Subtotal</span><strong>Loading...</strong></div><div class="summary-row"><span>Delivery Fee</span><strong>Calculated at checkout</strong></div></div>
+                        <div class="summary-total"><span>Total</span><strong>Calculated at checkout</strong></div>
+
+                        <!-- Payment Note -->
+                        <div class="checkout-payment-note">
+                            <strong> Payment </strong>
+
+                            <span>
+                                Your selected payment method will be used when the order is
+                                placed.
+                            </span>
+                        </div>
+                    </section>
+
+                    <!-- Delivery Estimate -->
+                    <section class="delivery-estimate-card">
+                        <div class="estimate-icon">🚴</div>
+
+                        <div>
+                            <strong> Estimated Delivery </strong>
+
+                            <span>Timing depends on restaurant preparation and your location.</span>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="customer-footer">
+        <div class="customer-footer-container">
+            <div class="footer-brand">
+                <a href="home.html" class="customer-logo">Food<span>Delivery</span></a>
+                <p>Delicious food delivered straight to your door.</p>
+            </div>
+            <nav class="footer-links" aria-label="Customer footer navigation">
+                <a href="home.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">Orders</a>
+                <a href="addresses.html">Addresses</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 FoodDelivery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Checkout JavaScript -->
+    <script src="../../assets/js/api-config.js"></script>
+    <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/customer/mobile-navigation.js"></script>
+    <script src="../../assets/js/customer/support-footer.js"></script>
+    <script src="../../assets/js/main.js"></script> 
+    <script src="../../assets/js/customer/checkout.js"></script>
+</body>
+
+</html>

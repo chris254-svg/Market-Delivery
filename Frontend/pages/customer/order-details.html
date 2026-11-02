@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Details | FoodDelivery</title>
+
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/pages/customer/customer.css">
+    <link rel="stylesheet" href="../../assets/css/pages/customer/order-details.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         CUSTOMER HEADER
+    ====================================================== -->
+
+    <header class="customer-header">
+  <div class="customer-header-container">
+    <a href="home.html" class="customer-logo" aria-label="FoodDelivery home">Food<span>Delivery</span></a>
+    <a href="addresses.html" class="delivery-location-link" aria-label="Manage delivery addresses"><span class="delivery-location"><span class="location-icon" aria-hidden="true">📍</span><span class="location-text"><small>Deliver to</small><strong>Select location</strong></span></span></a>
+    <nav class="customer-navigation" aria-label="Customer navigation"><a href="home.html" data-customer-nav>Home</a><a href="restaurants.html" data-customer-nav>Restaurants</a><a href="cart.html" data-customer-nav>Cart</a><a href="orders.html" data-customer-nav>Orders</a><a href="addresses.html" data-customer-nav>Addresses</a><a href="profile.html" data-customer-nav>Profile</a><a href="../auth/login.html" data-customer-logout>Logout</a></nav>
+    <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNavigation"><span aria-hidden="true">☰</span></button>
+  </div>
+  <nav class="mobile-navigation" id="mobileNavigation" aria-label="Customer navigation" aria-hidden="true"><a href="home.html" data-customer-nav>Home</a><a href="restaurants.html" data-customer-nav>Restaurants</a><a href="cart.html" data-customer-nav>Cart</a><a href="orders.html" data-customer-nav>Orders</a><a href="addresses.html" data-customer-nav>Addresses</a><a href="profile.html" data-customer-nav>Profile</a><a href="../auth/login.html" data-customer-logout>Logout</a></nav>
+</header>
+
+<main class="order-details-page">
+
+        <div class="order-details-container">
+
+            <!-- Back -->
+            <a href="orders.html" class="order-back-link">
+                ← Back to Orders
+            </a>
+
+
+            <!-- Page Header -->
+            <section class="order-details-header">
+
+                <div>
+
+                    <span class="order-details-label">
+                        Order Details
+                    </span>
+
+                    <h1>Order Details</h1>
+
+                    <p>Loading order details…</p>
+
+                </div>
+
+                <span class="order-status" aria-live="polite">Loading…</span>
+
+            </section>
+
+
+            <!-- =================================================
+                 ORDER CONTENT
+            ================================================== -->
+
+            <div class="order-details-layout">
+
+
+                <!-- =================================================
+                     LEFT COLUMN
+                ================================================== -->
+
+                <div class="order-details-main">
+
+
+                    <!-- Order Progress -->
+                    <section class="order-details-card">
+
+                        <div class="order-card-header">
+
+                            <div>
+                                <h2>Order Status</h2>
+
+                                <p>Current status and recorded stage times are shown below.</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="order-timeline" aria-live="polite"><p>Loading order status…</p></div>
+
+                    </section>
+
+
+                    <!-- Restaurant -->
+                    <section class="order-details-card">
+
+                        <div class="order-card-header">
+
+                            <h2>
+                                Restaurant
+                            </h2>
+
+                        </div>
+
+
+                        <div class="restaurant-order-info"><p>Loading restaurant…</p></div>
+
+                    </section>
+
+
+                    <!-- Order Items -->
+                    <section class="order-details-card">
+
+                        <div class="order-card-header">
+
+                            <h2>
+                                Order Items
+                            </h2>
+
+                        </div>
+
+
+                        <div class="order-detail-items"><p>Loading order items…</p></div>
+
+                    </section>
+
+
+                    <!-- Delivery Information -->
+                    <section class="order-details-card">
+
+                        <div class="order-card-header">
+
+                            <h2>
+                                Delivery Information
+                            </h2>
+
+                        </div>
+
+
+                        <div class="delivery-info-grid"><p>Loading delivery information…</p></div>
+
+                    </section>
+
+
+                    <!-- Actions -->
+                    <div class="order-detail-actions"><a href="orders.html" class="secondary-action-button">Back to Orders</a><button type="button" class="secondary-action-button" id="refreshOrderButton">Refresh order</button></div>
+
+
+                    <div class="order-action-message" id="orderActionMessage" role="status" aria-live="polite"></div>
+
+                </div>
+
+
+                <!-- =================================================
+                     RIGHT COLUMN
+                ================================================== -->
+
+                <aside class="order-details-sidebar">
+
+
+                    <!-- Order Summary -->
+
+                    <section class="order-details-card summary-card">
+
+                        <div class="order-card-header">
+
+                            <h2>
+                                Order Summary
+                            </h2>
+
+                        </div>
+
+
+                        <div class="summary-restaurant"><strong>Loading restaurant…</strong><span>Order number pending</span></div>
+
+
+                        <div class="summary-items"><p>Loading order items…</p></div>
+
+                        <div class="summary-divider"></div>
+
+
+                        <div class="summary-row">
+
+                            <span>Subtotal</span><strong>—</strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>Delivery Fee</span><strong>—</strong>
+
+                        </div>
+
+
+                        <div class="summary-divider"></div>
+
+
+                        <div class="summary-total">
+
+                            <span>Total</span><strong>—</strong>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Delivery Estimate -->
+
+                    <section class="order-details-card delivery-estimate-card"><div class="estimate-icon">🛵</div><div><h3>Delivery updates</h3><strong>Live status</strong><p>Check this page for the latest order status. No delivery-time estimate is currently available.</p></div></section>
+
+
+                    <!-- Payment -->
+
+                    <section class="order-details-card payment-card">
+
+                        <div class="order-card-header">
+
+                            <h2>
+                                Payment
+                            </h2>
+
+                        </div>
+
+
+                        <div class="payment-info">
+
+                            <div class="payment-method-icon">
+                                M
+                            </div>
+
+                            <div><strong class="payment-method">Loading…</strong><span>Payment method</span></div>
+
+                            <span class="payment-status">Loading…</span>
+
+                        </div>
+
+                    </section>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         CUSTOMER FOOTER
+    ====================================================== -->
+
+    <footer class="customer-footer">
+        <div class="customer-footer-container">
+            <div class="footer-brand">
+                <a href="home.html" class="customer-logo">Food<span>Delivery</span></a>
+                <p>Delicious food delivered straight to your door.</p>
+            </div>
+            <nav class="footer-links" aria-label="Customer footer navigation">
+                <a href="home.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">Orders</a>
+                <a href="addresses.html">Addresses</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 FoodDelivery. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="../../assets/js/api-config.js"></script>
+    <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/customer/mobile-navigation.js"></script>
+    <script src="../../assets/js/customer/support-footer.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/customer/order-details.js"></script>
+
+</body>
+
+</html>

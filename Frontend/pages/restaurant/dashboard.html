@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurant Dashboard | FoodDelivery</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+
+    <!-- Restaurant Dashboard CSS -->
+    <link rel="stylesheet" href="../../assets/css/pages/restaurant/restaurant.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         RESTAURANT DASHBOARD
+    ========================== -->
+
+    <div class="restaurant-dashboard">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside class="restaurant-sidebar" id="restaurantSidebar">
+  <div class="restaurant-sidebar-header"><a href="dashboard.html" class="restaurant-logo">Food<span>Delivery</span></a></div>
+  <div class="restaurant-profile-mini">
+    <div class="restaurant-avatar" id="restaurantSidebarAvatar">R</div>
+    <div class="restaurant-profile-info"><strong id="restaurantSidebarName">Loading restaurant…</strong><span>Restaurant</span></div>
+  </div>
+  <nav class="restaurant-navigation">
+    <p class="restaurant-nav-title">MAIN MENU</p>
+    <a href="dashboard.html" class="restaurant-nav-link active" aria-current="page"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+<a href="orders.html" class="restaurant-nav-link"><span class="nav-icon">▤</span><span>Orders</span><span class="nav-badge" hidden>0</span></a>
+<a href="earnings.html" class="restaurant-nav-link"><span class="nav-icon">▥</span><span>Earnings</span></a>
+<a href="restaurant-profile.html" class="restaurant-nav-link"><span class="nav-icon">◉</span><span>Restaurant Profile</span></a>
+<a href="settings.html" class="restaurant-nav-link"><span class="nav-icon">⚙</span><span>Settings</span></a>
+  </nav>
+  <div class="restaurant-sidebar-bottom"><a href="../../pages/auth/login.html" class="restaurant-nav-link logout-link"><span class="nav-icon">↪</span><span>Logout</span></a></div>
+</aside>
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <main class="restaurant-main">
+
+            <!-- =========================
+                 TOP BAR
+            ========================== -->
+
+            <header class="restaurant-topbar">
+  <div class="restaurant-topbar-left">
+    <button type="button" class="restaurant-menu-button" id="restaurantMenuButton" aria-label="Open menu">☰</button>
+    <div class="restaurant-page-heading">
+      <h1>Dashboard</h1>
+      <p>Monitor orders, restaurant status, and daily performance.</p>
+    </div>
+  </div>
+  <div class="restaurant-topbar-right">
+    <button type="button" class="restaurant-status" id="restaurantStatusButton" aria-live="polite">
+      <span class="status-dot"></span>
+      <span class="status-text"><small>Restaurant Status</small><strong id="restaurantStatusText">Loading…</strong></span>
+    </button>
+    <button type="button" class="restaurant-notification-button" aria-label="Notifications">
+      <span>♧</span><span class="notification-badge" hidden>0</span>
+    </button>
+    <button type="button" class="restaurant-topbar-profile" aria-label="Restaurant profile">
+      <span class="topbar-avatar" id="restaurantTopbarAvatar">R</span>
+      <span class="topbar-profile-text"><strong id="restaurantTopbarName">Loading restaurant…</strong><small>Restaurant</small></span>
+      <span class="profile-arrow">⌄</span>
+    </button>
+  </div>
+</header>
+
+
+            <!-- =========================
+                 DASHBOARD CONTENT
+            ========================== -->
+
+            <section class="restaurant-dashboard-content">
+
+                <!-- =========================
+                     WELCOME SECTION
+                ========================== -->
+
+                <div class="restaurant-welcome">
+
+                    <div>
+                        <h2 id="restaurantWelcomeHeading">Your restaurant overview</h2>
+                        <p>Here's what's happening with your restaurant today.</p>
+                    </div>
+
+                    <div class="dashboard-date"><span>Today</span><strong id="dashboardCurrentDate">Loading date…</strong></div>
+
+                </div>
+
+
+                <!-- =========================
+                     STATISTICS
+                ========================== -->
+
+                <div class="restaurant-statistics">
+
+                    <!-- Today's Orders -->
+                    <div class="restaurant-stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon orders-icon">
+                                🛍
+                            </div>
+
+                            <span class="stat-change neutral">Today</span>
+
+                        </div>
+
+                        <div class="stat-card-content">
+
+                            <span>Today's Orders</span>
+
+                            <strong>—</strong>
+
+                            <small>Orders placed today</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Pending Orders -->
+                    <div class="restaurant-stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon pending-icon">
+                                ⏱
+                            </div>
+
+                            <span class="stat-change warning">Pending</span>
+
+                        </div>
+
+                        <div class="stat-card-content">
+
+                            <span>Pending Orders</span>
+
+                            <strong>—</strong>
+
+                            <small>Orders requiring attention</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Today's Revenue -->
+                    <div class="restaurant-stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon revenue-icon">
+                                KSh
+                            </div>
+
+                            <span class="stat-change neutral">Today</span>
+
+                        </div>
+
+                        <div class="stat-card-content">
+
+                            <span>Today's Revenue</span>
+
+                            <strong>—</strong>
+
+                            <small>Revenue from delivered orders today</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Menu Items -->
+                    <div class="restaurant-stat-card">
+
+                        <div class="stat-card-top">
+
+                            <div class="stat-icon menu-icon">
+                                ☷
+                            </div>
+
+                            <span class="stat-change neutral">Menu</span>
+
+                        </div>
+
+                        <div class="stat-card-content">
+
+                            <span>Menu Items</span>
+
+                            <strong>—</strong>
+
+                            <small>Loading menu availability</small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     DASHBOARD GRID
+                ========================== -->
+
+                <div class="restaurant-dashboard-grid">
+
+
+                    <!-- =========================
+                         RECENT ORDERS
+                    ========================== -->
+
+                    <section class="restaurant-dashboard-card recent-orders-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+                                <h3>Recent Orders</h3>
+                                <p>Your latest customer orders</p>
+                            </div>
+
+                            <a href="#" class="view-all-link">
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <div class="orders-table-wrapper">
+
+                            <table class="restaurant-orders-table">
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Customer</th>
+                                        <th>Items</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Time</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody><tr><td colspan="6" style="text-align:center;padding:24px;">Loading your recent orders…</td></tr></tbody>
+
+                            </table>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =========================
+                         RESTAURANT STATUS
+                    ========================== -->
+
+                    <section class="restaurant-dashboard-card status-dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+                                <h3>Restaurant Status</h3>
+                                <p>Manage your availability</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="restaurant-status-panel">
+
+                            <div class="status-panel-icon">
+                                ✓
+                            </div>
+
+                            <div class="status-panel-content">
+
+                                <strong id="statusPanelTitle">
+                                    Your restaurant is open
+                                </strong>
+
+                                <p id="statusPanelDescription">
+                                    Customers can currently place orders.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="button" class="dashboard-status-button" id="toggleRestaurantStatus">
+
+                            Close Restaurant
+
+                        </button>
+
+
+                        <div class="status-information">
+
+                            <div class="status-info-row">
+
+                                <span>Average preparation time</span>
+
+                                <strong>
+                                    20–30 min
+                                </strong>
+
+                            </div>
+
+                            <div class="status-info-row">
+
+                                <span>Today's opening hours</span>
+
+                                <strong>
+                                    8:00 AM – 10:00 PM
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Popular items are hidden until live order-item analytics are available. -->
+
+
+                    <!-- =========================
+                         QUICK ACTIONS
+                    ========================== -->
+
+                    <section class="restaurant-dashboard-card quick-actions-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+                                <h3>Quick Actions</h3>
+                                <p>Common restaurant tasks</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions-grid">
+
+
+                            <a href="#" class="quick-action">
+
+                                <span class="quick-action-icon">
+                                    🛍
+                                </span>
+
+                                <span>
+                                    <strong>View Orders</strong>
+                                    <small>Manage customer orders</small>
+                                </span>
+
+                            </a>
+
+
+                            <a href="#" class="quick-action">
+
+                                <span class="quick-action-icon">
+                                    ✎
+                                </span>
+
+                                <span>
+                                    <strong>Edit Restaurant</strong>
+                                    <small>Update restaurant details</small>
+                                </span>
+
+                            </a>
+
+
+                            <a href="#" class="quick-action">
+
+                                <span class="quick-action-icon">
+                                    ▥
+                                </span>
+
+                                <span>
+                                    <strong>View Earnings</strong>
+                                    <small>Check your revenue</small>
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- Restaurant Dashboard JavaScript -->
+    <!-- Shared authentication and API helper -->
+    <script src="../../assets/js/api-config.js"></script>
+    <script src="../../assets/js/auth/auth-api.js"></script>
+
+    <!-- Existing global JavaScript -->
+    <script src="../../assets/js/main.js"></script>
+
+    <!-- Restaurant Dashboard -->
+    <script src="../../assets/js/restaurant/notifications.js"></script>
+    <script src="../../assets/js/restaurant/dashboard.js"></script>
+
+</body>
+
+</html>

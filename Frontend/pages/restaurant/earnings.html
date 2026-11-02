@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Earnings | FoodDelivery</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+
+    <!-- Restaurant CSS -->
+    <link rel="stylesheet" href="../../assets/css/pages/restaurant/restaurant.css" />
+
+    <!-- Earnings CSS -->
+    <link rel="stylesheet" href="../../assets/css/pages/restaurant/earnings.css" />
+</head>
+
+<body>
+    <!-- =====================================================
+         RESTAURANT DASHBOARD
+    ====================================================== -->
+
+    <div class="restaurant-dashboard">
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="restaurant-sidebar" id="restaurantSidebar">
+  <div class="restaurant-sidebar-header"><a href="dashboard.html" class="restaurant-logo">Food<span>Delivery</span></a></div>
+  <div class="restaurant-profile-mini">
+    <div class="restaurant-avatar" id="restaurantSidebarAvatar">R</div>
+    <div class="restaurant-profile-info"><strong id="restaurantSidebarName">Loading restaurant…</strong><span>Restaurant</span></div>
+  </div>
+  <nav class="restaurant-navigation">
+    <p class="restaurant-nav-title">MAIN MENU</p>
+    <a href="dashboard.html" class="restaurant-nav-link"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+<a href="orders.html" class="restaurant-nav-link"><span class="nav-icon">▤</span><span>Orders</span><span class="nav-badge" hidden>0</span></a>
+<a href="earnings.html" class="restaurant-nav-link active" aria-current="page"><span class="nav-icon">▥</span><span>Earnings</span></a>
+<a href="restaurant-profile.html" class="restaurant-nav-link"><span class="nav-icon">◉</span><span>Restaurant Profile</span></a>
+<a href="settings.html" class="restaurant-nav-link"><span class="nav-icon">⚙</span><span>Settings</span></a>
+  </nav>
+  <div class="restaurant-sidebar-bottom"><a href="../../pages/auth/login.html" class="restaurant-nav-link logout-link"><span class="nav-icon">↪</span><span>Logout</span></a></div>
+</aside>
+
+        <!-- =================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <main class="restaurant-main">
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header class="restaurant-topbar">
+  <div class="restaurant-topbar-left">
+    <button type="button" class="restaurant-menu-button" id="restaurantMenuButton" aria-label="Open menu">☰</button>
+    <div class="restaurant-page-heading">
+      <h1>Earnings</h1>
+      <p>Track food revenue, configured platform fees, and net earnings. Delivery fees are excluded.</p>
+    </div>
+  </div>
+  <div class="restaurant-topbar-right">
+    <button type="button" class="restaurant-status" id="restaurantStatusButton" aria-live="polite">
+      <span class="status-dot"></span>
+      <span class="status-text"><small>Restaurant Status</small><strong id="restaurantStatusText">Loading…</strong></span>
+    </button>
+    <button type="button" class="restaurant-notification-button" aria-label="Notifications">
+      <span>♧</span><span class="notification-badge" hidden>0</span>
+    </button>
+    <button type="button" class="restaurant-topbar-profile" aria-label="Restaurant profile">
+      <span class="topbar-avatar" id="restaurantTopbarAvatar">R</span>
+      <span class="topbar-profile-text"><strong id="restaurantTopbarName">Loading restaurant…</strong><small>Restaurant</small></span>
+      <span class="profile-arrow">⌄</span>
+    </button>
+  </div>
+</header>
+
+            <!-- =================================================
+                 PAGE CONTENT
+            ================================================== -->
+
+            <section class="restaurant-dashboard-content">
+                <!-- =================================================
+                     PAGE HEADER
+                ================================================== -->
+
+                <div class="earnings-page-header">
+                    <div>
+                        <h2>Earnings Overview</h2>
+
+                        <p>Food revenue excludes delivery fees. Platform fees are calculated only on the food portion of completed orders.</p>
+                    </div>
+
+                    <div class="earnings-period-selector">
+                        <label for="earningsPeriod"> Period </label>
+
+                        <select id="earningsPeriod">
+                            <option value="today">Today</option>
+
+                            <option value="week">This Week</option>
+
+                            <option value="month" selected>This Month</option>
+
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- =================================================
+                     EARNINGS SUMMARY
+                ================================================== -->
+
+                <div class="earnings-summary-grid">
+                    <!-- Total Revenue -->
+                    <div class="earnings-summary-card">
+                        <div class="earnings-summary-top">
+                            <div class="earnings-summary-icon revenue">KSh</div>
+
+                            <span class="earnings-change" hidden></span>
+                        </div>
+
+                        <div class="earnings-summary-content">
+                            <span> Total Revenue </span>
+
+                            <strong>Loading…</strong>
+
+                            <small> Compared to previous period </small>
+                        </div>
+                    </div>
+
+                    <!-- Net Earnings -->
+                    <div class="earnings-summary-card">
+                        <div class="earnings-summary-top">
+                            <div class="earnings-summary-icon earnings">↗</div>
+
+                            <span class="earnings-change" hidden></span>
+                        </div>
+
+                        <div class="earnings-summary-content">
+                            <span> Net Earnings </span>
+
+                            <strong>Loading…</strong>
+
+                            <small>Food revenue less configured platform fee</small>
+                        </div>
+                    </div>
+
+                    <!-- Orders -->
+                    <div class="earnings-summary-card">
+                        <div class="earnings-summary-top">
+                            <div class="earnings-summary-icon orders">🛍</div>
+
+                            <span class="earnings-change" hidden></span>
+                        </div>
+
+                        <div class="earnings-summary-content">
+                            <span> Completed Orders </span>
+
+                            <strong>Loading…</strong>
+
+                            <small> Successfully completed </small>
+                        </div>
+                    </div>
+
+                    <!-- Average Order -->
+                    <div class="earnings-summary-card">
+                        <div class="earnings-summary-top">
+                            <div class="earnings-summary-icon average">KSh</div>
+
+                            <span class="earnings-change" hidden></span>
+                        </div>
+
+                        <div class="earnings-summary-content">
+                            <span> Average Order </span>
+
+                            <strong>Loading…</strong>
+
+                            <small>Average food value; delivery fee excluded</small>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="restaurant-dashboard-card platform-fee-calculation-card" aria-labelledby="platformFeeCalculationTitle">
+                    <div class="dashboard-card-header">
+                        <div>
+                            <h3 id="platformFeeCalculationTitle">Platform Fees Calculation</h3>
+                            <p>How the platform fee is deducted from food revenue for the selected period.</p>
+                        </div>
+                    </div>
+                    <div class="payout-details" id="platformFeeCalculationDetails" aria-live="polite">
+                        <div class="payout-detail-row">
+                            <span>Food revenue (delivery fee excluded)</span>
+                            <strong>Loading…</strong>
+                        </div>
+                        <div class="payout-detail-row">
+                            <span>Platform fee rate</span>
+                            <strong>Loading…</strong>
+                        </div>
+                        <div class="payout-detail-row">
+                            <span>Platform fee calculation</span>
+                            <strong>Loading…</strong>
+                        </div>
+                        <div class="payout-detail-row total">
+                            <span>Total platform fees</span>
+                            <strong>Loading…</strong>
+                        </div>
+                        <div class="payout-detail-row">
+                            <span>Net food earnings after fee</span>
+                            <strong>Loading…</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =================================================
+                     EARNINGS GRID
+                ================================================== -->
+
+                <div class="earnings-main-grid">
+                    <!-- =================================================
+                         REVENUE CHART
+                    ================================================== -->
+
+                    <section class="restaurant-dashboard-card earnings-chart-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <h3>Revenue Overview</h3>
+
+                                <p>Completed food revenue in the selected period; delivery fees excluded.</p>
+                            </div>
+
+                            <div class="chart-legend">
+                                <span class="legend-item">
+                                    <span class="legend-dot"></span>
+
+                                    Revenue
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="earnings-chart">
+                            <div class="chart-y-axis">
+                                <span> KSh 50K </span>
+
+                                <span> KSh 40K </span>
+
+                                <span> KSh 30K </span>
+
+                                <span> KSh 20K </span>
+
+                                <span> KSh 10K </span>
+
+                                <span> KSh 0 </span>
+                            </div>
+
+                            <div class="chart-area">
+                                <div class="chart-grid-lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+
+                                <div class="chart-bars" aria-live="polite"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- =================================================
+                         PAYOUT SUMMARY
+                    ================================================== -->
+
+                    <section class="restaurant-dashboard-card payout-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <h3>Payout Summary</h3>
+
+                                <p>Payout balances and transfer history are unavailable until payout records are added.</p>
+                            </div>
+                        </div>
+
+                        <div class="payout-status">
+                            <div class="payout-status-icon">✓</div>
+
+                            <div>
+                                <span> Next payout </span>
+
+                                <strong>Not available</strong>
+
+                                <small>Payout records are not configured.</small>
+                            </div>
+                        </div>
+
+                        <div class="payout-details">
+                            <div class="payout-detail-row">
+                                <span> Available balance </span>
+
+                                <strong> Not available </strong>
+                            </div>
+
+                            <div class="payout-detail-row">
+                                <span> Pending balance </span>
+
+                                <strong>Not available</strong>
+                            </div>
+
+                            <div class="payout-detail-row">
+                                <span> Platform fees </span>
+
+                                <strong>Not configured</strong>
+                            </div>
+
+                            <div class="payout-detail-row total">
+                                <span> Net earnings </span>
+
+                                <strong> Not configured </strong>
+                            </div>
+                        </div>
+
+                        <button type="button" class="earnings-payout-button" aria-label="Payout history unavailable until payout tracking is implemented" disabled>
+                            Payout History Unavailable
+                        </button>
+                    </section>
+                </div>
+
+                <!-- =================================================
+                     TRANSACTIONS
+                ================================================== -->
+
+                <section class="restaurant-dashboard-card earnings-transactions-card">
+                    <div class="dashboard-card-header">
+                        <div>
+                            <h3>Recent Transactions</h3>
+
+                            <p>Latest earnings and payout transactions.</p>
+                        </div>
+
+                        <button type="button" class="earnings-export-button" id="exportEarningsButton">
+                            Export
+                        </button>
+                    </div>
+
+                    <div class="earnings-table-wrapper">
+                        <table class="earnings-table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction</th>
+
+                                    <th>Order</th>
+
+                                    <th>Date</th>
+
+                                    <th>Food Revenue</th>
+
+                                    <th>Fees</th>
+
+                                    <th>Net Amount</th>
+
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr><td colspan="7">Loading payment transactions…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- =================================================
+                     EARNINGS BREAKDOWN
+                ================================================== -->
+
+                <div class="earnings-breakdown-grid">
+                    <!-- Revenue Breakdown -->
+                    <section class="restaurant-dashboard-card earnings-breakdown-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <h3>Payment Breakdown</h3>
+
+                                <p>Payment breakdown by status; revenue values exclude delivery fees.</p>
+                            </div>
+                        </div>
+
+                        <div class="breakdown-list">
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">
+                                    <span class="breakdown-indicator orders"> </span>
+
+                                    <span> Completed order payments </span>
+                                </div>
+
+                                <strong>Loading…</strong>
+                            </div>
+
+                            <div class="breakdown-progress">
+                                <span style="width: 88%"></span>
+                            </div>
+
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">
+                                    <span class="breakdown-indicator delivery"> </span>
+
+                                    <span> Pending / processing payments </span>
+                                </div>
+
+                                <strong>Loading…</strong>
+                            </div>
+
+                            <div class="breakdown-progress">
+                                <span style="width: 67%"></span>
+                            </div>
+
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">
+                                    <span class="breakdown-indicator promotion"> </span>
+
+                                    <span> Refunded payments </span>
+                                </div>
+
+                                <strong>Loading…</strong>
+                            </div>
+
+                            <div class="breakdown-progress">
+                                <span style="width: 48%"></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Performance -->
+                    <section class="restaurant-dashboard-card earnings-performance-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <h3>Performance</h3>
+
+                                <p>Key financial metrics.</p>
+                            </div>
+                        </div>
+
+                        <div class="performance-list">
+                            <div class="performance-row">
+                                <div>
+                                    <span> Revenue growth </span>
+
+                                    <small>Completed payments only</small>
+                                </div>
+
+                                <strong>—</strong>
+                            </div>
+
+                            <div class="performance-row">
+                                <div>
+                                    <span> Average order value </span>
+
+                                    <small> Per completed order </small>
+                                </div>
+
+                                <strong> KSh 652 </strong>
+                            </div>
+
+                            <div class="performance-row">
+                                <div>
+                                    <span> Completion rate </span>
+
+                                    <small>Payments marked completed</small>
+                                </div>
+
+                                <strong>—</strong>
+                            </div>
+
+                            <div class="performance-row">
+                                <div>
+                                    <span> Customer cancellations </span>
+
+                                    <small>Payments linked to cancelled orders</small>
+                                </div>
+
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../../assets/js/api-config.js"></script>
+    <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/main.js"></script>
+
+    <script src="../../assets/js/restaurant/notifications.js"></script>
+    <script src="../../assets/js/restaurant/earnings.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,275 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Profile | FoodDelivery</title>
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <!-- Restaurant CSS -->
+  <link rel="stylesheet" href="../../assets/css/pages/restaurant/restaurant.css" />
+
+  <!-- Restaurant Profile CSS -->
+  <link rel="stylesheet" href="../../assets/css/pages/restaurant/restaurant-profile.css">
+  <style>
+    #restaurantLocationForm input[readonly] {
+      background: #f8fafc;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+    .profile-readonly-note {
+      margin: 18px 22px 22px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="restaurant-dashboard">
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="restaurant-sidebar" id="restaurantSidebar">
+  <div class="restaurant-sidebar-header"><a href="dashboard.html" class="restaurant-logo">Food<span>Delivery</span></a></div>
+  <div class="restaurant-profile-mini">
+    <div class="restaurant-avatar" id="restaurantSidebarAvatar">R</div>
+    <div class="restaurant-profile-info"><strong id="restaurantSidebarName">Loading restaurant…</strong><span>Restaurant</span></div>
+  </div>
+  <nav class="restaurant-navigation">
+    <p class="restaurant-nav-title">MAIN MENU</p>
+    <a href="dashboard.html" class="restaurant-nav-link"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+<a href="orders.html" class="restaurant-nav-link"><span class="nav-icon">▤</span><span>Orders</span><span class="nav-badge" hidden>0</span></a>
+<a href="earnings.html" class="restaurant-nav-link"><span class="nav-icon">▥</span><span>Earnings</span></a>
+<a href="restaurant-profile.html" class="restaurant-nav-link active" aria-current="page"><span class="nav-icon">◉</span><span>Restaurant Profile</span></a>
+<a href="settings.html" class="restaurant-nav-link"><span class="nav-icon">⚙</span><span>Settings</span></a>
+  </nav>
+  <div class="restaurant-sidebar-bottom"><a href="../../pages/auth/login.html" class="restaurant-nav-link logout-link"><span class="nav-icon">↪</span><span>Logout</span></a></div>
+</aside>
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="restaurant-main">
+      <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+      <header class="restaurant-topbar">
+  <div class="restaurant-topbar-left">
+    <button type="button" class="restaurant-menu-button" id="restaurantMenuButton" aria-label="Open menu">☰</button>
+    <div class="restaurant-page-heading">
+      <h1>Restaurant Profile</h1>
+      <p>Manage your restaurant information and business details.</p>
+    </div>
+  </div>
+  <div class="restaurant-topbar-right">
+    <button type="button" class="restaurant-status" id="restaurantStatusButton" aria-live="polite">
+      <span class="status-dot"></span>
+      <span class="status-text"><small>Restaurant Status</small><strong id="restaurantStatusText">Loading…</strong></span>
+    </button>
+    <button type="button" class="restaurant-notification-button" aria-label="Notifications">
+      <span>♧</span><span class="notification-badge" hidden>0</span>
+    </button>
+    <button type="button" class="restaurant-topbar-profile" aria-label="Restaurant profile">
+      <span class="topbar-avatar" id="restaurantTopbarAvatar">R</span>
+      <span class="topbar-profile-text"><strong id="restaurantTopbarName">Loading restaurant…</strong><small>Restaurant</small></span>
+      <span class="profile-arrow">⌄</span>
+    </button>
+  </div>
+</header>
+
+      <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+
+      <section class="restaurant-dashboard-content">
+        <!-- PAGE HEADER -->
+
+        <div class="profile-page-header">
+          <div>
+            <h2>Restaurant Information</h2>
+
+            <p>Keep your restaurant information up to date.</p>
+          </div>
+        </div>
+
+        <!-- PROFILE OVERVIEW -->
+
+        <section class="restaurant-dashboard-card profile-overview-card">
+          <div class="profile-overview-left">
+            <div class="profile-large-avatar">R</div>
+
+            <div class="profile-overview-info">
+              <h2>Loading restaurant…</h2>
+
+              <p id="restaurantIdText">Restaurant ID: —</p>
+
+              <span class="profile-active-status">
+                <span></span>
+                Active Restaurant
+              </span>
+            </div>
+          </div>
+
+          <div class="profile-overview-meta">
+            <div>
+              <span> Member Since </span>
+
+              <strong id="memberSinceText">—</strong>
+            </div>
+
+            <div>
+              <span> Total Orders </span>
+
+              <strong id="totalOrdersText">0</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================
+                 PROFILE GRID
+            ================================================== -->
+
+        <div class="restaurant-profile-grid">
+          <!-- =================================================
+                     RESTAURANT INFORMATION
+                ================================================== -->
+
+          <section class="restaurant-dashboard-card profile-form-card">
+            <div class="dashboard-card-header">
+              <div>
+                <h3>Restaurant Information</h3>
+
+                <p>Public restaurant details shown to customers. These are separate from your owner login details.</p>
+              </div>
+            </div>
+
+            <form id="restaurantProfileForm">
+              <div class="profile-form-grid">
+                <div class="profile-form-group">
+                  <label for="restaurantName"> Restaurant Name </label>
+
+                  <input type="text" id="restaurantName" value="" required />
+                </div>
+
+                <div class="profile-form-group full-width">
+                  <label for="restaurantDescription"> Description </label>
+
+                  <textarea id="restaurantDescription" rows="4"></textarea>
+                </div>
+
+                <div class="profile-form-group">
+                  <label for="restaurantPhone"> Phone Number </label>
+
+                  <input type="tel" id="restaurantPhone" value="" />
+                </div>
+
+                <div class="profile-form-group">
+                  <label for="restaurantEmail"> Email Address </label>
+
+                  <input type="email" id="restaurantEmail" value="" />
+                </div>
+              </div>
+
+              <div class="profile-form-actions">
+                <button type="reset" class="profile-secondary-button">
+                  Cancel
+                </button>
+
+                <button type="submit" class="profile-primary-button">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- =================================================
+                     CONTACT & LOCATION
+                ================================================== -->
+
+          <section class="restaurant-dashboard-card profile-form-card">
+            <div class="dashboard-card-header">
+              <div>
+                <h3>Contact & Location</h3>
+
+                <p>Your restaurant contact and location details.</p>
+              </div>
+            </div>
+
+            <div id="restaurantLocationForm">
+              <div class="profile-form-grid">
+                <div class="profile-form-group full-width">
+                  <label for="restaurantLocationName">Restaurant Location</label>
+                  <input type="text" id="restaurantLocationName" value="" readonly aria-readonly="true" />
+                </div>
+                <div class="profile-form-group full-width">
+                  <label for="restaurantCoordinates">GPS Coordinates</label>
+                  <input type="text" id="restaurantCoordinates" value="" readonly aria-readonly="true" />
+                </div>
+              </div>
+              <p class="profile-readonly-note">Restaurant location is captured using live GPS by the platform administrator. Address and city fields are not used.</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- =================================================
+                 OPERATING INFORMATION
+            ================================================== -->
+
+        <section class="restaurant-dashboard-card operating-hours-card">
+          <div class="dashboard-card-header">
+            <div>
+              <h3>Operating Hours</h3>
+              <p>Set your restaurant's daily opening and closing times. These hours apply every day.</p>
+            </div>
+            <span class="profile-hours-status">Order acceptance: Closed</span>
+          </div>
+
+          <div class="operating-hours-list">
+            <div class="operating-hours-row">
+              <div class="day-information">
+                <strong>Daily schedule</strong>
+              </div>
+              <div class="hours-inputs">
+                <label for="restaurantOpeningTime">Opens</label>
+                <input type="time" id="restaurantOpeningTime" />
+                <span>to</span>
+                <label for="restaurantClosingTime">Closes</label>
+                <input type="time" id="restaurantClosingTime" />
+              </div>
+            </div>
+          </div>
+
+          <div class="operating-hours-actions">
+            <button type="button" class="profile-primary-button" id="saveHoursButton">
+              Save Operating Hours
+            </button>
+          </div>
+        </section>
+
+        <!-- MESSAGE -->
+
+        <div class="profile-message" id="profileMessage" role="alert" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- JavaScript -->
+
+  <script src="../../assets/js/api-config.js"></script>
+  <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/main.js"></script>
+
+    <script src="../../assets/js/restaurant/notifications.js"></script>
+  <script src="../../assets/js/restaurant/restaurant-profile.js"></script>
+</body>
+
+</html>

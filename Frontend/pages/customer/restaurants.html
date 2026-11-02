@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurants - FoodDelivery</title>
+
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/pages/customer/customer.css">
+    <link rel="stylesheet" href="../../assets/css/pages/customer/restaurants.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         CUSTOMER HEADER
+    ========================== -->
+    <header class="customer-header">
+  <div class="customer-header-container">
+    <a href="home.html" class="customer-logo" aria-label="FoodDelivery home">Food<span>Delivery</span></a>
+    <a href="addresses.html" class="delivery-location-link" aria-label="Manage delivery addresses"><span class="delivery-location"><span class="location-icon" aria-hidden="true">📍</span><span class="location-text"><small>Deliver to</small><strong>Select location</strong></span></span></a>
+    <nav class="customer-navigation" aria-label="Customer navigation"><a href="home.html" data-customer-nav>Home</a><a href="restaurants.html" data-customer-nav>Restaurants</a><a href="cart.html" data-customer-nav>Cart</a><a href="orders.html" data-customer-nav>Orders</a><a href="addresses.html" data-customer-nav>Addresses</a><a href="profile.html" data-customer-nav>Profile</a><a href="../auth/login.html" data-customer-logout>Logout</a></nav>
+    <button type="button" class="mobile-menu-button" id="mobileMenuButton" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNavigation"><span aria-hidden="true">☰</span></button>
+  </div>
+  <nav class="mobile-navigation" id="mobileNavigation" aria-label="Customer navigation" aria-hidden="true"><a href="home.html" data-customer-nav>Home</a><a href="restaurants.html" data-customer-nav>Restaurants</a><a href="cart.html" data-customer-nav>Cart</a><a href="orders.html" data-customer-nav>Orders</a><a href="addresses.html" data-customer-nav>Addresses</a><a href="profile.html" data-customer-nav>Profile</a><a href="../auth/login.html" data-customer-logout>Logout</a></nav>
+</header>
+
+<main class="customer-main">
+
+        <!-- =========================
+             PAGE HERO
+        ========================== -->
+        <section class="restaurant-page-hero">
+
+            <div class="restaurant-page-hero-content">
+
+                <span class="hero-label">
+                    Discover restaurants
+                </span>
+
+                <h1>
+                    Find your next meal
+                </h1>
+
+                <p>
+                    Browse restaurants near you and order your
+                    favourite meals.
+                </p>
+
+                <!-- Search -->
+                <form class="food-search restaurant-search" id="restaurantSearchForm">
+
+                    <input type="search" id="restaurantSearch" placeholder="Search restaurants or cuisines..."
+                        autocomplete="off">
+
+                    <button type="submit">Search</button>
+                    <button type="button" id="clearRestaurantSearch" class="restaurant-clear-search">Clear</button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RESTAURANT CONTENT
+        ========================== -->
+        <section class="customer-section restaurant-discovery">
+
+            <div class="restaurant-discovery-layout">
+
+                <aside class="restaurant-filters" aria-label="Restaurant filters">
+                    <h3>Filter restaurants</h3>
+                    <label for="restaurantAvailability">Availability</label>
+                    <select id="restaurantAvailability">
+                        <option value="all">All restaurants</option>
+                        <option value="open">Open now</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                    <label for="restaurantCuisine">Cuisine</label>
+                    <select id="restaurantCuisine">
+                        <option value="all">All cuisines</option>
+                    </select>
+                    <button type="button" id="resetRestaurantFilters" class="restaurant-reset-filters">Reset filters</button>
+                </aside>
+
+                <div class="restaurant-results">
+
+                    <!-- Results Header -->
+                    <div class="restaurant-results-header">
+                        <div>
+                            <span class="section-label">Restaurants</span>
+                            <h2>Restaurants near you</h2>
+                            <p id="restaurantResultsCount" aria-live="polite">Loading restaurants…</p>
+                        </div>
+                        <div class="restaurant-sort">
+                            <label for="restaurantSort">Sort by</label>
+                            <select id="restaurantSort">
+                                <option value="recommended">Recommended</option>
+                                <option value="name">Name (A–Z)</option>
+                                <option value="rating">Highest rated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Cards are rendered from the API; no stale demo cards. -->
+                    <div class="restaurant-grid" id="restaurantGrid" aria-live="polite">
+                        <p class="restaurant-grid-message">Loading restaurants…</p>
+                    </div>
+
+                    <!-- No Results -->
+                    <div class="no-results" id="noRestaurantsMessage" hidden>
+
+                        <h3>
+                            No restaurants found
+                        </h3>
+
+                        <p>Try changing your search or filters.</p>
+                        <button type="button" id="clearRestaurantFilters" class="restaurant-reset-filters">Clear search and filters</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FLOATING CART
+    ========================== -->
+    <a href="cart.html" class="floating-cart" aria-label="View cart">
+
+        <span class="cart-icon">
+            🛒
+        </span>
+
+        <span class="cart-count" id="cartCount">
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="customer-footer">
+        <div class="customer-footer-container">
+            <div class="footer-brand">
+                <a href="home.html" class="customer-logo">Food<span>Delivery</span></a>
+                <p>Delicious food delivered straight to your door.</p>
+            </div>
+            <nav class="footer-links" aria-label="Customer footer navigation">
+                <a href="home.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">Orders</a>
+                <a href="addresses.html">Addresses</a>
+                <a href="profile.html">Profile</a>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 FoodDelivery. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="../../assets/js/api-config.js"></script>
+    <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/customer/mobile-navigation.js"></script>
+    <script src="../../assets/js/customer/support-footer.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/customer/restaurants.js"></script>
+
+</body>
+
+</html>
