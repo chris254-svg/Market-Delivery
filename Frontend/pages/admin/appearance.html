@@ -28,6 +28,65 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 </style>
 </head>
 <body>
+<aside class="admin-sidebar" id="adminSidebar">
+        <div class="admin-sidebar-header">
+            <a href="dashboard.html" class="admin-logo">Market<span>Delivery</span></a>
+            <button type="button" id="adminCloseMenuButton" class="admin-close-menu-button" aria-label="Close menu">×</button>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-avatar">A</div>
+            <div class="admin-profile-info">
+                <strong>Loading account…</strong>
+                <span>Loading role…</span>
+            </div>
+        </div>
+        <nav class="admin-navigation" aria-label="Admin navigation">
+            <a href="dashboard.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="orders.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▤</span>
+                <span>Orders</span>
+            </a>
+            <a href="customers.html" class="admin-nav-link">
+                <span class="admin-nav-icon">♙</span>
+                <span>Customers</span>
+            </a>
+            <a href="restaurants.html" class="admin-nav-link">
+                <span class="admin-nav-icon">⌂</span>
+                <span>Restaurants</span>
+            </a>
+            <a href="riders.html" class="admin-nav-link"><span class="admin-nav-icon">♧</span><span>Riders</span></a>
+            <a href="deleted-accounts.html" class="admin-nav-link"><span class="admin-nav-icon">▣</span><span>Deleted Accounts</span></a>
+            <a href="payments.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▣</span>
+                <span>Payments</span>
+            </a>
+            <a href="reports.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▤</span>
+                <span>Reports</span>
+            </a>
+            <a href="operations.html" class="admin-nav-link">
+                <span class="admin-nav-icon">⚙</span>
+                <span>Operations</span>
+            </a>
+            
+            <a href="appearance.html" class="admin-nav-link"><span class="admin-nav-icon">◐</span><span>Appearance Studio</span></a>
+            <a href="appearance.html" class="admin-nav-link active" aria-current="page"><span class="admin-nav-icon">◐</span><span>Appearance Studio</span></a>
+            <a href="settings.html" class="admin-nav-link">
+                <span class="admin-nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="admin-sidebar-bottom">
+            <a href="../../pages/auth/login.html" class="admin-nav-link logout-link">
+                <span class="admin-nav-icon">↪</span><span>Logout</span>
+            </a>
+        </div>
+    </aside>
+<div class="admin-main">
+<header class="admin-topbar"><div class="admin-topbar-left"><button type="button" class="admin-mobile-menu-button" id="adminMenuButton" aria-label="Open menu">☰</button><div class="admin-page-heading"><h1>Appearance Studio</h1><p>Customize the Market Delivery platform appearance.</p></div></div><div class="admin-topbar-right"><div class="admin-topbar-profile"><div class="admin-topbar-avatar">A</div><div class="admin-topbar-profile-info"><strong>Loading account…</strong><span>Loading role…</span></div></div></div></header>
 <main class="studio">
 <div class="studio-main">
 <header class="studio-heading"><h1>Appearance Studio</h1><p>Control the Market Delivery visual identity, dashboard surfaces, charts and homepage hero. Changes preview here. Only the super admin can publish them platform-wide.</p></header>
@@ -70,7 +129,9 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 <div class="preview-chart"><strong>Chart preview</strong><div class="preview-bars" id="bars"></div><small id="chartCaption">Illustrative preview only — real order and revenue charts always use live database records.</small></div>
 </div></aside>
 </main>
+</div>
 <script src="../../assets/js/api-config.js"></script>
+<script src="../../assets/js/main.js"></script>
 <script src="../../assets/js/auth/auth-api.js"></script>
 <script>
 (function(){
