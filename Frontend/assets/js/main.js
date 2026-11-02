@@ -230,8 +230,8 @@ function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength
     paint(".light-card,.light-panel,.product-card.light,.category-card", {
         "background-color": c.lightCard, color: ink(c.lightCard), "border-color": c.border
     });
-    paint("h1,h2,h3,h4,h5,h6,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", { color: c.textReadable || c.text });
-    paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.form-help,.helper-text,.field-hint,.empty-state", { color: c.mutedReadable || c.muted });
+    paint("h1,h2,h3,h4,h5,h6,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", { color: "inherit" });
+    paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.form-help,.helper-text,.field-hint,.empty-state,label,li,td", { color: "inherit" });
     paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: ink(c.secondary) });
     paint(".promotion,.discount,.promotion-badge,.badge-warning,.status-warning", {
         "background-color": c.promotion, color: ink(c.promotion), "border-color": c.promotion
@@ -242,6 +242,15 @@ function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength
     paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: ink(c.cardAlt), "border-color": c.border });
     paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
     paint(".admin-chart,.chart-container,.chart-card", { "background-color": c.card, color: ink(c.card), "border-color": c.border });
+    paint('div[class*="card"]:not(.light-card):not(.category-card):not(.product-card.light),section[class*="card"]:not(.light-card):not(.category-card),article[class*="card"],li[class*="card"],aside[class*="card"],[class*="Panel"],[class*="tile"],[class*="Tile"],[class*="widget"],[class*="Widget"],[class*="modal"],[class*="Modal"],article', {
+        "background-color": c.card, color: ink(c.card), "border-color": c.border,
+        "border-style": "solid", "border-width": borderWidth + "px",
+        "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
+    });
+    paint('a[class*="btn"],a[class*="button"],[role="button"]', {
+        "background-color": c.primary, color: ink(c.primary), "border-color": c.border,
+        "border-style": "solid", "border-width": borderWidth + "px"
+    });
 }
 
 /* MARKET DELIVERY APPEARANCE SETTINGS — loaded from the shared database. */
@@ -323,7 +332,7 @@ async function applyMarketDeliveryAppearance() {
 
         // Cards, panels, product tiles, forms, modals and summary surfaces.
         paint(".admin-content-card,.admin-stat-card,.admin-action,.admin-quick-actions-card,.dashboard-card,.stat-card,.product-card,.content-card,.panel,.card,.auth-card,.customer-card,.restaurant-card,.menu-item-card,.cart-summary,.order-card,.table-container,.modal-content,.profile-card,.address-card,.payment-card,.restaurant-item,.feature-card,.preview-component", {
-            "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border,
+            "background-color": c.card, color: ink(c.card), "border-color": c.border,
             "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
         });
         paint(".admin-status-total,.admin-table th,.table thead th,.secondary-panel,.card-secondary,.stat-card-secondary,.order-summary,.filter-panel,.customer-promotion,.promotion-card", {
