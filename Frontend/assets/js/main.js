@@ -207,14 +207,14 @@ function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength
         });
     });
     paint(".admin-sidebar,.super-admin-sidebar,.sidebar,.dashboard-sidebar,.rider-sidebar,.restaurant-sidebar,.admin-topbar,.customer-header,.restaurant-header,.rider-header,.customer-navigation,.mobile-navigation", {
-        "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
+        "background-color": c.navigation, color: ink(c.navigation), "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
     });
     paint(".admin-content-card,.admin-stat-card,.admin-action,.dashboard-card,.stat-card,.product-card,.content-card,.panel,.card,.auth-card,.customer-card,.restaurant-card,.menu-item-card,.cart-summary,.order-card,.table-container,.modal-content,.profile-card,.address-card,.payment-card,.restaurant-item,.feature-card", {
-        "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border,
+        "background-color": c.card, color: ink(c.card), "border-color": c.border,
         "border-radius": radius + "px", "border-style": "solid", "border-width": borderWidth + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
     });
     paint("input,select,textarea,.form-control,.admin-period-select,.food-search,.search-box,.filter-control", {
-        "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
+        "background-color": c.input, color: ink(c.input), "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
     });
     paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar", { "background-color": c.chart });
     paint(".admin-chart-grid-line,.chart-grid-line", { "border-color": c.chartGrid });
@@ -225,14 +225,14 @@ function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength
         "background-color": c.secondary, color: ink(c.secondary), "border-color": c.secondary
     });
     paint(".admin-status-total,.admin-table th,.table thead th,.secondary-panel,.card-secondary,.stat-card-secondary,.order-summary,.filter-panel,.customer-promotion,.promotion-card", {
-        "background-color": c.cardAlt, color: c.textReadable || c.text, "border-color": c.border
+        "background-color": c.cardAlt, color: ink(c.cardAlt), "border-color": c.border
     });
     paint(".light-card,.light-panel,.product-card.light,.category-card", {
         "background-color": c.lightCard, color: ink(c.lightCard), "border-color": c.border
     });
     paint("h1,h2,h3,h4,h5,h6,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", { color: c.textReadable || c.text });
     paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.form-help,.helper-text,.field-hint,.empty-state", { color: c.mutedReadable || c.muted });
-    paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: c.secondary });
+    paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: ink(c.secondary) });
     paint(".promotion,.discount,.promotion-badge,.badge-warning,.status-warning", {
         "background-color": c.promotion, color: ink(c.promotion), "border-color": c.promotion
     });
