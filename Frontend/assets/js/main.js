@@ -218,7 +218,7 @@ function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength
     });
     paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar", { "background-color": c.chart });
     paint(".admin-chart-grid-line,.chart-grid-line", { "border-color": c.chartGrid });
-    paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,button:not(.secondary):not(.danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
+    paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not([class*="danger"]):not([class*="delete"]):not(.btn-outline):not(.button-outline):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
         "background-color": c.primary, color: ink(c.primary), "border-color": c.primary
     });
     paint(".secondary-button,.btn-secondary,.button-secondary,button.secondary", {
@@ -382,7 +382,7 @@ async function applyMarketDeliveryAppearance() {
         paint(".admin-chart-grid-line,.chart-grid-line,.admin-chart-grid,.chart-grid", { "border-color": c.chartGrid });
         paint(".admin-chart,.chart-container,.chart-card,.preview-chart", { "background-color": c.card, color: ink(c.card), "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px" });
         // Catch page-specific component names used across the 39 HTML pages.
-        paint('[class*="card"]:not(.light-card):not(.category-card):not(.product-card.light),[class*="Card"],[class*="panel"]:not(.light-panel),[class*="Panel"],[class*="tile"],[class*="Tile"],[class*="summary"],[class*="Summary"],[class*="widget"],[class*="Widget"],[class*="modal"],[class*="Modal"],article', {
+        paint('div[class*="card"]:not(.light-card):not(.category-card):not(.product-card.light),section[class*="card"]:not(.light-card):not(.category-card),article[class*="card"],li[class*="card"],aside[class*="card"],[class*="Panel"],[class*="tile"],[class*="Tile"],[class*="summary"],[class*="Summary"],[class*="widget"],[class*="Widget"],[class*="modal"],[class*="Modal"],article', {
             "background-color": c.card, color: ink(c.card), "border-color": c.border,
             "border-style": "solid", "border-width": borderWidth + "px",
             "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
