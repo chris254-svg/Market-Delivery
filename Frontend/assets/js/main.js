@@ -371,7 +371,27 @@ async function applyMarketDeliveryAppearance() {
         paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
         paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar,.preview-bars i", { "background-color": c.chart });
         paint(".admin-chart-grid-line,.chart-grid-line,.admin-chart-grid,.chart-grid", { "border-color": c.chartGrid });
-        paint(".admin-chart,.chart-container,.chart-card,.preview-chart", { "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border });
+        paint(".admin-chart,.chart-container,.chart-card,.preview-chart", { "background-color": c.card, color: ink(c.card), "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px" });
+        // Catch page-specific component names used across the 39 HTML pages.
+        paint('[class*="card"],[class*="Card"],[class*="panel"],[class*="Panel"],[class*="tile"],[class*="Tile"],[class*="summary"],[class*="Summary"],[class*="widget"],[class*="Widget"],[class*="modal"],[class*="Modal"],article', {
+            "background-color": c.card, color: ink(c.card), "border-color": c.border,
+            "border-style": "solid", "border-width": borderWidth + "px",
+            "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
+        });
+        paint('[class*="secondary"],[class*="Secondary"],[class*="filter"],[class*="Filter"],[class*="toolbar"],[class*="Toolbar"],[class*="summary"],[class*="Summary"]', {
+            "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
+        });
+        paint('button,a[class*="btn"],a[class*="button"],[role="button"]', {
+            "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
+        });
+        paint('button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button)', {
+            "background-color": c.primary, color: ink(c.primary), "border-radius": Math.min(radius, 18) + "px"
+        });
+        paint('button.secondary,button.btn-secondary,button.button-secondary,.secondary-button,.btn-secondary,.button-secondary', {
+            "background-color": c.secondary, color: ink(c.secondary)
+        });
+        paint('body,main,section,article,aside,header,footer,nav,div', { "border-color": c.border });
+
         paint(".admin-stat-icon,.feature-icon,.icon-tile", { "background-color": c.cardAlt, color: c.secondary });
 
         // Apply the same surface treatment to elements inserted after initial page load.
@@ -387,7 +407,7 @@ async function applyMarketDeliveryAppearance() {
             });
             window.__marketDeliveryThemeObserver.observe(document.body, { childList: true, subtree: true });
         }
-        applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink);
+        applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength, ink);
         const hero=document.querySelector(".hero");
         if(hero){const image=config.heroImage||"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=85";const overlay=Math.max(0,Math.min(95,Number(config.heroOverlay??82)))/100;hero.style.backgroundImage="linear-gradient(90deg,rgba(5,5,5,"+overlay+") 0%,rgba(5,5,5,.2) 100%),url('"+image.replace(/['"\\\\]/g,"")+"')";const h=hero.querySelector("h1"),p=hero.querySelector("p"),buttons=hero.querySelectorAll(".hero-actions a");if(h&&config.heroTitle){h.textContent=config.heroTitle;h.style.color=config.heroText||c.text||""}if(p&&config.heroSubtitle)p.textContent=config.heroSubtitle;if(buttons[0]&&config.heroPrimary)buttons[0].textContent=config.heroPrimary;if(buttons[1]&&config.heroSecondary)buttons[1].textContent=config.heroSecondary}
     } catch(error){console.warn("Market Delivery appearance settings could not be loaded.",error)}
