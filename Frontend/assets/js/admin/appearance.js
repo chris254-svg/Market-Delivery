@@ -322,7 +322,8 @@
     const button = $("reset");
     button.disabled = true;
     button.classList.add("is-busy");
-    config = cloneDefaults();
+    const savedThemes = config.themes || [];
+    config = { ...cloneDefaults(), themes: savedThemes };
     fillForm();
     paintPreview();
     animatePreview(button);
