@@ -22,7 +22,7 @@
       return;
     }
     const isSuperAdminRole = (role) =>
-      ["super_admin", "super_admin2"].includes(String(role || "").toLowerCase());
+      String(role || "").toLowerCase() === "super_admin";
     const cachedUser = api.getCurrentUser ? api.getCurrentUser() : null;
     if (cachedUser && cachedUser.role && !isSuperAdminRole(cachedUser.role)) {
       window.location.replace(cachedUser.role === "admin" ? "dashboard.html" : "../../pages/auth/login.html");
