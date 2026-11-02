@@ -382,7 +382,7 @@ async function applyMarketDeliveryAppearance() {
         paint(".admin-chart-grid-line,.chart-grid-line,.admin-chart-grid,.chart-grid", { "border-color": c.chartGrid });
         paint(".admin-chart,.chart-container,.chart-card,.preview-chart", { "background-color": c.card, color: ink(c.card), "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px" });
         // Catch page-specific component names used across the 39 HTML pages.
-        paint('div[class*="card"]:not(.light-card):not(.category-card):not(.product-card.light),section[class*="card"]:not(.light-card):not(.category-card),article[class*="card"],li[class*="card"],aside[class*="card"],[class*="Panel"],[class*="tile"],[class*="Tile"],[class*="summary"],[class*="Summary"],[class*="widget"],[class*="Widget"],[class*="modal"],[class*="Modal"],article', {
+        paint('div[class*="card"]:not(.light-card):not(.category-card):not(.product-card.light):not(.card-secondary):not(.stat-card-secondary),section[class*="card"]:not(.light-card):not(.category-card),article[class*="card"],li[class*="card"],aside[class*="card"],[class*="panel"]:not(.light-panel):not(.secondary-panel):not(.filter-panel),[class*="Panel"]:not(.secondary-panel):not(.filter-panel),[class*="tile"],[class*="Tile"],[class*="widget"],[class*="Widget"],[class*="modal"],[class*="Modal"],[id*="card"],[id*="panel"],[id*="modal"],[id*="tile"],article', {
             "background-color": c.card, color: ink(c.card), "border-color": c.border,
             "border-style": "solid", "border-width": borderWidth + "px",
             "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
