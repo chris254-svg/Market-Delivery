@@ -327,7 +327,7 @@ async function applyMarketDeliveryAppearance() {
             "background-color": c.navigation, color: ink(c.navigation), "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
         });
         paint(".admin-sidebar-header,.admin-sidebar-bottom,.admin-profile,.admin-topbar-profile,.customer-footer,.footer,.restaurant-footer,.rider-footer", {
-            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
+            "background-color": c.navigation, color: "inherit", "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
         });
 
         // Cards, panels, product tiles, forms, modals and summary surfaces.
@@ -344,13 +344,13 @@ async function applyMarketDeliveryAppearance() {
 
         // Typography and accent links, including labels that older CSS hard-coded.
         paint("h1,h2,h3,h4,h5,h6,.admin-topbar h1,.admin-page-heading h1,.admin-card-header h3,.section-heading h2,.customer-section h2,.auth-header h1,.form-group label,.admin-table td,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", {
-            color: c.textReadable || c.text
+            color: "inherit"
         });
         paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.section-heading p,.feature-card p,.auth-header p,.auth-footer p,.form-help,.helper-text,.field-hint,.empty-state", {
-            color: c.mutedReadable || c.muted
+            color: "inherit"
         });
         paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: ink(c.secondary) });
-        paint(".logo span,.admin-logo span,.admin-page-header h2,.section-label,.hero-label", { color: c.primary });
+        paint(".logo span,.admin-logo span,.admin-page-header h2,.section-label,.hero-label", { color: ink(c.background) });
 
         // Primary, secondary, destructive and promotional controls.
         paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,.button-primary,button.primary,button:not(.secondary):not(.danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
@@ -376,7 +376,7 @@ async function applyMarketDeliveryAppearance() {
         });
         root.style.setProperty("--md-placeholder-color", c.mutedReadable || c.muted);
         paint("table,.admin-table,.table", { color: ink(c.card), "border-color": c.border });
-        paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: c.primary, "border-color": c.border });
+        paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: ink(c.cardAlt), "border-color": c.border });
         paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
         paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar,.preview-bars i", { "background-color": c.chart });
         paint(".admin-chart-grid-line,.chart-grid-line,.admin-chart-grid,.chart-grid", { "border-color": c.chartGrid });
