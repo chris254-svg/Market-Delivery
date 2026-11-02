@@ -283,7 +283,7 @@ app.use("/api/riders", riderRoutes);
 app.get("/api/public/settings", async (req, res) => {
     try {
         const result = await pool.query(
-            "SELECT settings #>> '{general,platformName}' AS \"platformName\" FROM admin_settings WHERE id = 1 LIMIT 1",
+            "SELECT settings #>> '{general,platformName}' AS \"platformName\", settings->'appearance' AS appearance FROM admin_settings WHERE id = 1 LIMIT 1",
         );
         const platformName = String(result.rows[0]?.platformName || "").trim();
         res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
