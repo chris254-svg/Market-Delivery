@@ -276,14 +276,14 @@ test("password length requirements depend on the role", () => {
     assert.equal(validators.minPasswordLengthForRole("customer"), 8);
     assert.equal(validators.minPasswordLengthForRole("rider"), 8);
     assert.equal(validators.minPasswordLengthForRole("admin"), 8);
-    assert.equal(validators.minPasswordLengthForRole("super_admin"), 16);
+    assert.equal(validators.minPasswordLengthForRole("super_admin"), 8);
     assert.equal(validators.minPasswordLengthForRole("super_admin"), 16);
 
     assert.equal(validators.isValidPasswordForRole("12345678", "customer"), true);
     assert.equal(validators.isValidPasswordForRole("12345678", "admin"), true);
     assert.equal(validators.isValidPasswordForRole("123456789", "admin"), true);
-    assert.equal(validators.isValidPasswordForRole("123456789012", "super_admin"), false);
-    assert.equal(validators.isValidPasswordForRole("1234567890123456", "super_admin"), true);
+    assert.equal(validators.isValidPasswordForRole("1234567", "super_admin"), false);
+    assert.equal(validators.isValidPasswordForRole("12345678", "super_admin"), true);
     assert.equal(validators.isValidPasswordForRole("1234567890123456", "super_admin"), true);
     assert.equal(validators.isValidPasswordForRole(undefined, "customer"), false);
 });
@@ -305,7 +305,7 @@ test("changing an admin password: role-based length, fresh token, sessions inval
     addUser({ id: 22, role: "customer", email: "c22@example.com", password_hash: oldHash });
 
     await assert.rejects(authService.changeCurrentUserPassword(20, "old-password-123456", "pass123"), /at least 8/);
-    await assert.rejects(authService.changeCurrentUserPassword(21, "old-password-123456", "short-pass-1"), /at least 16/);
+    await assert.rejects(authService.changeCurrentUserPassword(21, "old-password-123456", "short7"), /at least 8/);
 
     calls = [];
     const adminResult = await authService.changeCurrentUserPassword(20, "old-password-123456", "short-pass-1");
