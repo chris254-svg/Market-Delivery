@@ -294,6 +294,11 @@ async function applyMarketDeliveryAppearance() {
         const ink = (color) => luminance(color) > 0.42 ? "#102A23" : "#F4F2E9";
         c.textReadable = bestReadableText(c.text, [c.background, c.navigation, c.card, c.cardAlt]);
         c.mutedReadable = bestReadableText(c.muted, [c.background, c.navigation, c.card, c.cardAlt]);
+        root.style.setProperty("--white", c.textReadable);
+        root.style.setProperty("--text", c.textReadable);
+        root.style.setProperty("--text-light", c.mutedReadable);
+        root.style.setProperty("--md-border", c.border);
+        root.style.setProperty("--md-border-width", borderWidth + "px");
         const paint = (selector, styles) => {
             document.querySelectorAll(selector).forEach((element) => {
                 Object.entries(styles).forEach(([property, value]) => {
