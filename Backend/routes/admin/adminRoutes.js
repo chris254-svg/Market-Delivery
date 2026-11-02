@@ -14,7 +14,7 @@ const router = express.Router();
 // router can create duplicate audit records.
 router.use(
     authenticateToken,
-    authorizeRoles("admin", "super_admin2")
+    authorizeRoles("admin", "super_admin")
 );
 
 // Static paths must come before /:id
