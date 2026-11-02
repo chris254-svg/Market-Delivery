@@ -218,12 +218,30 @@ function applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink) {
     });
     paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar", { "background-color": c.chart });
     paint(".admin-chart-grid-line,.chart-grid-line", { "border-color": c.chartGrid });
-    paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,[type=submit]", {
+    paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,button:not(.secondary):not(.danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
         "background-color": c.primary, color: ink(c.primary), "border-color": c.primary
     });
-    paint(".secondary-button,.btn-secondary,.button-secondary", {
+    paint(".secondary-button,.btn-secondary,.button-secondary,button.secondary", {
         "background-color": c.secondary, color: ink(c.secondary), "border-color": c.secondary
     });
+    paint(".admin-status-total,.admin-table th,.table thead th,.secondary-panel,.card-secondary,.stat-card-secondary,.order-summary,.filter-panel,.customer-promotion,.promotion-card", {
+        "background-color": c.cardAlt, color: c.text, "border-color": c.border
+    });
+    paint(".light-card,.light-panel,.product-card.light,.category-card", {
+        "background-color": c.lightCard, color: ink(c.lightCard), "border-color": c.border
+    });
+    paint("h1,h2,h3,h4,h5,h6,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", { color: c.text });
+    paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.form-help,.helper-text,.field-hint,.empty-state", { color: c.muted });
+    paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: c.secondary });
+    paint(".promotion,.discount,.promotion-badge,.badge-warning,.status-warning", {
+        "background-color": c.promotion, color: ink(c.promotion), "border-color": c.promotion
+    });
+    paint(".badge-success,.status-available,.in-stock,.status-completed,.success-message", {
+        "background-color": c.success, color: ink(c.success), "border-color": c.success
+    });
+    paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: c.primary, "border-color": c.border });
+    paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
+    paint(".admin-chart,.chart-container,.chart-card", { "background-color": c.card, color: c.text, "border-color": c.border });
 }
 
 /* MARKET DELIVERY APPEARANCE SETTINGS — loaded from the shared database. */
@@ -305,7 +323,7 @@ async function applyMarketDeliveryAppearance() {
         paint(".logo span,.admin-logo span,.admin-page-header h2,.section-label,.hero-label", { color: c.primary });
 
         // Primary, secondary, destructive and promotional controls.
-        paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,.button-primary,button.primary,[type=submit]", {
+        paint(".primary-button,.auth-button,.nav-button,.promotion-button,.food-search button,.admin-btn-primary,.btn-primary,.button-primary,button.primary,button:not(.secondary):not(.danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button),[type=submit]", {
             "background-color": c.primary, color: ink(c.primary), "border-color": c.primary, "border-radius": Math.min(radius, 18) + "px"
         });
         paint(".secondary-button,.btn-secondary,.button-secondary,button.secondary,.admin-btn-secondary", {
