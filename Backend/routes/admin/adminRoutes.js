@@ -23,6 +23,8 @@ router.patch("/me/avatar", adminController.updateMyAvatar);
 router.get("/dashboard", adminController.getDashboard);
 router.get("/reports", adminController.getReports);
 router.get("/settings", adminController.getSettings);
+router.get("/appearance", adminController.getAppearance);
+router.put("/appearance", requireSuperAdmin, adminController.updateAppearance);
 // Regular admins can save the settings exposed in the admin settings page.
 // Super-admin-only account management, audit history, and permanent deletion
 // remain protected by requireSuperAdmin below.
