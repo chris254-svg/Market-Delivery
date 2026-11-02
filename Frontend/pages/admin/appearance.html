@@ -15,7 +15,7 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 .studio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.studio-field{display:flex;flex-direction:column;gap:7px;min-width:0}.studio-field label{font-size:12px;color:var(--studio-muted);font-weight:650}
 .studio-field input,.studio-field textarea,.studio-field select{width:100%;box-sizing:border-box;border:1px solid var(--studio-border);border-radius:9px;background:#242824;color:#F4F2E9;padding:11px;font:inherit;min-width:0}
 .studio-field input[type=color]{height:46px;padding:4px;cursor:pointer}.studio-field textarea{min-height:110px;resize:vertical}.studio-field.full{grid-column:1/-1}
-.studio-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.studio-btn{border:0;border-radius:9px;padding:11px 16px;background:#D9F56B;color:#050505;font-weight:750;cursor:pointer}.studio-btn.secondary{background:#465B32;color:#F4F2E9}.studio-btn.danger{background:#242824;color:#F4F2E9;border:1px solid var(--studio-border)}
+.studio-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.studio>.studio-actions{grid-column:1/-1;margin-top:0}.studio>.studio-notice{grid-column:1/-1;margin-top:-10px}.studio-btn{border:0;border-radius:9px;padding:11px 16px;background:#D9F56B;color:#050505;font-weight:750;cursor:pointer}.studio-btn.secondary{background:#465B32;color:#F4F2E9}.studio-btn.danger{background:#242824;color:#F4F2E9;border:1px solid var(--studio-border)}
 .studio-swatches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.studio-swatch{display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.16);padding:9px;border-radius:9px;min-width:0}.studio-swatch input{width:34px;height:34px;padding:2px;border:0;background:transparent}.studio-swatch span{font-size:11px;overflow:hidden;text-overflow:ellipsis}
 .preview-card{position:sticky;top:18px;background:var(--studio-panel);border:1px solid var(--studio-border);border-radius:16px;overflow:hidden}
 .preview-head{padding:17px 18px;border-bottom:1px solid var(--studio-border);font-weight:700}.preview-body{padding:18px}.preview-hero{min-height:230px;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:center;background-size:cover;background-position:center;background-image:linear-gradient(90deg,rgba(5,5,5,.9),rgba(5,5,5,.2)),url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80')}
@@ -44,7 +44,7 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 .preview-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--studio-muted);margin:14px 0 6px}
 
 @media(max-width:1050px){.studio{grid-template-columns:1fr}.preview-card{position:static}}
-@media(max-width:650px){.studio{padding:16px}.studio-grid{grid-template-columns:1fr}.studio-swatches{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-section{padding:16px}}
+@media(max-width:650px){.studio{padding:16px}.studio>.studio-actions{display:grid;grid-template-columns:1fr}.studio>.studio-actions .studio-btn{width:100%;min-height:46px}.studio-grid{grid-template-columns:1fr}.studio-swatches{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-section{padding:16px}}
 </style>
 </head>
 <body>
@@ -108,7 +108,7 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 <header class="admin-topbar"><div class="admin-topbar-left"><button type="button" class="admin-mobile-menu-button" id="adminMenuButton" aria-label="Open menu">☰</button><div class="admin-page-heading"><h1>Appearance Studio</h1><p>Customize the Market Delivery platform appearance.</p></div></div><div class="admin-topbar-right"><div class="admin-topbar-profile"><div class="admin-topbar-avatar">A</div><div class="admin-topbar-profile-info"><strong>Loading account…</strong><span>Loading role…</span></div></div></div></header>
 <main class="studio">
 <div class="studio-main">
-<header class="studio-heading"><h1>Appearance Studio</h1><p>Control the Market Delivery visual identity, dashboard surfaces, charts and homepage hero. Changes preview here. Only the super admin can publish them platform-wide.</p></header>
+<header class="studio-heading"><h1>Appearance Studio</h1><p>Control the Market Delivery visual identity, dashboard surfaces, charts and homepage hero. Changes preview here. Preview your changes, save named themes, and publish the active appearance for the whole platform.</p></header>
 <section class="studio-section">
 <h2>Theme colours</h2><p class="studio-help">Set the colours used across page backgrounds, navigation, cards, inputs, text, buttons, borders and charts.</p>
 <div class="studio-swatches" id="swatches"></div>
@@ -116,6 +116,15 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 <div class="studio-field"><label for="radius">Card corner radius</label><input id="radius" type="range" min="0" max="28" value="16"></div>
 <div class="studio-field"><label for="shadow">Card shadow strength</label><input id="shadow" type="range" min="0" max="60" value="24"></div>
 </div>
+</section>
+<section class="studio-section">
+<h2>Theme Library</h2><p class="studio-help">Choose a ready-made look or save your current settings as a named theme. Saved themes are stored with Market Delivery appearance settings and can be reused later.</p>
+<div class="studio-grid">
+<div class="studio-field full"><label for="themeSelect">Available themes</label><select id="themeSelect"><option value="preset:market-fresh">Market Fresh · built in</option><option value="preset:forest">Forest Market · built in</option><option value="preset:midnight">Midnight Lime · built in</option><option value="preset:light">Fresh Light · built in</option></select></div>
+<div class="studio-field full"><label for="themeName">Name your current theme</label><input id="themeName" maxlength="40" placeholder="e.g. Weekend Promotions"></div>
+</div>
+<div class="studio-actions"><button class="studio-btn secondary" id="applyTheme" type="button">Apply selected theme</button><button class="studio-btn" id="saveTheme" type="button">Save named theme</button><button class="studio-btn danger" id="deleteTheme" type="button" disabled>Delete saved theme</button></div>
+<p class="studio-notice" id="themeNotice" role="status">Choose a built-in theme or save your current design with a name.</p>
 </section>
 <section class="studio-section">
 <h2>Chart appearance and data</h2><p class="studio-help">Edit the preview chart's bar colour, grid colour, labels and values. This controls the visual chart template; it does not alter real order, revenue or payment records.</p>
@@ -138,8 +147,7 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 <div class="studio-field"><label for="heroText">Hero text colour</label><input id="heroText" type="color" value="#F4F2E9"></div>
 </div>
 </section>
-<div class="studio-actions"><button class="studio-btn" id="save">Save appearance</button><button class="studio-btn secondary" id="apply">Apply preview</button><button class="studio-btn danger" id="reset">Reset brand defaults</button></div>
-<p class="studio-notice" id="notice" role="status">Loading shared Market Delivery appearance settings…</p>
+
 </div>
 <aside class="studio-preview preview-card">
 <div class="preview-head" id="previewNav">Market Delivery <span style="float:right;font-size:11px;opacity:.75">HOME　 SHOP　 ACCOUNT</span></div><div class="preview-body">
@@ -149,6 +157,8 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 <div class="preview-label">Buttons, fields and panels</div><div class="preview-components" id="previewComponents"><div class="preview-component">Sample form field<input value="Search groceries" readonly></div><div class="preview-component">Primary and secondary actions<br><button type="button">Primary action</button><button type="button">Secondary action</button></div></div>
 <div class="preview-chart"><strong>Chart preview</strong><div class="preview-bars" id="bars"></div><small id="chartCaption">Illustrative preview only — real order and revenue charts always use live database records.</small></div>
 </div></aside>
+<div class="studio-actions"><button class="studio-btn" id="save">Save appearance</button><button class="studio-btn secondary" id="apply">Apply preview</button><button class="studio-btn danger" id="reset">Reset brand defaults</button></div>
+<p class="studio-notice" id="notice" role="status">Loading shared Market Delivery appearance settings…</p>
 </main>
 </div>
 <script src="../../assets/js/api-config.js"></script>
