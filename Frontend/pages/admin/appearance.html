@@ -22,7 +22,27 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 .preview-hero h3{font-size:26px;line-height:1.1;margin:0 0 10px}.preview-hero p{font-size:12px;color:#eee;margin:0 0 16px}.preview-hero button{align-self:flex-start;background:var(--studio-accent);color:#050505;border:0;padding:10px 14px;border-radius:8px;font-weight:700}
 .preview-products{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.preview-product{background:var(--studio-card);border:1px solid var(--studio-border);border-radius:10px;padding:13px;font-size:12px}.preview-product strong{display:block;margin-top:8px;color:var(--studio-accent)}
 .preview-chart{margin-top:12px;background:var(--studio-card);border-radius:10px;padding:14px}.preview-bars{height:115px;display:flex;align-items:end;gap:9px;border-bottom:1px solid var(--studio-border)}.preview-bars i{flex:1;background:var(--studio-chart,#D9F56B);border-radius:5px 5px 0 0}.preview-chart small{display:block;color:var(--studio-muted);margin-top:8px}
-.studio-notice{font-size:12px;color:var(--studio-muted);line-height:1.5;margin-top:12px}
+.studio-notice{font-size:12px;color:var(--studio-muted);line-height:1.5;margin-top:12px;transition:all .25s ease}
+.studio-btn{position:relative;overflow:hidden;transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
+.studio-btn:active{transform:scale(.96)}
+.studio-btn:disabled{opacity:.55;cursor:not-allowed}
+.preview-card,.preview-hero,.preview-product,.preview-chart,.studio-swatch{transition:background-color .35s ease,color .35s ease,border-color .35s ease,border-radius .35s ease,box-shadow .35s ease,transform .35s ease}
+.preview-card.is-updating{animation:studioPreviewIn .48s ease}
+.studio-btn.is-busy{animation:studioButtonPulse .85s ease infinite}
+.studio-btn.is-done{animation:studioButtonDone .45s ease}
+.preview-hero.is-updating{animation:studioHeroIn .55s ease}
+@keyframes studioPreviewIn{0%{opacity:.55;transform:translateY(7px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes studioHeroIn{0%{filter:brightness(.75);transform:scale(.985)}100%{filter:brightness(1);transform:scale(1)}}
+@keyframes studioButtonPulse{50%{box-shadow:0 0 0 6px rgba(217,245,107,.2)}}
+@keyframes studioButtonDone{50%{transform:scale(1.05)}}
+.preview-palette{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:12px}
+.preview-palette span{height:24px;border-radius:6px;border:1px solid rgba(255,255,255,.12)}
+.preview-components{display:grid;gap:9px;margin-top:12px}
+.preview-component{padding:12px;border-radius:var(--preview-radius,12px);background:var(--preview-card,#16382D);border:1px solid var(--preview-border,rgba(244,242,233,.14));box-shadow:var(--preview-shadow,none);font-size:12px}
+.preview-component input{width:100%;margin-top:8px;padding:9px;border-radius:7px;border:1px solid var(--preview-border);background:var(--preview-input);color:var(--preview-text)}
+.preview-component button{border:0;border-radius:8px;padding:8px 12px;margin:8px 6px 0 0;background:var(--preview-primary);color:var(--preview-bg);font-weight:700}
+.preview-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--studio-muted);margin:14px 0 6px}
+
 @media(max-width:1050px){.studio{grid-template-columns:1fr}.preview-card{position:static}}
 @media(max-width:650px){.studio{padding:16px}.studio-grid{grid-template-columns:1fr}.studio-swatches{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-section{padding:16px}}
 </style>
@@ -122,9 +142,11 @@ body{background:var(--studio-bg);color:var(--studio-text)}
 <p class="studio-notice" id="notice" role="status">Loading shared Market Delivery appearance settings…</p>
 </div>
 <aside class="studio-preview">
-<div class="preview-head">Live preview</div><div class="preview-body">
-<div class="preview-hero" id="heroPreview"><h3 id="heroPreviewTitle">Freshness, delivered to your doorstep.</h3><p id="heroPreviewSubtitle">Shop fresh groceries and everyday essentials.</p><button id="heroPreviewButton">Shop Now</button></div>
-<div class="preview-products"><div class="preview-product">Fresh produce<strong>KSh 250</strong></div><div class="preview-product">Available now<strong>In stock</strong></div></div>
+<div class="preview-head" id="previewNav">Market Delivery <span style="float:right;font-size:11px;opacity:.75">HOME　 SHOP　 ACCOUNT</span></div><div class="preview-body">
+<div class="preview-label">Theme palette</div><div class="preview-palette" id="previewPalette"></div>
+<div class="preview-hero" id="heroPreview"><h3 id="heroPreviewTitle">Freshness, delivered to your doorstep.</h3><p id="heroPreviewSubtitle">Shop fresh groceries and everyday essentials.</p><button id="heroPreviewButton" type="button">Shop Now</button></div>
+<div class="preview-label">Store cards</div><div class="preview-products"><div class="preview-product" id="sampleProduct">Fresh produce<strong>KSh 250</strong></div><div class="preview-product" id="sampleStatus">Available now<strong>In stock</strong></div></div>
+<div class="preview-label">Buttons, fields and panels</div><div class="preview-components" id="previewComponents"><div class="preview-component">Sample form field<input value="Search groceries" readonly></div><div class="preview-component">Primary and secondary actions<br><button type="button">Primary action</button><button type="button">Secondary action</button></div></div>
 <div class="preview-chart"><strong>Chart preview</strong><div class="preview-bars" id="bars"></div><small id="chartCaption">Illustrative preview only — real order and revenue charts always use live database records.</small></div>
 </div></aside>
 </main>
