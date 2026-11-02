@@ -120,6 +120,8 @@ function validateAppearance(input) {
                 !theme.colors || typeof theme.colors !== "object" || Array.isArray(theme.colors)) {
                 throw apiError("Each saved theme needs a name and colour palette");
             }
+            const themeBorderWidth = Number(theme.borderWidth ?? 1.5);
+            if (!Number.isFinite(themeBorderWidth) || themeBorderWidth < 0 || themeBorderWidth > 4) throw apiError("Invalid border thickness in saved theme");
             for (const [key, value] of Object.entries(theme.colors)) {
                 if (!APPEARANCE_COLOR_KEYS.has(key) || typeof value !== "string" || !/^#[0-9a-f]{6}$/i.test(value)) {
                     throw apiError("Invalid colour in saved theme: " + key);
@@ -136,8 +138,8 @@ function validateAppearance(input) {
     }
     if (input.chartValues !== undefined && (typeof input.chartValues !== "string" || input.chartValues.length > 300)) throw apiError("Invalid chart preview values");
     if (input.chartLabels !== undefined && (typeof input.chartLabels !== "string" || input.chartLabels.length > 300)) throw apiError("Invalid chart preview labels");
-    const radius = Number(input.radius ?? 16), shadow = Number(input.shadow ?? 24), overlay = Number(input.heroOverlay ?? 82);
-    if (![radius, shadow, overlay].every(Number.isFinite) || radius < 0 || radius > 40 || shadow < 0 || shadow > 80 || overlay < 0 || overlay > 95) throw apiError("Appearance numeric values are outside allowed limits");
+    const radius = Number(input.radius ?? 16), borderWidth = Number(input.borderWidth ?? 1.5), shadow = Number(input.shadow ?? 24), overlay = Number(input.heroOverlay ?? 82);
+    if (![radius, borderWidth, shadow, overlay].every(Number.isFinite) || radius < 0 || radius > 40 || borderWidth < 0 || borderWidth > 4 || shadow < 0 || shadow > 80 || overlay < 0 || overlay > 95) throw apiError("Appearance numeric values are outside allowed limits");
     return input;
 }
 async function getAppearanceSettings() {
