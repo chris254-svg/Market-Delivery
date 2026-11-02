@@ -456,18 +456,18 @@ async function ensureSuperAdminRoleSchema() {
     // authorization, audit checks, and the single-super-admin index all use
     // the canonical role. Refuse to merge two privileged accounts.
     const privilegedCount = await pool.query(
-        "SELECT COUNT(*)::int AS count FROM public.users WHERE role IN ('super_admin', 'super_admin1')",
+        "SELECT COUNT(*)::int AS count FROM public.users WHERE role IN ('super_admin', 'super_admin1', 'super_admin2')",
     );
     if (privilegedCount.rows[0].count > 1) {
         throw new Error("Multiple super-admin accounts were found across canonical and legacy roles. Resolve duplicates before startup.");
     }
     await pool.query(
-        "UPDATE public.users SET role = 'super_admin' WHERE role = 'super_admin1'",
+        "UPDATE public.users SET role = 'super_admin' WHERE role IN ('super_admin1', 'super_admin2')",
     );
 
     // Only canonical roles plus unrelated legacy values already in the
     // database are retained in the role constraint.
-    const canonicalRoles = ["customer", "restaurant", "rider", "admin", "super_admin", "super_admin2"];
+    const canonicalRoles = ["customer", "restaurant", "rider", "admin", "super_admin"];
     const existingRoles = await pool.query(
         "SELECT DISTINCT role FROM public.users WHERE role IS NOT NULL",
     );
@@ -488,20 +488,10 @@ async function ensureSuperAdminRoleSchema() {
     if (superAdminCount.rows[0].count > 1) {
         throw new Error("Only one super_admin account is supported. Remove duplicate super-admin rows before startup.");
     }
-    const superAdmin2Count = await pool.query(
-        "SELECT COUNT(*)::int AS count FROM public.users WHERE role = 'super_admin2'",
-    );
-    if (superAdmin2Count.rows[0].count > 1) {
-        throw new Error("Only one super_admin2 account is supported for Market Delivery. Resolve duplicate accounts before startup.");
-    }
-
     await pool.query(`
         CREATE UNIQUE INDEX IF NOT EXISTS idx_users_single_super_admin
             ON public.users (role)
             WHERE role = 'super_admin';
-        CREATE UNIQUE INDEX IF NOT EXISTS idx_users_single_super_admin2
-            ON public.users (role)
-            WHERE role = 'super_admin2';
 
         ALTER TABLE public.users DROP CONSTRAINT IF EXISTS users_role_check;
         ALTER TABLE public.users
@@ -511,8 +501,8 @@ async function ensureSuperAdminRoleSchema() {
 }
 
 async function seedSuperAdmin() {
-    // This repository is Market Delivery. Its privileged account has a
-    // separate role and environment namespace from Food Delivery's super_admin.
+    // This repository is Market Delivery. Its separate database keeps its
+    // canonical super_admin account independent from other projects.
     const email = normalizeEmail(process.env.MARKET_SUPER_ADMIN_EMAIL);
     const password = process.env.MARKET_SUPER_ADMIN_PASSWORD;
     if (!email && !password) return;
@@ -522,10 +512,10 @@ async function seedSuperAdmin() {
     const forcePasswordReset = String(process.env.MARKET_SUPER_ADMIN_FORCE_PASSWORD_RESET || "").toLowerCase() === "true";
 
     const currentMarketSuperAdmin = await pool.query(
-        "SELECT id, email FROM public.users WHERE role = 'super_admin2' LIMIT 1",
+        "SELECT id, email FROM public.users WHERE role = 'super_admin' LIMIT 1",
     );
     if (currentMarketSuperAdmin.rows.length && normalizeEmail(currentMarketSuperAdmin.rows[0].email) !== email) {
-        log("a Market Delivery super_admin2 account already exists with a different email than MARKET_SUPER_ADMIN_EMAIL; leaving it unchanged.");
+        log("a Market Delivery super_admin account already exists with a different email than MARKET_SUPER_ADMIN_EMAIL; leaving it unchanged.");
         return;
     }
 
@@ -543,12 +533,12 @@ async function seedSuperAdmin() {
                 `UPDATE public.users
                  SET password_hash = $1, must_change_password = TRUE,
                      password_changed_at = NULL, updated_at = CURRENT_TIMESTAMP
-                 WHERE id = $2 AND role = 'super_admin2'`,
+                 WHERE id = $2 AND role = 'super_admin'`,
                 [hash, existing.rows[0].id],
             );
             log("Market Delivery super admin password rotated and marked for mandatory change. Remove MARKET_SUPER_ADMIN_FORCE_PASSWORD_RESET now.");
         } else {
-            log("Market Delivery super_admin2 already exists; leaving its credentials unchanged.");
+            log("Market Delivery super_admin already exists; leaving its credentials unchanged.");
         }
         return;
     }
@@ -557,7 +547,7 @@ async function seedSuperAdmin() {
     const hash = await bcrypt.hash(password, 12);
     const result = await pool.query(
         `INSERT INTO public.users (first_name,last_name,email,phone,password_hash,role,is_active,must_change_password)
-         VALUES ($1,$2,$3,$4,$5,'super_admin2',TRUE,TRUE) RETURNING id`,
+         VALUES ($1,$2,$3,$4,$5,'super_admin',TRUE,TRUE) RETURNING id`,
         [
             String(process.env.MARKET_SUPER_ADMIN_FIRST_NAME || "Market").trim().slice(0, 100),
             String(process.env.MARKET_SUPER_ADMIN_LAST_NAME || "Super Admin 2").trim().slice(0, 100),
@@ -566,7 +556,7 @@ async function seedSuperAdmin() {
             hash,
         ],
     );
-    log(`Market Delivery super_admin2 account created (user ID ${result.rows[0].id}). Remove MARKET_SUPER_ADMIN_PASSWORD after successful creation.`);
+    log(`Market Delivery super_admin account created (user ID ${result.rows[0].id}). Remove MARKET_SUPER_ADMIN_PASSWORD after successful creation.`);
 }
 
 async function initializeDatabase() {
