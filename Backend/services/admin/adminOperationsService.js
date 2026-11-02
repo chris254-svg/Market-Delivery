@@ -112,6 +112,21 @@ function validateAppearance(input) {
     for (const key of Object.keys(colors)) {
         if (!APPEARANCE_COLOR_KEYS.has(key) || typeof colors[key] !== "string" || !/^#[0-9a-f]{6}$/i.test(colors[key])) throw apiError("Invalid appearance color: " + key);
     }
+    if (input.themes !== undefined) {
+        if (!Array.isArray(input.themes) || input.themes.length > 12) throw apiError("You can save up to 12 named themes");
+        for (const theme of input.themes) {
+            if (!theme || typeof theme !== "object" || Array.isArray(theme) ||
+                typeof theme.name !== "string" || !theme.name.trim() || theme.name.trim().length > 40 ||
+                !theme.colors || typeof theme.colors !== "object" || Array.isArray(theme.colors)) {
+                throw apiError("Each saved theme needs a name and colour palette");
+            }
+            for (const [key, value] of Object.entries(theme.colors)) {
+                if (!APPEARANCE_COLOR_KEYS.has(key) || typeof value !== "string" || !/^#[0-9a-f]{6}$/i.test(value)) {
+                    throw apiError("Invalid colour in saved theme: " + key);
+                }
+            }
+        }
+    }
     for (const key of ["heroTitle","heroSubtitle","heroPrimary","heroSecondary"]) {
         if (input[key] !== undefined && (typeof input[key] !== "string" || input[key].length > (key === "heroSubtitle" ? 1000 : 160))) throw apiError("Invalid " + key);
     }
