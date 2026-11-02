@@ -199,10 +199,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* MARKET DELIVERY APPEARANCE SETTINGS */
-function applyMarketDeliveryAppearance() {
+/* MARKET DELIVERY APPEARANCE SETTINGS — loaded from the shared database. */
+async function applyMarketDeliveryAppearance() {
     try {
-        const config = JSON.parse(localStorage.getItem("marketDeliveryAppearanceV1") || "null");
+        const base = window.FOOD_DELIVERY_API_BASE || "https://market-delivery.onrender.com/api";
+        const response = await fetch(base.replace(/\\/+$/, "") + "/public/settings", { headers: { Accept: "application/json" }, cache: "no-store" });
+        if (!response.ok) return;
+        const result = await response.json();
+        const config = result?.data?.appearance;
         if (!config) return;
         const c = config.colors || {}, root = document.documentElement;
         const vars = {"--background":c.background,"--surface":c.navigation,"--white":c.text,"--text":c.text,"--text-light":c.muted,"--primary":c.primary,"--primary-hover":c.primary,"--border":c.border,"--success":c.success,"--warning":c.promotion,"--md-navigation":c.navigation,"--md-card":c.card,"--md-card-alt":c.cardAlt,"--md-input":c.input,"--md-chart":c.chart,"--md-chart-grid":c.chartGrid,"--radius":Number(config.radius??16)+"px","--shadow":"0 18px 50px rgba(0,0,0,"+(Number(config.shadow??24)/100)+")"};
@@ -212,10 +216,8 @@ function applyMarketDeliveryAppearance() {
         document.querySelectorAll(".admin-bar,.chart-bar,.chart-fill").forEach(el=>{if(c.chart)el.style.setProperty("background-color",c.chart,"important")});
         document.querySelectorAll(".admin-chart-grid-line,.chart-grid-line").forEach(el=>{if(c.chartGrid)el.style.setProperty("border-color",c.chartGrid,"important")});
         const hero=document.querySelector(".hero");
-        if(hero){const image=config.heroImage||"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=85";const overlay=Math.max(0,Math.min(95,Number(config.heroOverlay??82)))/100;hero.style.backgroundImage="linear-gradient(90deg,rgba(5,5,5,"+overlay+") 0%,rgba(5,5,5,.2) 100%),url('"+image.replace(/['"\\]/g,"")+"')";const h=hero.querySelector("h1"),p=hero.querySelector("p"),buttons=hero.querySelectorAll(".hero-actions a");if(h&&config.heroTitle){h.textContent=config.heroTitle;h.style.color=config.heroText||c.text||""}if(p&&config.heroSubtitle)p.textContent=config.heroSubtitle;if(buttons[0]&&config.heroPrimary)buttons[0].textContent=config.heroPrimary;if(buttons[1]&&config.heroSecondary)buttons[1].textContent=config.heroSecondary}
-    } catch(error){console.warn("Market Delivery appearance preferences could not be applied.",error)}
+        if(hero){const image=config.heroImage||"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=85";const overlay=Math.max(0,Math.min(95,Number(config.heroOverlay??82)))/100;hero.style.backgroundImage="linear-gradient(90deg,rgba(5,5,5,"+overlay+") 0%,rgba(5,5,5,.2) 100%),url('"+image.replace(/['"\\\\]/g,"")+"')";const h=hero.querySelector("h1"),p=hero.querySelector("p"),buttons=hero.querySelectorAll(".hero-actions a");if(h&&config.heroTitle){h.textContent=config.heroTitle;h.style.color=config.heroText||c.text||""}if(p&&config.heroSubtitle)p.textContent=config.heroSubtitle;if(buttons[0]&&config.heroPrimary)buttons[0].textContent=config.heroPrimary;if(buttons[1]&&config.heroSecondary)buttons[1].textContent=config.heroSecondary}
+    } catch(error){console.warn("Market Delivery appearance settings could not be loaded.",error)}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",applyMarketDeliveryAppearance,{once:true});else applyMarketDeliveryAppearance();
-
-
 })();
