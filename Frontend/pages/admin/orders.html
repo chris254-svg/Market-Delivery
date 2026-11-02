@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Orders | FoodDelivery Admin</title>
+
+	<!-- =========================
+          GLOBAL STYLES
+    ========================== -->
+	<link rel="stylesheet" href="../../assets/css/style.css" />
+
+	<!-- =========================
+          ADMIN ORDERS STYLES
+    ========================== -->
+	<link rel="stylesheet" href="../../assets/css/pages/admin/orders.css" />
+<link rel="stylesheet" href="../../assets/css/pages/admin/dashboard.css" />
+</head>
+
+<body class="admin-orders-page">
+	<!-- =========================================================
+          ADMIN SIDEBAR
+    ========================================================== -->
+	<aside class="admin-sidebar" id="adminSidebar">
+        <div class="admin-sidebar-header">
+            <a href="dashboard.html" class="admin-logo">Food<span>Delivery</span></a>
+            <button type="button" id="adminCloseMenuButton" class="admin-close-menu-button" aria-label="Close menu">×</button>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-avatar">A</div>
+            <div class="admin-profile-info">
+                <strong>Loading account…</strong>
+                <span>Loading role…</span>
+            </div>
+        </div>
+        <nav class="admin-navigation" aria-label="Admin navigation">
+            <a href="dashboard.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▣</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="orders.html" class="admin-nav-link active" aria-current="page">
+                <span class="admin-nav-icon">▤</span>
+                <span>Orders</span>
+            </a>
+            <a href="customers.html" class="admin-nav-link">
+                <span class="admin-nav-icon">♙</span>
+                <span>Customers</span>
+            </a>
+            <a href="restaurants.html" class="admin-nav-link">
+                <span class="admin-nav-icon">⌂</span>
+                <span>Restaurants</span>
+            </a>
+            <a href="riders.html" class="admin-nav-link"><span class="admin-nav-icon">♧</span><span>Riders</span></a>
+            <a href="deleted-accounts.html" class="admin-nav-link"><span class="admin-nav-icon">▣</span><span>Deleted Accounts</span></a>
+            <a href="payments.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▣</span>
+                <span>Payments</span>
+            </a>
+            <a href="reports.html" class="admin-nav-link">
+                <span class="admin-nav-icon">▤</span>
+                <span>Reports</span>
+            </a>
+            <a href="operations.html" class="admin-nav-link">
+                <span class="admin-nav-icon">⚙</span>
+                <span>Operations</span>
+            </a>
+            <a href="settings.html" class="admin-nav-link">
+                <span class="admin-nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="admin-sidebar-bottom">
+            <a href="../../pages/auth/login.html" class="admin-nav-link logout-link">
+                <span class="admin-nav-icon">↪</span><span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+	<!-- =========================================================
+          MAIN CONTENT
+    ========================================================== -->
+	<main class="admin-main">
+		<!-- =====================================================
+              TOPBAR
+        ====================================================== -->
+		<header class="admin-topbar">
+        <div class="admin-topbar-left">
+            <button type="button" class="admin-mobile-menu-button" id="adminMenuButton" aria-label="Open menu">☰</button>
+            <div class="admin-page-heading">
+                <h1>Orders</h1>
+                <p>Manage your food delivery platform.</p>
+            </div>
+        </div>
+        <div class="admin-topbar-right">
+            <button type="button" class="admin-notification-button" aria-label="Notifications">
+                <span>🔔</span>
+                <span class="admin-notification-badge" hidden></span>
+            </button>
+            <div class="admin-topbar-profile">
+                <div class="admin-topbar-avatar">A</div>
+                <div class="admin-topbar-profile-info">
+                    <strong>Loading account…</strong>
+                    <span>Loading role…</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+		<!-- =====================================================
+              PAGE CONTENT
+        ====================================================== -->
+		<section class="admin-content">
+			<!-- =================================================
+                  PAGE HEADER
+            ================================================== -->
+			<div class="admin-content-header">
+				<div>
+					<h2>Order Management</h2>
+					<p>
+						Monitor orders, track their progress and manage customer
+						deliveries.
+					</p>
+				</div>
+
+				<div class="admin-header-actions">
+					<button type="button" class="admin-secondary-button">
+						Export Orders
+					</button>
+
+					<button type="button" class="admin-primary-button">
+						+ New Order
+					</button>
+				</div>
+			</div>
+
+			<!-- =================================================
+                  ORDER STATISTICS
+            ================================================== -->
+			<div class="admin-order-stats">
+				<div class="admin-order-stat-card">
+					<div class="admin-order-stat-icon">▣</div>
+
+					<div class="admin-order-stat-content">
+						<span>Total Orders</span>
+						<strong>—</strong>
+						<small>All time orders</small>
+					</div>
+				</div>
+
+				<div class="admin-order-stat-card">
+					<div class="admin-order-stat-icon">◷</div>
+
+					<div class="admin-order-stat-content">
+						<span>Pending</span>
+						<strong>—</strong>
+						<small>Awaiting processing</small>
+					</div>
+				</div>
+
+				<div class="admin-order-stat-card">
+					<div class="admin-order-stat-icon">✓</div>
+
+					<div class="admin-order-stat-content">
+						<span>Completed</span>
+						<strong>—</strong>
+						<small>Successfully delivered</small>
+					</div>
+				</div>
+
+				<div class="admin-order-stat-card">
+					<div class="admin-order-stat-icon">!</div>
+
+					<div class="admin-order-stat-content">
+						<span>Cancelled</span>
+						<strong>—</strong>
+						<small>Cancelled orders</small>
+					</div>
+				</div>
+			</div>
+
+			<!-- =================================================
+                  ORDERS CARD
+            ================================================== -->
+			<div class="admin-orders-card">
+				<!-- Orders Card Header -->
+				<div class="admin-orders-card-header">
+					<div>
+						<h3>All Orders</h3>
+						<p id="adminOrdersFoundCount">Loading orders…</p>
+					</div>
+
+					<div class="admin-orders-actions">
+						<div class="admin-search-box">
+							<span>⌕</span>
+
+							<input type="search" placeholder="Search orders..." aria-label="Search orders" />
+						</div>
+
+					</div>
+				</div>
+
+				<!-- =================================================
+                      ORDER FILTERS
+                ================================================== -->
+				<div class="admin-order-filters">
+					<button type="button" class="admin-filter-tab active">
+						All Orders
+						<span>—</span>
+					</button>
+
+					<button type="button" class="admin-filter-tab">
+						Pending
+						<span>—</span>
+					</button>
+
+					<button type="button" class="admin-filter-tab">
+						Preparing
+						<span>—</span>
+					</button>
+
+					<button type="button" class="admin-filter-tab">
+						Out for Delivery
+						<span>—</span>
+					</button>
+
+					<button type="button" class="admin-filter-tab">
+						Delivered
+						<span>—</span>
+					</button>
+
+					<button type="button" class="admin-filter-tab">
+						Cancelled
+						<span>—</span>
+					</button>
+				</div>
+
+				<!-- =================================================
+                      ORDERS TABLE
+                ================================================== -->
+				<div class="admin-orders-table-wrapper">
+					<table class="admin-orders-table">
+						<thead>
+							<tr>
+								<th>Order</th>
+								<th>Customer</th>
+								<th>Restaurant</th>
+								<th>Rider</th>
+								<th>Amount</th>
+								<th>Status</th>
+								<th>Date</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+
+						<tbody>
+  <tr class="admin-loading-row"><td colspan="10">Loading records from the server…</td></tr>
+</tbody>
+					</table>
+				</div>
+
+				<!-- =================================================
+                      TABLE FOOTER / PAGINATION
+                ================================================== -->
+				<div class="admin-orders-footer">
+					<p id="adminOrdersShowingCount">Loading order range…</p>
+
+					<div class="admin-pagination" aria-label="Orders pagination"></div>
+				</div>
+			</div>
+
+			<!-- =================================================
+                  QUICK ORDER SUMMARY
+            ================================================== -->
+			<div class="admin-order-summary-grid">
+				<!-- Today's Orders -->
+				<div class="admin-summary-card">
+					<div class="admin-summary-header">
+						<div>
+							<h3>Today's Orders</h3>
+							<p>Order status overview</p>
+						</div>
+					</div>
+
+					<div class="admin-summary-list">
+						<div class="admin-summary-item">
+							<div class="admin-summary-label">
+								<span class="summary-dot pending-dot"></span>
+								Pending
+							</div>
+
+							<strong>—</strong>
+						</div>
+
+						<div class="admin-summary-item">
+							<div class="admin-summary-label">
+								<span class="summary-dot preparing-dot"></span>
+								Preparing
+							</div>
+
+							<strong>—</strong>
+						</div>
+
+						<div class="admin-summary-item">
+							<div class="admin-summary-label">
+								<span class="summary-dot delivery-dot"></span>
+								Out for Delivery
+							</div>
+
+							<strong>—</strong>
+						</div>
+
+						<div class="admin-summary-item">
+							<div class="admin-summary-label">
+								<span class="summary-dot delivered-dot"></span>
+								Delivered
+							</div>
+
+							<strong>—</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- =================================================
+                  MESSAGE AREA
+            ================================================== -->
+			<div class="admin-message" id="adminMessage" role="alert" aria-live="polite"></div>
+		</section>
+	</main>
+
+	<!-- CREATE ORDER MODAL -->
+	<div class="admin-modal" id="createOrderModal" aria-hidden="true">
+		<div class="admin-modal-overlay"></div>
+
+		<section class="admin-modal-content" role="dialog" aria-modal="true" aria-labelledby="createOrderTitle">
+			<div class="admin-modal-header">
+				<div>
+					<p class="admin-modal-eyebrow">
+						ORDER MANAGEMENT
+					</p>
+
+					<h2 id="createOrderTitle">
+						Create New Order
+					</h2>
+
+					<p>
+						Loading order form...
+					</p>
+				</div>
+
+				<button type="button" class="admin-modal-close" aria-label="Close modal">
+					×
+				</button>
+			</div>
+		</section>
+	</div>
+
+	<!-- =========================================================
+          OPTIONAL MAIN JS
+    ========================================================== -->
+	<script src="../../assets/js/api-config.js"></script>
+	<script src="../../assets/js/main.js"></script>
+	<script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/admin/admin-header.js" defer></script>
+    <script src="../../assets/js/admin/admin-notifications.js" defer></script>
+	<script src="../../assets/js/admin/orders.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,430 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operations | FoodDelivery Admin</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/pages/admin/dashboard.css" />
+  <link rel="stylesheet" href="../../assets/css/pages/admin/operations.css" />
+</head>
+<body>
+  <div id="adminMessage" class="admin-message" role="status" aria-live="polite"></div>
+
+  <aside class="admin-sidebar" id="adminSidebar"><div class="admin-sidebar-header"><a href="dashboard.html" class="admin-logo">Food<span>Delivery</span></a><button type="button" id="adminCloseMenuButton" class="admin-close-menu-button" aria-label="Close menu">×</button></div><div class="admin-profile"><div class="admin-profile-avatar">A</div><div class="admin-profile-info"><strong>Loading account…</strong><span>Loading role…</span></div></div><nav class="admin-navigation" aria-label="Admin navigation">
+            <a href="dashboard.html" class="admin-nav-link"><span class="admin-nav-icon">▣</span><span>Dashboard</span></a>
+            <a href="orders.html" class="admin-nav-link"><span class="admin-nav-icon">▤</span><span>Orders</span></a>
+            <a href="customers.html" class="admin-nav-link"><span class="admin-nav-icon">♙</span><span>Customers</span></a>
+            <a href="restaurants.html" class="admin-nav-link"><span class="admin-nav-icon">⌂</span><span>Restaurants</span></a>
+            <a href="riders.html" class="admin-nav-link"><span class="admin-nav-icon">♧</span><span>Riders</span></a>
+            <a href="deleted-accounts.html" class="admin-nav-link"><span class="admin-nav-icon">▣</span><span>Deleted Accounts</span></a>
+            <a href="payments.html" class="admin-nav-link"><span class="admin-nav-icon">▣</span><span>Payments</span></a>
+            <a href="reports.html" class="admin-nav-link"><span class="admin-nav-icon">▤</span><span>Reports</span></a>
+            <a href="operations.html" class="admin-nav-link active" aria-current="page"><span class="admin-nav-icon">⚙</span><span>Operations</span></a>
+            <a href="settings.html" class="admin-nav-link"><span class="admin-nav-icon">⚙</span><span>Settings</span></a>
+</nav><div class="admin-sidebar-bottom"><a href="../../pages/auth/login.html" class="admin-nav-link logout-link"><span class="admin-nav-icon">↪</span><span>Logout</span></a></div></aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar"><div class="admin-topbar-left"><button type="button" class="admin-mobile-menu-button" id="adminMenuButton" aria-label="Open menu">☰</button><div class="admin-page-heading"><h1>Operations</h1><p>Catalog, administrator access, reviews, and activity history.</p></div></div><div class="admin-topbar-right"><button type="button" class="admin-notification-button" aria-label="Notifications"><span>🔔</span><span class="admin-notification-badge" hidden></span></button><div class="admin-topbar-profile"><div class="admin-topbar-avatar">A</div><div class="admin-topbar-profile-info"><strong>Loading account…</strong><span>Loading role…</span></div></div></div></header>
+
+    <section class="admin-content">
+      <div class="admin-page-header">
+        <div>
+          <h2>Platform operations</h2>
+          <p>Review and maintain platform records.</p>
+        </div>
+      </div>
+
+      <nav class="operations-tabs" aria-label="Operations sections">
+        <button type="button" class="active" data-panel="catalog">Catalog</button>
+        <button type="button" data-panel="platform-fees">Platform fees</button>
+        <button type="button" data-panel="admins">Admin accounts</button>
+        <button type="button" data-panel="reviews">Reviews</button>
+        <button type="button" data-panel="audit">Audit history</button>
+      </nav>
+
+      <div id="operationsMessage" class="operations-message"
+        role="status" aria-live="polite"></div>
+
+      <!-- PLATFORM FEES -->
+      <section class="admin-content-card operations-panel" id="panel-platform-fees" hidden>
+        <div class="admin-card-header">
+          <div>
+            <h3>Platform fees</h3>
+            <p>Configure the platform transaction percentage and the delivery charge per kilometre. Delivery charges are calculated from restaurant-to-customer distance at checkout.</p>
+          </div>
+        </div>
+
+        <form id="platformFeeForm" class="operations-form">
+          <label for="platformTransactionFee">
+            Platform transaction fee (%)
+            <input id="platformTransactionFee" name="transactionFee" type="number" min="0" max="100" step="0.1" required inputmode="decimal" />
+          </label>
+          <label for="deliveryFeePerKm">
+            Delivery charge per kilometre (KSh/km)
+            <input id="deliveryFeePerKm" name="deliveryFeePerKm" type="number" min="0" step="0.01" required inputmode="decimal" />
+          </label>
+          <button id="savePlatformFee" class="admin-primary-button" type="submit">Save platform fees</button>
+        </form>
+        <p id="platformFeeHelp" class="operations-help">
+          Delivery charge = GPS distance × this rate. No fixed base fee is added. Existing orders are not changed.
+        </p>
+      </section>
+
+      <!-- CATALOG -->
+      <section class="admin-content-card operations-panel" id="panel-catalog">
+        <div class="admin-card-header">
+          <div>
+            <h3>Restaurant catalog</h3>
+            <p>Select a restaurant to manage its foods and categories.</p>
+          </div>
+          <button class="admin-secondary-button" id="refreshCatalog" type="button">
+            Refresh
+          </button>
+        </div>
+
+        <!-- Restaurant cards are rendered by operations.js -->
+        <div id="restaurantCards" class="restaurant-cards"
+          aria-label="Restaurants"></div>
+
+        <!-- This workspace appears after selecting a restaurant -->
+        <div id="restaurantCatalogWorkspace" hidden>
+          <div class="restaurant-workspace-header">
+            <button type="button" id="backToRestaurants"
+              class="admin-secondary-button">
+              ← All restaurants
+            </button>
+            <h3 id="selectedRestaurantName">Restaurant catalog</h3>
+            <p id="selectedRestaurantSummary">
+              Manage this restaurant's food items and categories.
+            </p>
+          </div>
+
+          <h3 class="catalog-section-title">Food items</h3>
+
+          <form class="operations-form" id="foodForm">
+            <label hidden>
+              Restaurant
+              <select id="foodRestaurant" required></select>
+            </label>
+
+            <label>
+              Category
+              <select id="foodCategory"></select>
+            </label>
+
+            <label>
+              Food name
+              <input id="foodName" required maxlength="150"
+                placeholder="e.g. Chicken biryani" />
+            </label>
+
+            <label>
+              Price (KSh)
+              <input id="foodPrice" type="number" min="0" step="0.01"
+                required placeholder="e.g. 450" />
+            </label>
+
+            <label>
+              Preparation (min)
+              <input id="foodPrep" type="number" min="1"
+                placeholder="e.g. 25" />
+            </label>
+
+            <label class="food-image-field">
+              Food image <span aria-hidden="true">*</span>
+              <input id="foodImage" type="file"
+                accept="image/jpeg,image/png,image/webp" required
+                aria-describedby="foodImageHelp" />
+              <small id="foodImageHelp">Required. JPEG, PNG, or WebP; maximum 5 MB.</small>
+              <img id="foodImagePreview" class="food-image-preview"
+                alt="Preview of selected food image" hidden />
+            </label>
+
+            <button class="admin-primary-button" type="submit">
+              Add food
+            </button>
+          </form>
+
+          <div class="operations-tools">
+            <label>
+              Search foods
+              <input type="search" id="foodSearch"
+                placeholder="Search this restaurant's foods" />
+            </label>
+          </div>
+
+          <div class="operations-scroll">
+            <table class="operations-table">
+              <thead>
+                <tr>
+                  <th>Food</th>
+                  <th>Restaurant</th>
+                  <th>Price</th>
+                  <th>Availability</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="foodsBody"></tbody>
+            </table>
+          </div>
+
+          <h3 class="catalog-section-title">Categories</h3>
+
+          <form class="operations-form" id="categoryForm">
+            <label hidden>
+              Restaurant
+              <select id="categoryRestaurant" required></select>
+            </label>
+
+            <label>
+              Category name
+              <input id="categoryName" required maxlength="100"
+                placeholder="e.g. Main meals" />
+            </label>
+
+            <button class="admin-primary-button" type="submit">
+              Add category
+            </button>
+          </form>
+
+          <div class="operations-scroll">
+            <table class="operations-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Restaurant</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMIN ACCOUNTS -->
+      <section class="admin-content-card operations-panel"
+        id="panel-admins" hidden>
+        <div class="admin-card-header">
+          <div>
+            <h3>Administrator accounts</h3>
+            <p>Create and manage access for platform administrators.</p>
+          </div>
+        </div>
+
+        <form class="operations-form" id="adminForm">
+          <label>
+            First name
+            <input id="newAdminFirst" required minlength="2" />
+          </label>
+          <label>
+            Last name
+            <input id="newAdminLast" required minlength="2" />
+          </label>
+          <label>
+            Email
+            <input id="newAdminEmail" type="email" required />
+          </label>
+          <label>
+            Phone
+            <input id="newAdminPhone" type="tel" />
+          </label>
+          <label>
+            Temporary password
+            <input id="newAdminPassword" type="password"
+              minlength="8" required autocomplete="new-password" />
+          </label>
+          <button class="admin-primary-button" type="submit">Create admin</button>
+        </form>
+
+        <div class="operations-scroll">
+          <table class="operations-table">
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Phone</th>
+                <th>Status</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminsBody"></tbody>
+          </table>
+        </div>
+        <div class="operations-tools" id="adminsPager" aria-live="polite"></div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section class="admin-content-card operations-panel"
+        id="panel-reviews" hidden>
+        <div class="admin-card-header">
+          <div>
+            <h3>Review moderation</h3>
+            <p>Hide or restore customer reviews without deleting their history.</p>
+          </div>
+        </div>
+
+        <div class="operations-tools">
+          <label>
+            Visibility
+            <select id="reviewVisibility">
+              <option value="all">All reviews</option>
+              <option value="visible">Visible</option>
+              <option value="hidden">Hidden</option>
+            </select>
+          </label>
+          <label>
+            Search
+            <input id="reviewSearch" type="search"
+              placeholder="Review, customer, restaurant" />
+          </label>
+          <button type="button" class="admin-secondary-button"
+            id="refreshReviews">Refresh</button>
+        </div>
+
+        <div class="operations-scroll">
+          <table class="operations-table">
+            <thead>
+              <tr>
+                <th>Customer</th><th>Restaurant</th><th>Rating</th>
+                <th>Comment</th><th>Date</th><th>Visibility</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="reviewsBody"></tbody>
+          </table>
+        </div>
+        <div class="operations-tools" id="reviewsPager" aria-live="polite"></div>
+      </section>
+
+      <!-- AUDIT HISTORY -->
+      <section class="admin-content-card operations-panel"
+        id="panel-audit" hidden>
+        <div class="admin-card-header">
+          <div>
+            <h3>Audit history</h3>
+            <p>Recent administrator-created and administrator-changed records.</p>
+          </div>
+          <button type="button" id="refreshAudit"
+            class="admin-secondary-button">Refresh</button>
+        </div>
+
+        <div class="operations-scroll">
+          <table class="operations-table">
+            <thead>
+              <tr>
+                <th>When</th><th>Administrator</th><th>Action</th>
+                <th>Resource</th><th>Result</th>
+              </tr>
+            </thead>
+            <tbody id="auditBody"></tbody>
+          </table>
+        </div>
+        <div class="operations-tools" id="auditPager" aria-live="polite"></div>
+      </section>
+    </section>
+
+    
+<!-- Catalog Edit Modal -->
+<div id="catalogEditModal" class="catalog-modal" hidden>
+  <div class="catalog-modal-backdrop" data-close-modal></div>
+
+  <section
+    class="catalog-modal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="catalogEditTitle"
+    aria-describedby="catalogEditDescription"
+  >
+    <div class="catalog-modal-header">
+      <div>
+        <h2 id="catalogEditTitle">Edit item</h2>
+        <p id="catalogEditDescription">
+          Update the details below.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        id="catalogEditClose"
+        class="catalog-modal-close"
+        aria-label="Close edit dialog"
+      >×</button>
+    </div>
+
+    <form id="catalogEditForm">
+      <input type="hidden" id="catalogEditType" />
+      <input type="hidden" id="catalogEditId" />
+
+      <div class="catalog-modal-body">
+        <label for="catalogEditName">
+          <span id="catalogEditNameLabel">Name</span>
+          <input
+            type="text"
+            id="catalogEditName"
+            required
+            maxlength="150"
+            autocomplete="off"
+          />
+        </label>
+
+        <label id="catalogEditPriceGroup" for="catalogEditPrice">
+          Price (KSh)
+          <input
+            type="number"
+            id="catalogEditPrice"
+            min="0"
+            step="0.01"
+          />
+        </label>
+
+        <div id="catalogEditFoodOptions" hidden>
+          <label for="catalogEditImage">
+            Replace food image (optional)
+            <input id="catalogEditImage" type="file"
+              accept="image/jpeg,image/png,image/webp" />
+          </label>
+          <small>Leave empty to keep the current image. JPEG, PNG, or WebP; maximum 5 MB.</small>
+          <img id="catalogEditImagePreview" class="food-image-preview"
+            alt="Current or replacement food image" hidden />
+          <label class="catalog-featured-option" for="catalogEditFeatured">
+            <input id="catalogEditFeatured" type="checkbox" />
+            Show in Popular Foods on the customer home page
+          </label>
+        </div>
+
+        <p
+          id="catalogEditError"
+          class="catalog-modal-error"
+          role="alert"
+          hidden
+        ></p>
+      </div>
+
+      <div class="catalog-modal-footer">
+        <button
+          type="button"
+          id="catalogEditCancel"
+          class="admin-secondary-button"
+        >Cancel</button>
+
+        <button
+          type="submit"
+          id="catalogEditSave"
+          class="admin-primary-button"
+        >Save changes</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+  </main>
+
+  <script src="../../assets/js/api-config.js"></script>
+  <script src="../../assets/js/auth/auth-api.js"></script>
+    <script src="../../assets/js/admin/admin-header.js" defer></script>
+    <script src="../../assets/js/admin/admin-notifications.js" defer></script>
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/admin/operations.js"></script>
+</body>
+</html>
