@@ -200,21 +200,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-function applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink) {
+function applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength, ink) {
     const paint = (selector, styles) => document.querySelectorAll(selector).forEach((element) => {
         Object.entries(styles).forEach(([property, value]) => {
             if (value !== undefined && value !== null && value !== "") element.style.setProperty(property, String(value), "important");
         });
     });
     paint(".admin-sidebar,.super-admin-sidebar,.sidebar,.dashboard-sidebar,.rider-sidebar,.restaurant-sidebar,.admin-topbar,.customer-header,.restaurant-header,.rider-header,.customer-navigation,.mobile-navigation", {
-        "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border
+        "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
     });
     paint(".admin-content-card,.admin-stat-card,.admin-action,.dashboard-card,.stat-card,.product-card,.content-card,.panel,.card,.auth-card,.customer-card,.restaurant-card,.menu-item-card,.cart-summary,.order-card,.table-container,.modal-content,.profile-card,.address-card,.payment-card,.restaurant-item,.feature-card", {
         "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border,
-        "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
+        "border-radius": radius + "px", "border-style": "solid", "border-width": borderWidth + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
     });
     paint("input,select,textarea,.form-control,.admin-period-select,.food-search,.search-box,.filter-control", {
-        "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border
+        "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
     });
     paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar", { "background-color": c.chart });
     paint(".admin-chart-grid-line,.chart-grid-line", { "border-color": c.chartGrid });
@@ -255,6 +255,7 @@ async function applyMarketDeliveryAppearance() {
         if (!config) return;
         const c = config.colors || {}, root = document.documentElement;
         const radius = Math.max(0, Math.min(40, Number(config.radius ?? 16)));
+        const borderWidth = Math.max(0, Math.min(4, Number(config.borderWidth ?? 1.5)));
         const shadowStrength = Math.max(0, Math.min(80, Number(config.shadow ?? 24))) / 100;
         const vars = {
             "--background": c.background, "--surface": c.navigation, "--white": c.text,
@@ -309,10 +310,10 @@ async function applyMarketDeliveryAppearance() {
             "background-color": c.background, color: c.textReadable || c.text
         });
         paint(".header,.customer-header,.restaurant-header,.rider-header,.admin-sidebar,.super-admin-sidebar,.sidebar,.dashboard-sidebar,.rider-sidebar,.restaurant-sidebar,.admin-topbar,.customer-navigation,.mobile-navigation", {
-            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border
+            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
         });
         paint(".admin-sidebar-header,.admin-sidebar-bottom,.admin-profile,.admin-topbar-profile,.customer-footer,.footer,.restaurant-footer,.rider-footer", {
-            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border
+            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
         });
 
         // Cards, panels, product tiles, forms, modals and summary surfaces.
@@ -357,7 +358,7 @@ async function applyMarketDeliveryAppearance() {
         // Inputs, tables, chart surfaces, grid lines and chart marks.
         paint("input,select,textarea,.form-control,.admin-period-select,.food-search,.search-box,.filter-control", {
             "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border,
-            "border-radius": Math.min(radius, 14) + "px"
+            "border-radius": Math.min(radius, 14) + "px", "border-style": "solid", "border-width": borderWidth + "px"
         });
         paint("input::placeholder,textarea::placeholder", { color: c.mutedReadable || c.muted });
         paint("table,.admin-table,.table", { color: c.textReadable || c.text, "border-color": c.border });
@@ -376,7 +377,7 @@ async function applyMarketDeliveryAppearance() {
                 queued = true;
                 Promise.resolve().then(() => {
                     queued = false;
-                    applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink);
+                    applyMarketDeliveryThemeElements(c, radius, borderWidth, shadowStrength, ink);
                 });
             });
             window.__marketDeliveryThemeObserver.observe(document.body, { childList: true, subtree: true });
