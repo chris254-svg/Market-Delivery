@@ -251,6 +251,24 @@ async function updateSettings(req, res) {
     }
 }
 
+
+async function getAppearance(req, res) {
+    try {
+        const data = await operationsService.getAppearanceSettings();
+        return res.status(200).json({ success: true, data });
+    } catch (error) {
+        return handleError(res, error, "Failed to load appearance settings");
+    }
+}
+async function updateAppearance(req, res) {
+    try {
+        const data = await operationsService.updateAppearanceSettings(req.body, req.user.id);
+        return res.status(200).json({ success: true, message: "Appearance saved for the whole platform", data });
+    } catch (error) {
+        return handleError(res, error, "Failed to save appearance settings");
+    }
+}
+
 async function getNotifications(req, res) {
     try {
         const data = await operationsService.getNotifications(req.query);
@@ -324,6 +342,8 @@ module.exports = {
     getReports,
     getSettings,
     updateSettings,
+    getAppearance,
+    updateAppearance,
     getNotifications,
     markNotificationRead,
     markAllNotificationsRead,
