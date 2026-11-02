@@ -1943,3 +1943,141 @@
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* =========================================================
+   MARKET DELIVERY — LIVE APPEARANCE THEME
+   Dashboard-only coverage for components that previously
+   retained fixed colours instead of using Appearance Studio.
+========================================================= */
+.admin-sidebar,
+.admin-sidebar-header,
+.admin-profile,
+.admin-sidebar-bottom,
+.admin-topbar {
+  background-color: var(--md-navigation, var(--surface)) !important;
+  color: var(--text, var(--white)) !important;
+  border-color: var(--md-border, var(--border)) !important;
+}
+.admin-logo,
+.admin-profile-info strong,
+.admin-topbar-profile-info strong,
+.admin-nav-link,
+.admin-topbar h1,
+.admin-page-heading h1 {
+  color: inherit;
+}
+.admin-logo span,
+.admin-page-header h2 {
+  color: var(--primary) !important;
+}
+.admin-profile-info span,
+.admin-topbar-profile-info span,
+.admin-topbar p,
+.admin-page-header p,
+.admin-date span,
+.admin-stat-content > span,
+.admin-stat-content small,
+.admin-card-header p,
+.admin-chart-y-axis span,
+.admin-bar-column span,
+.admin-status-label,
+.admin-status-total span,
+.admin-summary-item span {
+  color: var(--md-muted, var(--text-light)) !important;
+}
+.admin-stat-card,
+.admin-content-card,
+.admin-quick-actions-card {
+  background-color: var(--md-card, var(--white)) !important;
+  color: var(--text, var(--white)) !important;
+  border-color: var(--md-border, var(--border)) !important;
+}
+.admin-stat-content > strong,
+.admin-status-total strong,
+.admin-status-item > strong,
+.admin-summary-item strong,
+.admin-card-header h3,
+.admin-table td,
+.admin-action strong {
+  color: var(--text, var(--white)) !important;
+}
+.admin-stat-icon,
+.admin-action-icon {
+  background-color: var(--md-card-alt, var(--primary)) !important;
+  color: var(--md-secondary, var(--primary)) !important;
+}
+.admin-status-total,
+.admin-table th {
+  background-color: var(--md-card-alt, var(--surface)) !important;
+  color: var(--text, var(--white)) !important;
+}
+.admin-period-select,
+.admin-content-card input,
+.admin-content-card select,
+.admin-content-card textarea {
+  background-color: var(--md-input, var(--white)) !important;
+  color: var(--text, var(--white)) !important;
+  border-color: var(--md-border, var(--border)) !important;
+}
+.admin-chart,
+.admin-chart-area {
+  background-color: var(--md-card, var(--white));
+  color: var(--text, var(--white));
+}
+.admin-chart-area {
+  border-bottom-color: var(--md-border, var(--border)) !important;
+}
+.admin-chart-grid-line {
+  border-top-color: var(--md-chart-grid, var(--border)) !important;
+}
+.admin-bar {
+  background-color: var(--md-chart, var(--primary)) !important;
+}
+.admin-table th,
+.admin-table td,
+.admin-table tr,
+.admin-status-item,
+.admin-summary-item {
+  border-color: var(--md-border, var(--border)) !important;
+}
+.admin-table tbody tr:hover,
+.admin-action:hover {
+  background-color: var(--md-card-alt, var(--surface)) !important;
+}
+.admin-nav-link:hover,
+.admin-nav-link.active {
+  background-color: var(--md-card-alt, var(--surface)) !important;
+  color: var(--primary) !important;
+}
+.admin-nav-link:hover .admin-nav-icon,
+.admin-nav-link.active .admin-nav-icon {
+  color: var(--primary) !important;
+}
+.admin-status.pending {
+  background-color: var(--md-promotion, #f2c94c) !important;
+  color: #102a23 !important;
+}
+.admin-status.preparing,
+.admin-status.delivery {
+  background-color: var(--md-card-alt, var(--surface)) !important;
+  color: var(--text, var(--white)) !important;
+}
+.admin-status.completed {
+  background-color: var(--md-success, #b9e8c5) !important;
+  color: #102a23 !important;
+}
+.admin-status.cancelled {
+  background-color: #5b2525 !important;
+  color: #fff !important;
+}
+.admin-stat-content small b,
+.admin-summary-item strong.success {
+  color: var(--md-success, #b9e8c5) !important;
+}
+.admin-summary-item strong.warning {
+  color: var(--md-promotion, #f2c94c) !important;
+}
+.admin-summary-item strong.danger {
+  color: #e58b8b !important;
+}
