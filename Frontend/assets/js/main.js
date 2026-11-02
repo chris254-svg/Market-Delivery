@@ -365,7 +365,7 @@ async function applyMarketDeliveryAppearance() {
             "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border,
             "border-radius": Math.min(radius, 14) + "px", "border-style": "solid", "border-width": borderWidth + "px"
         });
-        paint("input::placeholder,textarea::placeholder", { color: c.mutedReadable || c.muted });
+        root.style.setProperty("--md-placeholder-color", c.mutedReadable || c.muted);
         paint("table,.admin-table,.table", { color: c.textReadable || c.text, "border-color": c.border });
         paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: c.primary, "border-color": c.border });
         paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
