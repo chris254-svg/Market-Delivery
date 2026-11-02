@@ -524,7 +524,7 @@ async function seedSuperAdmin() {
         [email],
     );
     if (existing.rows.length) {
-        if (existing.rows[0].role !== "super_admin2") {
+        if (existing.rows[0].role !== "super_admin") {
             throw new Error("MARKET_SUPER_ADMIN_EMAIL already belongs to a different role. No role was changed.");
         }
         if (forcePasswordReset) {
