@@ -17,7 +17,7 @@
     heroTitle: "Freshness, delivered to your doorstep.",
     heroSubtitle: "Shop fresh groceries and everyday essentials, then get them delivered straight to your doorstep.",
     heroImage: "", heroPrimary: "Shop Now", heroSecondary: "Get Started",
-    heroOverlay: 82, heroText: "#F4F2E9"
+    heroOverlay: 82, heroText: "#F4F2E9", themes: []
   };
   const COLOR_LABELS = {
     background: "Page background", navigation: "Navigation", card: "Main cards",
@@ -28,6 +28,86 @@
   };
   let config = cloneDefaults();
   let canPublish = false;
+  let selectedThemeKey = "preset:market-fresh";
+  const BUILT_IN_THEMES = {
+    "preset:market-fresh": { name: "Market Fresh", colors: { ...DEFAULTS.colors } },
+    "preset:forest": { name: "Forest Market", colors: { ...DEFAULTS.colors, background: "#071B15", navigation: "#123D2D", card: "#1B4A36", cardAlt: "#315C42", input: "#19372B", text: "#F4F2E9", muted: "#A8C4A5", primary: "#B9E8C5", secondary: "#789B75", border: "#315C42", chart: "#B9E8C5", chartGrid: "#789B75" } },
+    "preset:midnight": { name: "Midnight Lime", colors: { ...DEFAULTS.colors, background: "#050510", navigation: "#17172B", card: "#22223B", cardAlt: "#343451", input: "#191929", text: "#F5F4FF", muted: "#A5A4C4", primary: "#D9F56B", secondary: "#A4B85A", border: "#454565", chart: "#D9F56B", chartGrid: "#77779B" } },
+    "preset:light": { name: "Fresh Light", colors: { ...DEFAULTS.colors, background: "#F4F2E9", navigation: "#E4EBD9", card: "#F5F3DC", cardAlt: "#DDE8D5", input: "#FFFFFF", text: "#102A23", muted: "#526D55", primary: "#789B35", secondary: "#789B75", border: "#C8D5C0", chart: "#789B35", chartGrid: "#A8B99E" } }
+  };
+  const THEME_FIELDS = ["colors", "radius", "shadow", "chartType", "chartLabels", "chartValues", "heroTitle", "heroSubtitle", "heroImage", "heroPrimary", "heroSecondary", "heroOverlay", "heroText"];
+
+
+  function themeSnapshot() {
+    const snapshot = {};
+    THEME_FIELDS.forEach((key) => { snapshot[key] = key === "colors" ? { ...config.colors } : config[key]; });
+    return snapshot;
+  }
+  function refreshThemeOptions() {
+    const select = $("themeSelect");
+    if (!select) return;
+    const previous = selectedThemeKey;
+    select.replaceChildren();
+    Object.entries(BUILT_IN_THEMES).forEach(([key, theme]) => {
+      const option = document.createElement("option");
+      option.value = key; option.textContent = theme.name + " · built in";
+      select.append(option);
+    });
+    (config.themes || []).forEach((theme, index) => {
+      const option = document.createElement("option");
+      option.value = "saved:" + index; option.textContent = theme.name + " · saved";
+      select.append(option);
+    });
+    if ([...select.options].some((option) => option.value === previous)) select.value = previous;
+    else { selectedThemeKey = "preset:market-fresh"; select.value = selectedThemeKey; }
+    $("deleteTheme").disabled = !selectedThemeKey.startsWith("saved:") || !canPublish;
+  }
+  function selectedTheme() {
+    if (BUILT_IN_THEMES[selectedThemeKey]) return BUILT_IN_THEMES[selectedThemeKey];
+    if (selectedThemeKey.startsWith("saved:")) return (config.themes || [])[Number(selectedThemeKey.slice(6))] || null;
+    return null;
+  }
+  function applySelectedTheme() {
+    const theme = selectedTheme();
+    if (!theme) return;
+    const savedThemes = config.themes || [];
+    config = { ...DEFAULTS, ...theme, colors: { ...DEFAULTS.colors, ...(theme.colors || {}) }, themes: savedThemes };
+    fillForm(); paintPreview(); animatePreview();
+    notify('"' + theme.name + '" applied to the preview. Save appearance to publish it.');
+    $("themeNotice").textContent = "Applied " + theme.name + ". Adjust any setting before saving.";
+    refreshThemeOptions();
+  }
+  async function saveNamedTheme() {
+    if (!canPublish) { notify("Your account cannot save platform themes.", true); return; }
+    readForm();
+    const name = String($("themeName").value || "").trim();
+    if (!name) { $("themeName").focus(); $("themeNotice").textContent = "Enter a name for this theme first."; return; }
+    const themes = [...(config.themes || [])];
+    const existing = themes.findIndex((theme) => theme.name.toLowerCase() === name.toLowerCase());
+    const entry = { name, ...themeSnapshot() };
+    if (existing >= 0) themes[existing] = entry;
+    else if (themes.length >= 12) { $("themeNotice").textContent = "You can save up to 12 named themes. Delete one before adding another."; return; }
+    else themes.push(entry);
+    config.themes = themes;
+    selectedThemeKey = "saved:" + (existing >= 0 ? existing : themes.length - 1);
+    refreshThemeOptions();
+    $("themeSelect").value = selectedThemeKey;
+    await save();
+    $("themeNotice").textContent = "Saved theme: " + name + ". It is available in this library.";
+  }
+  async function deleteSelectedTheme() {
+    if (!selectedThemeKey.startsWith("saved:")) return;
+    const index = Number(selectedThemeKey.slice(6));
+    const themes = [...(config.themes || [])];
+    const removed = themes[index];
+    if (!removed) return;
+    themes.splice(index, 1);
+    config.themes = themes;
+    selectedThemeKey = "preset:market-fresh";
+    refreshThemeOptions();
+    await save();
+    $("themeNotice").textContent = "Deleted saved theme: " + removed.name + ".";
+  }
 
   function cloneDefaults() {
     return { ...DEFAULTS, colors: { ...DEFAULTS.colors } };
@@ -269,10 +349,13 @@
       canPublish = ["admin", "super_admin"].includes(String(admin?.role || "").trim().toLowerCase());
       const appearance = saved?.appearance || saved?.data?.appearance || null;
       if (appearance) {
-        config = { ...DEFAULTS, ...appearance, colors: { ...DEFAULTS.colors, ...(appearance.colors || {}) } };
+        config = { ...DEFAULTS, ...appearance, colors: { ...DEFAULTS.colors, ...(appearance.colors || {}) },
+          themes: Array.isArray(appearance.themes) ? appearance.themes : [] };
       }
+      refreshThemeOptions();
       fillForm();
       paintPreview();
+      $("saveTheme").disabled = !canPublish;
       if (!canPublish) {
         $("save").disabled = true;
         $("reset").disabled = true;
@@ -292,11 +375,18 @@
     $("apply")?.addEventListener("click", preview);
     $("save")?.addEventListener("click", save);
     $("reset")?.addEventListener("click", reset);
+    $("themeSelect")?.addEventListener("change", (event) => {
+      selectedThemeKey = event.target.value;
+      $("deleteTheme").disabled = !canPublish || !selectedThemeKey.startsWith("saved:");
+    });
+    $("applyTheme")?.addEventListener("click", applySelectedTheme);
+    $("saveTheme")?.addEventListener("click", saveNamedTheme);
+    $("deleteTheme")?.addEventListener("click", deleteSelectedTheme);
     document.addEventListener("input", (event) => {
-      if (event.target.closest(".studio")) preview();
+      if (event.target.closest(".studio") && !event.target.closest("#themeName")) preview();
     });
     document.addEventListener("change", (event) => {
-      if (event.target.closest(".studio")) preview();
+      if (event.target.closest(".studio") && !event.target.closest("#themeSelect")) preview();
     });
     initialize().catch((error) => notify(error.message || "Could not initialize the editor.", true));
   });
