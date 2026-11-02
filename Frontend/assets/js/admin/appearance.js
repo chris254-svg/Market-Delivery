@@ -9,9 +9,9 @@
       cardAlt: "#465B32", input: "#242824", text: "#F4F2E9",
       muted: "#789B75", primary: "#D9F56B", secondary: "#789B75",
       success: "#B9E8C5", promotion: "#F2C94C", lightCard: "#F5F3DC",
-      border: "#465B32", chart: "#D9F56B", chartGrid: "#789B75"
+      border: "#789B75", chart: "#D9F56B", chartGrid: "#789B75"
     },
-    radius: 16, shadow: 24, chartType: "bar",
+    radius: 16, borderWidth: 1.5, shadow: 24, chartType: "bar",
     chartLabels: "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
     chartValues: "35,62,48,80,55,92,70",
     heroTitle: "Freshness, delivered to your doorstep.",
@@ -31,11 +31,11 @@
   let selectedThemeKey = "preset:market-fresh";
   const BUILT_IN_THEMES = {
     "preset:market-fresh": { name: "Market Fresh", colors: { ...DEFAULTS.colors } },
-    "preset:forest": { name: "Forest Market", colors: { ...DEFAULTS.colors, background: "#071B15", navigation: "#123D2D", card: "#1B4A36", cardAlt: "#315C42", input: "#19372B", text: "#F4F2E9", muted: "#A8C4A5", primary: "#B9E8C5", secondary: "#789B75", border: "#315C42", chart: "#B9E8C5", chartGrid: "#789B75" } },
-    "preset:midnight": { name: "Midnight Lime", colors: { ...DEFAULTS.colors, background: "#050510", navigation: "#17172B", card: "#22223B", cardAlt: "#343451", input: "#191929", text: "#F5F4FF", muted: "#A5A4C4", primary: "#D9F56B", secondary: "#A4B85A", border: "#454565", chart: "#D9F56B", chartGrid: "#77779B" } },
-    "preset:light": { name: "Fresh Light", colors: { ...DEFAULTS.colors, background: "#F4F2E9", navigation: "#E4EBD9", card: "#F5F3DC", cardAlt: "#DDE8D5", input: "#FFFFFF", text: "#102A23", muted: "#526D55", primary: "#789B35", secondary: "#789B75", border: "#C8D5C0", chart: "#789B35", chartGrid: "#A8B99E" } }
+    "preset:forest": { name: "Forest Market", colors: { ...DEFAULTS.colors, background: "#071B15", navigation: "#123D2D", card: "#1B4A36", cardAlt: "#315C42", input: "#19372B", text: "#F4F2E9", muted: "#A8C4A5", primary: "#B9E8C5", secondary: "#789B75", border: "#78A88B", chart: "#B9E8C5", chartGrid: "#789B75" } },
+    "preset:midnight": { name: "Midnight Lime", colors: { ...DEFAULTS.colors, background: "#050510", navigation: "#17172B", card: "#22223B", cardAlt: "#343451", input: "#191929", text: "#F5F4FF", muted: "#A5A4C4", primary: "#D9F56B", secondary: "#A4B85A", border: "#77779B", chart: "#D9F56B", chartGrid: "#77779B" } },
+    "preset:light": { name: "Fresh Light", colors: { ...DEFAULTS.colors, background: "#F4F2E9", navigation: "#E4EBD9", card: "#F5F3DC", cardAlt: "#DDE8D5", input: "#FFFFFF", text: "#102A23", muted: "#526D55", primary: "#789B35", secondary: "#789B75", border: "#8A9D83", chart: "#789B35", chartGrid: "#A8B99E" } }
   };
-  const THEME_FIELDS = ["colors", "radius", "shadow", "chartType", "chartLabels", "chartValues", "heroTitle", "heroSubtitle", "heroImage", "heroPrimary", "heroSecondary", "heroOverlay", "heroText"];
+  const THEME_FIELDS = ["colors", "radius", "borderWidth", "shadow", "chartType", "chartLabels", "chartValues", "heroTitle", "heroSubtitle", "heroImage", "heroPrimary", "heroSecondary", "heroOverlay", "heroText"];
 
 
   function themeSnapshot() {
@@ -146,7 +146,7 @@
     });
     const chartGrid = $("chartGrid");
     if (chartGrid) config.colors.chartGrid = chartGrid.value;
-    ["radius", "shadow", "heroOverlay"].forEach((id) => {
+    ["radius", "borderWidth", "shadow", "heroOverlay"].forEach((id) => {
       const el = $(id);
       if (el) config[id] = Number(el.value);
     });
@@ -163,26 +163,53 @@
     });
     const chartGrid = $("chartGrid");
     if (chartGrid) chartGrid.value = config.colors.chartGrid;
-    ["radius", "shadow", "heroOverlay", "chartType", "chartLabels", "chartValues",
+    ["radius", "borderWidth", "shadow", "heroOverlay", "chartType", "chartLabels", "chartValues",
       "heroTitle", "heroSubtitle", "heroImage", "heroPrimary", "heroSecondary", "heroText"]
       .forEach((id) => { if ($(id)) $(id).value = config[id]; });
   }
+
+  function relativeLuminance(hex) {
+    if (!/^#[0-9a-f]{6}$/i.test(String(hex || ""))) return 1;
+    const channels = [1, 3, 5].map((index) => parseInt(hex.slice(index, index + 2), 16) / 255)
+      .map((value) => value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4));
+    return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+  }
+  function contrastRatio(a, b) {
+    const x = relativeLuminance(a), y = relativeLuminance(b);
+    return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+  }
+  function readableInk(background) {
+    return contrastRatio("#102A23", background) >= contrastRatio("#F4F2E9", background)
+      ? "#102A23" : "#F4F2E9";
+  }
+  function readableText(preferred, backgrounds) {
+    if (/^#[0-9a-f]{6}$/i.test(String(preferred || "")) &&
+      backgrounds.every((background) => contrastRatio(preferred, background) >= 4.5)) return preferred;
+    const choices = ["#102A23", "#F4F2E9"];
+    return choices.sort((a, b) =>
+      Math.min(...backgrounds.map((background) => contrastRatio(a, background))) -
+      Math.min(...backgrounds.map((background) => contrastRatio(b, background)))
+    ).reverse()[0];
+  }
+
   function paintPreview() {
     const root = document.documentElement;
     const c = config.colors;
+    const readable = readableText(c.text, [c.background, c.navigation, c.card, c.cardAlt]);
+    const mutedReadable = readableText(c.muted, [c.background, c.navigation, c.card, c.cardAlt]);
     const setVar = (name, value) => root.style.setProperty(name, value);
     setVar("--studio-bg", c.background);
     setVar("--studio-panel", c.navigation);
     setVar("--studio-card", c.card);
-    setVar("--studio-text", c.text);
-    setVar("--studio-muted", c.muted);
+    setVar("--studio-text", readable);
+    setVar("--studio-muted", mutedReadable);
     setVar("--studio-accent", c.primary);
     setVar("--studio-chart", c.chart);
     setVar("--background", c.background);
     setVar("--surface", c.navigation);
-    setVar("--white", c.text);
-    setVar("--text", c.text);
-    setVar("--text-light", c.muted);
+    setVar("--white", readable);
+    setVar("--text", readable);
+    setVar("--text-light", mutedReadable);
     setVar("--primary", c.primary);
     setVar("--primary-hover", c.primary);
     setVar("--border", c.border);
@@ -203,12 +230,14 @@
     setVar("--preview-card", c.card);
     setVar("--preview-border", c.border);
     setVar("--preview-input", c.input);
-    setVar("--preview-text", c.text);
+    setVar("--preview-text", readable);
     setVar("--preview-primary", c.primary);
     setVar("--preview-radius", config.radius + "px");
+    setVar("--md-border-width", config.borderWidth + "px");
+    setVar("--preview-border-width", config.borderWidth + "px");
     setVar("--preview-shadow", "0 12px 30px rgba(0,0,0," + (Number(config.shadow) / 100) + ")");
     const previewNav = $("previewNav");
-    if (previewNav) { previewNav.style.background = c.navigation; previewNav.style.color = c.text; }
+    if (previewNav) { previewNav.style.background = c.navigation; previewNav.style.color = readable; previewNav.style.borderBottom = config.borderWidth + "px solid " + c.border; }
     const palette = $("previewPalette");
     if (palette) {
       palette.replaceChildren();
@@ -221,17 +250,20 @@
     }
     document.querySelectorAll(".preview-component,.preview-product,.preview-chart").forEach((node) => {
       node.style.backgroundColor = c.card;
-      node.style.color = c.text;
+      node.style.color = readable;
       node.style.borderColor = c.border;
+      node.style.borderStyle = "solid";
+      node.style.borderWidth = config.borderWidth + "px";
       node.style.borderRadius = config.radius + "px";
       node.style.boxShadow = "0 12px 30px rgba(0,0,0," + (Number(config.shadow) / 100) + ")";
     });
     document.querySelectorAll(".preview-component input").forEach((input) => {
-      input.style.background = c.input; input.style.color = c.text; input.style.borderColor = c.border;
+      input.style.background = c.input; input.style.color = c.text; input.style.borderColor = c.border; input.style.borderStyle = "solid"; input.style.borderWidth = config.borderWidth + "px";
     });
     document.querySelectorAll(".preview-component button").forEach((button, index) => {
       button.style.background = index === 0 ? c.primary : c.secondary;
-      button.style.color = c.background;
+      button.style.color = readableInk(index === 0 ? c.primary : c.secondary);
+      button.style.border = config.borderWidth + "px solid " + c.border;
     });
 
     const hero = $("heroPreview");
@@ -241,8 +273,8 @@
       hero.style.backgroundImage = "linear-gradient(90deg,rgba(5,5,5," +
         (Number(config.heroOverlay) / 100) + "),rgba(5,5,5,.18)),url('" +
         image.replace(/['\\]/g, "") + "')";
-      hero.style.color = config.heroText;
-      hero.style.borderRadius = config.radius + "px";
+      hero.style.color = readableText(config.heroText, [c.background]);
+      hero.style.borderRadius = config.radius + "px"; hero.style.border = config.borderWidth + "px solid " + c.border;
     }
     if ($("heroPreviewTitle")) $("heroPreviewTitle").textContent = config.heroTitle;
     if ($("heroPreviewSubtitle")) $("heroPreviewSubtitle").textContent = config.heroSubtitle;
