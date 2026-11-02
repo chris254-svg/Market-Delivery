@@ -101,6 +101,48 @@ async function updateSettings(input, adminId) {
     return result.rows[0];
 }
 
+
+const APPEARANCE_COLOR_KEYS = new Set(["background","navigation","card","cardAlt","input","text","muted","primary","secondary","success","promotion","lightCard","border","chart","chartGrid"]);
+function validateAppearance(input) {
+    if (!input || typeof input !== "object" || Array.isArray(input)) throw apiError("Appearance must be an object");
+    const serialized = JSON.stringify(input);
+    if (serialized.length > 30000) throw apiError("Appearance settings are too large");
+    const colors = input.colors;
+    if (!colors || typeof colors !== "object" || Array.isArray(colors)) throw apiError("Appearance colors are required");
+    for (const key of Object.keys(colors)) {
+        if (!APPEARANCE_COLOR_KEYS.has(key) || typeof colors[key] !== "string" || !/^#[0-9a-f]{6}$/i.test(colors[key])) throw apiError("Invalid appearance color: " + key);
+    }
+    for (const key of ["heroTitle","heroSubtitle","heroPrimary","heroSecondary"]) {
+        if (input[key] !== undefined && (typeof input[key] !== "string" || input[key].length > (key === "heroSubtitle" ? 1000 : 160))) throw apiError("Invalid " + key);
+    }
+    if (input.heroImage !== undefined) {
+        if (typeof input.heroImage !== "string" || input.heroImage.length > 2048) throw apiError("Invalid hero image URL");
+        if (input.heroImage) { let url; try { url = new URL(input.heroImage); } catch { throw apiError("Hero image must be a valid HTTPS URL"); } if (url.protocol !== "https:") throw apiError("Hero image must use HTTPS"); }
+    }
+    if (input.chartValues !== undefined && (typeof input.chartValues !== "string" || input.chartValues.length > 300)) throw apiError("Invalid chart preview values");
+    if (input.chartLabels !== undefined && (typeof input.chartLabels !== "string" || input.chartLabels.length > 300)) throw apiError("Invalid chart preview labels");
+    const radius = Number(input.radius ?? 16), shadow = Number(input.shadow ?? 24), overlay = Number(input.heroOverlay ?? 82);
+    if (![radius, shadow, overlay].every(Number.isFinite) || radius < 0 || radius > 40 || shadow < 0 || shadow > 80 || overlay < 0 || overlay > 95) throw apiError("Appearance numeric values are outside allowed limits");
+    return input;
+}
+async function getAppearanceSettings() {
+    const result = await pool.query("SELECT settings->'appearance' AS appearance, updated_at FROM admin_settings WHERE id = 1");
+    return { appearance: result.rows[0]?.appearance || null, updated_at: result.rows[0]?.updated_at || null };
+}
+async function updateAppearanceSettings(input, adminId) {
+    const appearance = validateAppearance(input);
+    const result = await pool.query(`
+        INSERT INTO admin_settings (id, settings, updated_by, updated_at)
+        VALUES (1, jsonb_build_object('appearance', $1::jsonb), $2, CURRENT_TIMESTAMP)
+        ON CONFLICT (id) DO UPDATE
+        SET settings = COALESCE(admin_settings.settings, '{}'::jsonb) || jsonb_build_object('appearance', $1::jsonb),
+            updated_by = EXCLUDED.updated_by,
+            updated_at = CURRENT_TIMESTAMP
+        RETURNING settings->'appearance' AS appearance, updated_at
+    `, [JSON.stringify(appearance), adminId]);
+    return { appearance: result.rows[0].appearance, updated_at: result.rows[0].updated_at };
+}
+
 async function syncNotifications() {
     await pool.query(`
         INSERT INTO admin_notifications
@@ -326,6 +368,8 @@ async function setReviewVisibility(id, isVisible) {
 module.exports = {
     getSettings,
     updateSettings,
+    getAppearanceSettings,
+    updateAppearanceSettings,
     getNotifications,
     markNotificationRead,
     markAllNotificationsRead,
