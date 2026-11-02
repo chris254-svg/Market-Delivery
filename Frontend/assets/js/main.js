@@ -393,11 +393,15 @@ async function applyMarketDeliveryAppearance() {
         paint('button,a[class*="btn"],a[class*="button"],[role="button"]', {
             "border-color": c.border, "border-style": "solid", "border-width": borderWidth + "px"
         });
-        paint('button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button)', {
+        paint('button:not(.secondary):not(.btn-secondary):not(.button-secondary):not(.danger):not(.btn-danger):not(.delete):not([class*="danger"]):not([class*="delete"]):not(.btn-outline):not(.button-outline):not(.icon-button):not(.admin-close-menu-button):not(.admin-mobile-menu-button):not(.mobile-menu-button)', {
             "background-color": c.primary, color: ink(c.primary), "border-radius": Math.min(radius, 18) + "px"
         });
         paint('button.secondary,button.btn-secondary,button.button-secondary,.secondary-button,.btn-secondary,.button-secondary', {
             "background-color": c.secondary, color: ink(c.secondary)
+        });
+        paint('a[class*="btn"],a[class*="button"],[role="button"]', {
+            "background-color": c.primary, color: ink(c.primary), "border-color": c.border,
+            "border-style": "solid", "border-width": borderWidth + "px"
         });
         paint('body,main,section,article,aside,header,footer,nav,div', { "border-color": c.border });
 
