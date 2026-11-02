@@ -258,7 +258,7 @@ async function getAdminById(id) {
         SELECT ${ADMIN_COLUMNS}
         FROM users
         WHERE id = $1
-          AND role IN ('admin', 'super_admin2')
+          AND role IN ('admin', 'super_admin')
         LIMIT 1
         `,
         [adminId]
@@ -271,7 +271,7 @@ async function updateAdminAvatar(id, avatarUrl) {
     const adminId = validateAdminId(id);
     const result = await pool.query(
         `UPDATE users SET avatar_url = $1, updated_at = CURRENT_TIMESTAMP
-         WHERE id = $2 AND role IN ('admin', 'super_admin2')
+         WHERE id = $2 AND role IN ('admin', 'super_admin')
          RETURNING ${ADMIN_COLUMNS}`,
         [avatarUrl, adminId]
     );
@@ -499,7 +499,7 @@ async function deactivateAdmin(
                 `
                 SELECT id
                 FROM users
-                WHERE role IN ('admin', 'super_admin2')
+                WHERE role IN ('admin', 'super_admin')
                   AND is_active = true
                 FOR UPDATE
                 `
@@ -1086,7 +1086,7 @@ async function getDashboard(
                         .trim(),
 
                 role:
-                    admin.role === "super_admin2"
+                    admin.role === "super_admin"
                         ? "Super Admin"
                         : "Administrator"
             },
