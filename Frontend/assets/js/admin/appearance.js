@@ -266,7 +266,7 @@
         API.request("/admins/appearance", { authenticated: true })
       ]);
       const admin = profile?.admin || profile?.data?.admin || profile;
-      canPublish = String(admin?.role || "").trim().toLowerCase() === "super_admin";
+      canPublish = ["admin", "super_admin"].includes(String(admin?.role || "").trim().toLowerCase());
       const appearance = saved?.appearance || saved?.data?.appearance || null;
       if (appearance) {
         config = { ...DEFAULTS, ...appearance, colors: { ...DEFAULTS.colors, ...(appearance.colors || {}) } };
@@ -276,7 +276,7 @@
       if (!canPublish) {
         $("save").disabled = true;
         $("reset").disabled = true;
-        notify("Preview is available. Only the super admin can save platform-wide changes.");
+        notify("You can preview and publish appearance changes for the whole platform.");
       } else {
         notify("Appearance editor ready. Change a setting, preview it, then save.");
       }
