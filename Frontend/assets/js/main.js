@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function applyMarketDeliveryAppearance() {
     try {
         const base = window.FOOD_DELIVERY_API_BASE || "https://market-delivery.onrender.com/api";
-        const response = await fetch(base.replace(/\\/+$/, "") + "/public/settings", { headers: { Accept: "application/json" }, cache: "no-store" });
+        const response = await fetch(base.replace(/\/+$/, "") + "/public/settings", { headers: { Accept: "application/json" }, cache: "no-store" });
         if (!response.ok) return;
         const result = await response.json();
         const config = result?.data?.appearance;
