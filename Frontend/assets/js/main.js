@@ -207,14 +207,14 @@ function applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink) {
         });
     });
     paint(".admin-sidebar,.super-admin-sidebar,.sidebar,.dashboard-sidebar,.rider-sidebar,.restaurant-sidebar,.admin-topbar,.customer-header,.restaurant-header,.rider-header,.customer-navigation,.mobile-navigation", {
-        "background-color": c.navigation, color: c.text, "border-color": c.border
+        "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border
     });
     paint(".admin-content-card,.admin-stat-card,.admin-action,.dashboard-card,.stat-card,.product-card,.content-card,.panel,.card,.auth-card,.customer-card,.restaurant-card,.menu-item-card,.cart-summary,.order-card,.table-container,.modal-content,.profile-card,.address-card,.payment-card,.restaurant-item,.feature-card", {
-        "background-color": c.card, color: c.text, "border-color": c.border,
+        "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border,
         "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
     });
     paint("input,select,textarea,.form-control,.admin-period-select,.food-search,.search-box,.filter-control", {
-        "background-color": c.input, color: c.text, "border-color": c.border
+        "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border
     });
     paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar", { "background-color": c.chart });
     paint(".admin-chart-grid-line,.chart-grid-line", { "border-color": c.chartGrid });
@@ -225,13 +225,13 @@ function applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink) {
         "background-color": c.secondary, color: ink(c.secondary), "border-color": c.secondary
     });
     paint(".admin-status-total,.admin-table th,.table thead th,.secondary-panel,.card-secondary,.stat-card-secondary,.order-summary,.filter-panel,.customer-promotion,.promotion-card", {
-        "background-color": c.cardAlt, color: c.text, "border-color": c.border
+        "background-color": c.cardAlt, color: c.textReadable || c.text, "border-color": c.border
     });
     paint(".light-card,.light-panel,.product-card.light,.category-card", {
         "background-color": c.lightCard, color: ink(c.lightCard), "border-color": c.border
     });
-    paint("h1,h2,h3,h4,h5,h6,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", { color: c.text });
-    paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.form-help,.helper-text,.field-hint,.empty-state", { color: c.muted });
+    paint("h1,h2,h3,h4,h5,h6,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", { color: c.textReadable || c.text });
+    paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.form-help,.helper-text,.field-hint,.empty-state", { color: c.mutedReadable || c.muted });
     paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: c.secondary });
     paint(".promotion,.discount,.promotion-badge,.badge-warning,.status-warning", {
         "background-color": c.promotion, color: ink(c.promotion), "border-color": c.promotion
@@ -241,7 +241,7 @@ function applyMarketDeliveryThemeElements(c, radius, shadowStrength, ink) {
     });
     paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: c.primary, "border-color": c.border });
     paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
-    paint(".admin-chart,.chart-container,.chart-card", { "background-color": c.card, color: c.text, "border-color": c.border });
+    paint(".admin-chart,.chart-container,.chart-card", { "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border });
 }
 
 /* MARKET DELIVERY APPEARANCE SETTINGS — loaded from the shared database. */
@@ -277,7 +277,22 @@ async function applyMarketDeliveryAppearance() {
                 .map((value) => value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4));
             return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
         };
-        const ink = (color) => luminance(color) > 0.42 ? "#102A23" : (c.text || "#F4F2E9");
+        const contrastRatio = (foreground, background) => {
+            const a = luminance(foreground), b = luminance(background);
+            return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+        };
+        const bestReadableText = (preferred, surfaces) => {
+            const valid = /^#[0-9a-f]{6}$/i.test(String(preferred || ""));
+            if (valid && surfaces.every((surface) => /^#[0-9a-f]{6}$/i.test(String(surface || "")) && contrastRatio(preferred, surface) >= 4.5)) return preferred;
+            const candidates = ["#F4F2E9", "#102A23"];
+            return candidates.sort((a, b) =>
+                Math.min(...surfaces.map((surface) => contrastRatio(a, surface))) -
+                Math.min(...surfaces.map((surface) => contrastRatio(b, surface)))
+            ).reverse()[0];
+        };
+        const ink = (color) => luminance(color) > 0.42 ? "#102A23" : "#F4F2E9";
+        c.textReadable = bestReadableText(c.text, [c.background, c.navigation, c.card, c.cardAlt]);
+        c.mutedReadable = bestReadableText(c.muted, [c.background, c.navigation, c.card, c.cardAlt]);
         const paint = (selector, styles) => {
             document.querySelectorAll(selector).forEach((element) => {
                 Object.entries(styles).forEach(([property, value]) => {
@@ -291,22 +306,22 @@ async function applyMarketDeliveryAppearance() {
 
         // Page canvas, content regions and all primary navigation variants.
         paint("body,.admin-main,.admin-content,.dashboard-content,.main-content,.page-content,.customer-main,.restaurant-main,.rider-main,.auth-page", {
-            "background-color": c.background, color: c.text
+            "background-color": c.background, color: c.textReadable || c.text
         });
         paint(".header,.customer-header,.restaurant-header,.rider-header,.admin-sidebar,.super-admin-sidebar,.sidebar,.dashboard-sidebar,.rider-sidebar,.restaurant-sidebar,.admin-topbar,.customer-navigation,.mobile-navigation", {
-            "background-color": c.navigation, color: c.text, "border-color": c.border
+            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border
         });
         paint(".admin-sidebar-header,.admin-sidebar-bottom,.admin-profile,.admin-topbar-profile,.customer-footer,.footer,.restaurant-footer,.rider-footer", {
-            "background-color": c.navigation, color: c.text, "border-color": c.border
+            "background-color": c.navigation, color: c.textReadable || c.text, "border-color": c.border
         });
 
         // Cards, panels, product tiles, forms, modals and summary surfaces.
         paint(".admin-content-card,.admin-stat-card,.admin-action,.admin-quick-actions-card,.dashboard-card,.stat-card,.product-card,.content-card,.panel,.card,.auth-card,.customer-card,.restaurant-card,.menu-item-card,.cart-summary,.order-card,.table-container,.modal-content,.profile-card,.address-card,.payment-card,.restaurant-item,.feature-card,.preview-component", {
-            "background-color": c.card, color: c.text, "border-color": c.border,
+            "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border,
             "border-radius": radius + "px", "box-shadow": "0 12px 32px rgba(0,0,0," + shadowStrength + ")"
         });
         paint(".admin-status-total,.admin-table th,.table thead th,.secondary-panel,.card-secondary,.stat-card-secondary,.order-summary,.filter-panel,.customer-promotion,.promotion-card", {
-            "background-color": c.cardAlt, color: c.text, "border-color": c.border
+            "background-color": c.cardAlt, color: c.textReadable || c.text, "border-color": c.border
         });
         paint(".light-card,.light-panel,.product-card.light,.category-card", {
             "background-color": c.lightCard, color: ink(c.lightCard), "border-color": c.border
@@ -314,10 +329,10 @@ async function applyMarketDeliveryAppearance() {
 
         // Typography and accent links, including labels that older CSS hard-coded.
         paint("h1,h2,h3,h4,h5,h6,.admin-topbar h1,.admin-page-heading h1,.admin-card-header h3,.section-heading h2,.customer-section h2,.auth-header h1,.form-group label,.admin-table td,.admin-nav-link,.customer-navigation a,.mobile-navigation a,.navigation a", {
-            color: c.text
+            color: c.textReadable || c.text
         });
         paint("p,small,.muted,.text-muted,.admin-card-header p,.admin-stat-content small,.section-heading p,.feature-card p,.auth-header p,.auth-footer p,.form-help,.helper-text,.field-hint,.empty-state", {
-            color: c.muted
+            color: c.mutedReadable || c.muted
         });
         paint("a,.admin-card-link,.view-all,.password-label a,.auth-footer a,.customer-logo span,.logo span", { color: c.secondary });
         paint(".logo span,.admin-logo span,.admin-page-header h2,.section-label,.hero-label", { color: c.primary });
@@ -341,16 +356,16 @@ async function applyMarketDeliveryAppearance() {
 
         // Inputs, tables, chart surfaces, grid lines and chart marks.
         paint("input,select,textarea,.form-control,.admin-period-select,.food-search,.search-box,.filter-control", {
-            "background-color": c.input, color: c.text, "border-color": c.border,
+            "background-color": c.input, color: c.textReadable || c.text, "border-color": c.border,
             "border-radius": Math.min(radius, 14) + "px"
         });
-        paint("input::placeholder,textarea::placeholder", { color: c.muted });
-        paint("table,.admin-table,.table", { color: c.text, "border-color": c.border });
+        paint("input::placeholder,textarea::placeholder", { color: c.mutedReadable || c.muted });
+        paint("table,.admin-table,.table", { color: c.textReadable || c.text, "border-color": c.border });
         paint("th,.admin-table th,.table th", { "background-color": c.cardAlt, color: c.primary, "border-color": c.border });
         paint("td,.admin-table td,.table td,tr,.admin-table tr", { "border-color": c.border });
         paint(".admin-bar,.chart-bar,.chart-fill,.progress-bar,.preview-bars i", { "background-color": c.chart });
         paint(".admin-chart-grid-line,.chart-grid-line,.admin-chart-grid,.chart-grid", { "border-color": c.chartGrid });
-        paint(".admin-chart,.chart-container,.chart-card,.preview-chart", { "background-color": c.card, color: c.text, "border-color": c.border });
+        paint(".admin-chart,.chart-container,.chart-card,.preview-chart", { "background-color": c.card, color: c.textReadable || c.text, "border-color": c.border });
         paint(".admin-stat-icon,.feature-icon,.icon-tile", { "background-color": c.cardAlt, color: c.secondary });
 
         // Apply the same surface treatment to elements inserted after initial page load.
