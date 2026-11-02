@@ -115,6 +115,40 @@
     setVar("--md-input", c.input);
     setVar("--md-chart", c.chart);
     setVar("--md-chart-grid", c.chartGrid);
+    setVar("--preview-bg", c.background);
+    setVar("--preview-card", c.card);
+    setVar("--preview-border", c.border);
+    setVar("--preview-input", c.input);
+    setVar("--preview-text", c.text);
+    setVar("--preview-primary", c.primary);
+    setVar("--preview-radius", config.radius + "px");
+    setVar("--preview-shadow", "0 12px 30px rgba(0,0,0," + (Number(config.shadow) / 100) + ")");
+    const previewNav = $("previewNav");
+    if (previewNav) { previewNav.style.background = c.navigation; previewNav.style.color = c.text; }
+    const palette = $("previewPalette");
+    if (palette) {
+      palette.replaceChildren();
+      Object.values(c).forEach((color) => {
+        const chip = document.createElement("span");
+        chip.style.background = color;
+        chip.title = color;
+        palette.append(chip);
+      });
+    }
+    document.querySelectorAll(".preview-component,.preview-product,.preview-chart").forEach((node) => {
+      node.style.backgroundColor = c.card;
+      node.style.color = c.text;
+      node.style.borderColor = c.border;
+      node.style.borderRadius = config.radius + "px";
+      node.style.boxShadow = "0 12px 30px rgba(0,0,0," + (Number(config.shadow) / 100) + ")";
+    });
+    document.querySelectorAll(".preview-component input").forEach((input) => {
+      input.style.background = c.input; input.style.color = c.text; input.style.borderColor = c.border;
+    });
+    document.querySelectorAll(".preview-component button").forEach((button, index) => {
+      button.style.background = index === 0 ? c.primary : c.secondary;
+      button.style.color = c.background;
+    });
 
     const hero = $("heroPreview");
     if (hero) {
@@ -154,9 +188,25 @@
         " | " + values.join(", ");
     }
   }
+  function animatePreview(button) {
+    const card = document.querySelector(".preview-card");
+    const hero = $("heroPreview");
+    [card, hero].filter(Boolean).forEach((node) => {
+      node.classList.remove("is-updating");
+      void node.offsetWidth;
+      node.classList.add("is-updating");
+    });
+    if (button) {
+      button.classList.remove("is-done");
+      void button.offsetWidth;
+      button.classList.add("is-done");
+      window.setTimeout(() => button.classList.remove("is-done"), 550);
+    }
+  }
   function preview() {
     readForm();
     paintPreview();
+    animatePreview();
     notify("Preview updated. These changes are not public until you select Save appearance.");
   }
   async function save() {
@@ -171,26 +221,36 @@
     readForm();
     const button = $("save");
     button.disabled = true;
+    button.classList.add("is-busy");
     button.textContent = "Saving…";
     try {
       const result = await API.request("/admins/appearance", {
         method: "PUT", body: config, authenticated: true
       });
       paintPreview();
+      animatePreview(button);
       notify(result?.message || "Appearance saved successfully across Market Delivery.");
     } catch (error) {
       notify(error.message || "Could not save appearance settings.", true);
     } finally {
       button.disabled = false;
+      button.classList.remove("is-busy");
       button.textContent = "Save appearance";
     }
   }
   async function reset() {
+    const button = $("reset");
+    button.disabled = true;
+    button.classList.add("is-busy");
     config = cloneDefaults();
     fillForm();
     paintPreview();
+    animatePreview(button);
     notify("Brand defaults restored in the preview. Saving…");
-    await save();
+    try { await save(); } finally {
+      button.disabled = !canPublish;
+      button.classList.remove("is-busy");
+    }
   }
   async function initialize() {
     mountColorInputs();
