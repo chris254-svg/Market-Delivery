@@ -1,0 +1,950 @@
+
+:root {
+  --operations-primary: #FF5A1F;
+  --operations-primary-hover: #E64A16;
+  --operations-primary-light: #FFF0E9;
+  --operations-text: #171717;
+  --operations-text-secondary: #666666;
+  --operations-text-muted: #888888;
+  --operations-border: #EEEEEE;
+  --operations-border-strong: #D9DDE3;
+  --operations-success-light: #F0FDF4;
+  --operations-danger-light: #FEF2F2;
+  --operations-warning-light: #FFFBEB;
+  --operations-info-light: #EFF6FF;
+}
+
+.operations-panel[hidden],
+[hidden] {
+  display: none !important;
+}
+
+.admin-content .admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.admin-content .admin-page-header h2 {
+  margin: 0 0 6px;
+  color: var(--operations-text);
+  font-size: 1.45rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.admin-content .admin-page-header p {
+  margin: 0;
+  color: var(--operations-text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+/* Operations navigation tabs */
+.operations-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  margin: 0 0 22px;
+  padding: 0 0 2px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--operations-border);
+  scrollbar-width: thin;
+}
+
+.operations-tabs button {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 13px 18px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 7px 7px 0 0;
+  background: transparent;
+  color: var(--operations-text-secondary);
+  font: inherit;
+  font-size: 0.91rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.operations-tabs button:hover,
+.operations-tabs button.active {
+  background: var(--operations-primary-light);
+  color: var(--operations-primary-hover);
+}
+
+.operations-tabs button.active {
+  border-bottom-color: var(--operations-primary);
+  font-weight: 750;
+}
+
+.operations-tabs button:focus-visible,
+.operations-panel button:focus-visible {
+  outline: 2px solid var(--operations-primary);
+  outline-offset: 3px;
+}
+
+/* Feedback messages */
+.operations-message {
+  min-height: 0;
+  margin: 0 0 16px;
+  padding: 0;
+  border-radius: 8px;
+  color: var(--operations-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.operations-message:empty {
+  display: none;
+}
+
+.operations-message:not(:empty) {
+  padding: 11px 14px;
+  border: 1px solid var(--operations-border);
+  background: #FFFFFF;
+}
+
+.operations-message.success {
+  border-color: #BBF7D0;
+  background: var(--operations-success-light);
+  color: #166534;
+}
+
+.operations-message.error {
+  border-color: #FECACA;
+  background: var(--operations-danger-light);
+  color: #991B1B;
+}
+
+/* Content panels */
+.admin-content-card.operations-panel {
+  min-width: 0;
+  margin-bottom: 24px;
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid var(--operations-border);
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgb(23 23 23 / 4%);
+}
+
+.operations-panel .admin-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #F1F1F1;
+}
+
+.operations-panel .admin-card-header h3 {
+  margin: 0 0 6px;
+  color: var(--operations-text);
+  font-size: 1.08rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.operations-panel .admin-card-header p {
+  margin: 0;
+  color: var(--operations-text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.operations-panel > h3,
+.catalog-section-title {
+  margin: 26px 0 12px;
+  color: var(--operations-text);
+  font-size: 1.02rem;
+  font-weight: 750;
+}
+
+/* Restaurant cards */
+.restaurant-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+  margin: 22px 0 6px;
+}
+
+.restaurant-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  min-height: 220px;
+  padding: 22px;
+  border: 1px solid var(--operations-border);
+  border-radius: 12px;
+  background: #FFFFFF;
+  color: var(--operations-text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.restaurant-card:hover {
+  border-color: var(--operations-primary);
+  box-shadow: 0 6px 20px rgb(23 23 23 / 7%);
+  transform: translateY(-2px);
+}
+
+.restaurant-card:focus-visible {
+  outline: 3px solid rgb(255 90 31 / 35%);
+  outline-offset: 3px;
+}
+
+.restaurant-card-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--operations-primary-light);
+  color: var(--operations-primary);
+  font-size: 24px;
+}
+
+.restaurant-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.restaurant-card-description {
+  margin: 0;
+  color: var(--operations-text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.restaurant-card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.restaurant-card-stats span {
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: #F9FAFB;
+  color: #374151;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.restaurant-card-action {
+  margin-top: 4px;
+  color: var(--operations-primary-hover);
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.restaurant-cards-empty {
+  grid-column: 1 / -1;
+  padding: 28px;
+  border: 1px dashed var(--operations-border-strong);
+  border-radius: 10px;
+  color: var(--operations-text-secondary);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Selected restaurant workspace */
+.restaurant-workspace-header {
+  margin: 10px 0 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--operations-border);
+}
+
+.restaurant-workspace-header h3 {
+  margin: 18px 0 6px;
+  color: var(--operations-text);
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+.restaurant-workspace-header p {
+  margin: 0;
+  color: var(--operations-text-secondary);
+  line-height: 1.6;
+}
+
+/* Forms */
+.operations-form {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 22px;
+  padding: 0 0 22px;
+  border-bottom: 1px solid var(--operations-border);
+}
+
+.operations-form label {
+  display: flex;
+  flex: 1 1 175px;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  color: #333333;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.operations-form input:not([type="checkbox"]),
+.operations-form select,
+.operations-tools input,
+.operations-tools select {
+  width: 100%;
+  min-width: 0;
+  min-height: 43px;
+  padding: 10px 12px;
+  border: 1px solid var(--operations-border-strong);
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: var(--operations-text);
+  font: inherit;
+  font-size: 0.9rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.operations-form input::placeholder,
+.operations-tools input::placeholder {
+  color: #9CA3AF;
+}
+
+.operations-form input:focus,
+.operations-form select:focus,
+.operations-tools input:focus,
+.operations-tools select:focus {
+  border-color: var(--operations-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(255 90 31 / 13%);
+}
+
+.operations-form input:disabled,
+.operations-form select:disabled,
+.operations-tools input:disabled,
+.operations-tools select:disabled {
+  background: #F3F4F6;
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.operations-form input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  min-height: auto;
+  accent-color: var(--operations-primary);
+  cursor: pointer;
+}
+
+.operations-form button {
+  flex: 0 0 auto;
+  min-height: 43px;
+}
+
+/* Search and action tools */
+.operations-tools {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 18px;
+}
+
+.operations-tools label {
+  display: flex;
+  flex: 1 1 200px;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 150px;
+  color: #333333;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.operations-tools > button {
+  flex: 0 0 auto;
+  min-height: 43px;
+}
+
+.operations-tools:has(#adminsPager),
+.operations-tools:has(#reviewsPager),
+.operations-tools:has(#auditPager) {
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* Buttons */
+.operations-panel .admin-primary-button,
+.operations-panel .admin-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease,
+    color 160ms ease, box-shadow 160ms ease;
+}
+
+.operations-panel .admin-primary-button {
+  border-color: var(--operations-primary);
+  background: var(--operations-primary);
+  color: #FFFFFF;
+}
+
+.operations-panel .admin-primary-button:hover {
+  border-color: var(--operations-primary-hover);
+  background: var(--operations-primary-hover);
+  box-shadow: 0 3px 8px rgb(230 74 22 / 18%);
+}
+
+.operations-panel .admin-secondary-button {
+  border-color: #E5E7EB;
+  background: #FFFFFF;
+  color: #374151;
+}
+
+.operations-panel .admin-secondary-button:hover {
+  border-color: #FDBA9A;
+  background: var(--operations-primary-light);
+  color: var(--operations-primary-hover);
+}
+
+.operations-panel button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Tables */
+.operations-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--operations-border);
+  border-radius: 9px;
+  background: #FFFFFF;
+  -webkit-overflow-scrolling: touch;
+}
+
+.operations-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #374151;
+  font-size: 0.88rem;
+}
+
+.operations-table th,
+.operations-table td {
+  padding: 14px 13px;
+  border-bottom: 1px solid #F0F1F3;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+.operations-table th {
+  background: #F9FAFB;
+  color: #4B5563;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.operations-table tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.operations-table tbody tr:hover {
+  background: #FFFAF7;
+}
+
+.operations-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.operations-table td {
+  overflow-wrap: anywhere;
+}
+
+.operations-table td button {
+  margin: 2px 4px 2px 0;
+}
+
+.operations-table td .admin-primary-button,
+.operations-table td .admin-secondary-button {
+  min-height: 32px;
+  padding: 7px 10px;
+  font-size: 0.79rem;
+}
+
+/* Empty states */
+.operations-empty {
+  padding: 30px 18px;
+  color: var(--operations-text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Responsive layout */
+@media (max-width: 1024px) {
+  .admin-content-card.operations-panel {
+    padding: 20px;
+  }
+
+  .operations-form {
+    gap: 13px;
+  }
+
+  .operations-table th,
+  .operations-table td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-content .admin-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-content .admin-page-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .operations-tabs {
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+
+  .operations-tabs button {
+    padding: 12px 13px;
+    font-size: 0.85rem;
+  }
+
+  .admin-content-card.operations-panel {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .operations-form {
+    gap: 13px;
+  }
+
+  .operations-form label {
+    flex: 1 1 calc(50% - 13px);
+  }
+
+  .operations-tools label {
+    flex: 1 1 calc(50% - 12px);
+  }
+
+  .operations-table {
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .restaurant-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-card {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .admin-content-card.operations-panel {
+    padding: 13px;
+  }
+
+  .operations-panel .admin-card-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .operations-form {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .operations-form label {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .operations-form button,
+  .operations-tools > button {
+    width: 100%;
+  }
+
+  .operations-tools {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .operations-tools label {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .operations-tabs button {
+    padding: 11px 12px;
+  }
+
+  .operations-table {
+    min-width: 650px;
+  }
+
+  .operations-message {
+    font-size: 0.84rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .operations-tabs button,
+  .operations-form input,
+  .operations-form select,
+  .operations-tools input,
+  .operations-tools select,
+  .operations-panel button,
+  .operations-table tbody tr,
+  .restaurant-card {
+    transition: none;
+  }
+}
+
+
+/* ==========================================
+   Catalog edit modal
+   ========================================== */
+
+.catalog-modal[hidden] {
+  display: none !important;
+}
+
+.catalog-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.catalog-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(17 24 39 / 58%);
+  backdrop-filter: blur(3px);
+}
+
+.catalog-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  border: 1px solid #EEEEEE;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 22%);
+  animation: catalogModalAppear 160ms ease-out;
+}
+
+.catalog-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 23px 24px 18px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.catalog-modal-header h2 {
+  margin: 0 0 7px;
+  color: #171717;
+  font-size: 1.25rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.catalog-modal-header p {
+  margin: 0;
+  color: #666666;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.catalog-modal-close {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #555555;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.catalog-modal-close:hover {
+  border-color: #FDBA9A;
+  background: #FFF0E9;
+  color: #E64A16;
+}
+
+.catalog-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 23px 24px;
+}
+
+.catalog-modal-body label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #333333;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.catalog-modal-body input {
+  width: 100%;
+  min-height: 45px;
+  padding: 11px 13px;
+  border: 1px solid #D9DDE3;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #171717;
+  font: inherit;
+  font-size: 0.94rem;
+  box-sizing: border-box;
+}
+
+.catalog-modal-body input:focus {
+  border-color: #FF5A1F;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(255 90 31 / 13%);
+}
+
+.catalog-modal-body input:disabled {
+  background: #F3F4F6;
+  color: #6B7280;
+  cursor: not-allowed;
+}
+
+.catalog-modal-error {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #FECACA;
+  border-radius: 7px;
+  background: #FEF2F2;
+  color: #991B1B;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.catalog-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 17px 24px 23px;
+  border-top: 1px solid #EEEEEE;
+  background: #FAFAFA;
+}
+
+.catalog-modal-footer button {
+  min-width: 115px;
+  min-height: 42px;
+}
+
+.catalog-modal-footer button:disabled,
+.catalog-modal-close:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+body.catalog-modal-open {
+  overflow: hidden;
+}
+
+@keyframes catalogModalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 520px) {
+  .catalog-modal {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .catalog-modal-dialog {
+    max-height: calc(100vh - 24px);
+    border-radius: 12px;
+  }
+
+  .catalog-modal-header {
+    padding: 19px 18px 15px;
+  }
+
+  .catalog-modal-body {
+    padding: 19px 18px;
+  }
+
+  .catalog-modal-footer {
+    padding: 15px 18px 19px;
+  }
+
+  .catalog-modal-footer button {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalog-modal-dialog {
+    animation: none;
+  }
+}
+
+
+
+/* Required food image upload in Operations catalog */
+.food-image-field {
+  flex: 1 1 240px;
+}
+.operations-form .food-image-field input[type="file"] {
+  min-height: auto;
+  padding: 9px;
+  font-size: 0.82rem;
+}
+.food-image-field small {
+  color: var(--operations-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+.food-image-preview {
+  display: block;
+  width: 150px;
+  height: 110px;
+  object-fit: cover;
+  border: 1px solid var(--operations-border);
+  border-radius: 8px;
+  background: #F9FAFB;
+}
+.food-image-thumb {
+  width: 48px;
+  height: 42px;
+  margin-right: 10px;
+  border-radius: 6px;
+  object-fit: cover;
+  vertical-align: middle;
+  background: #F3F4F6;
+}
+.food-name-cell {
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+}
+
+
+.catalog-featured-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-weight: 650;
+}
+.catalog-featured-option input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  accent-color: var(--operations-primary);
+}
+#catalogEditFoodOptions {
+  display: grid;
+  gap: 9px;
+  margin-top: 12px;
+}
+#catalogEditFoodOptions[hidden] {
+  display: none;
+}
+#catalogEditImagePreview {
+  max-width: 180px;
+}
+
+
+/* Catalog workspace, forms and modal overflow fixes */
+.restaurant-cards, .restaurant-workspace-header, .operations-form, .operations-table { min-width: 0; max-width: 100%; }
+.restaurant-card { min-width: 0; overflow-wrap: anywhere; }
+.operations-form input, .operations-form select, .operations-form textarea { width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
+.operations-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.catalog-modal { padding: 12px; }
+.catalog-modal-dialog { width: min(720px, 100%); max-width: 100%; max-height: calc(100dvh - 24px); overflow: hidden; display: flex; flex-direction: column; }
+.catalog-modal-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.catalog-modal-header, .catalog-modal-footer { flex-wrap: wrap; gap: 10px; }
+.catalog-modal-footer > button { max-width: 100%; }
+@media (max-width: 768px) {
+ .restaurant-cards { grid-template-columns: repeat(auto-fill,minmax(min(230px,100%),1fr)); }
+ .catalog-modal { padding: 8px; }
+ .catalog-modal-dialog { max-height: calc(100dvh - 16px); }
+}
+@media (max-width: 520px) {
+ .restaurant-cards { grid-template-columns: minmax(0,1fr); }
+ .restaurant-workspace-header { align-items: stretch; flex-direction: column; }
+ .catalog-modal-footer { flex-direction: column-reverse; }
+ .catalog-modal-footer > button { width: 100%; }
+}
