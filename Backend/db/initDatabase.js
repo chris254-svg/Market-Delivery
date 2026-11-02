@@ -508,7 +508,7 @@ async function seedSuperAdmin() {
     if (!email && !password) return;
     if (!email || !password) throw new Error("MARKET_SUPER_ADMIN_EMAIL and MARKET_SUPER_ADMIN_PASSWORD must both be set to create the Market Delivery super admin.");
     if (!isValidEmail(email)) throw new Error("MARKET_SUPER_ADMIN_EMAIL is not a valid email address.");
-    if (password.length < 16) throw new Error("MARKET_SUPER_ADMIN_PASSWORD must be at least 16 characters.");
+    if (password.length < 8) throw new Error("MARKET_SUPER_ADMIN_PASSWORD must be at least 8 characters.");
     const forcePasswordReset = String(process.env.MARKET_SUPER_ADMIN_FORCE_PASSWORD_RESET || "").toLowerCase() === "true";
 
     const currentMarketSuperAdmin = await pool.query(
