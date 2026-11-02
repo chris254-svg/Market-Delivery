@@ -289,7 +289,7 @@ app.get("/api/public/settings", async (req, res) => {
         res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
         return res.status(200).json({
             success: true,
-            data: { platformName: platformName || "Food Delivery" },
+            data: { platformName: platformName || "Market Delivery", appearance: result.rows[0]?.appearance || null },
         });
     } catch (error) {
         console.error("Could not load public platform name:", error.message);
