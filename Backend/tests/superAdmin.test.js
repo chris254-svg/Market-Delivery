@@ -62,7 +62,7 @@ const fakePool = {
         if (/COUNT\(\*\)::int AS count FROM public\.users WHERE role = 'super_admin'/.test(text)) {
             return { rows: [{ count: superAdminCount }], rowCount: 1 };
         }
-        if (/FROM public\.users WHERE role = 'super_admin2' LIMIT 1/.test(text)) {
+        if (/FROM public\.users WHERE role = 'super_admin' LIMIT 1/.test(text)) {
             return { rows: superAdminRows, rowCount: superAdminRows.length };
         }
         if (/INSERT INTO admin_audit_logs/.test(text)) {
@@ -239,8 +239,7 @@ test("requireSuperAdmin: 401 without a user, 403 for admins, passes for the supe
     assert.equal(run(undefined).res.statusCode, 401);
     assert.equal(run({ role: "admin" }).res.statusCode, 403);
     assert.equal(run({ role: "customer" }).res.statusCode, 403);
-    assert.equal(run({ role: "super_admin" }).res.statusCode, 403);
-    assert.equal(run({ role: "super_admin2" }).nextCalled, true);
+    assert.equal(run({ role: "super_admin" }).nextCalled, true);
 });
 
 test("authorizeRoles: super admin inherits admin routes only", () => {
@@ -251,8 +250,7 @@ test("authorizeRoles: super admin inherits admin routes only", () => {
         return { res, nextCalled };
     };
 
-    assert.equal(run(["admin"], "super_admin").res.statusCode, 403);
-    assert.equal(run(["admin"], "super_admin2").nextCalled, true);
+    assert.equal(run(["admin"], "super_admin").nextCalled, true);
     assert.equal(run(["customer"], "super_admin").res.statusCode, 403);
     assert.equal(run(["restaurant"], "super_admin").res.statusCode, 403);
     assert.equal(run(["admin"], "customer").res.statusCode, 403);
@@ -269,7 +267,7 @@ test("admin and super-admin tokens expire sooner than other roles", () => {
 
     assert.equal(lifetime("admin"), 12 * 3600);
     assert.equal(lifetime("super_admin"), 12 * 3600);
-    assert.equal(lifetime("super_admin2"), 12 * 3600);
+    assert.equal(lifetime("super_admin"), 12 * 3600);
     assert.equal(lifetime("customer"), 7 * 24 * 3600);
     assert.equal(lifetime("restaurant"), 7 * 24 * 3600);
 });
@@ -279,14 +277,14 @@ test("password length requirements depend on the role", () => {
     assert.equal(validators.minPasswordLengthForRole("rider"), 8);
     assert.equal(validators.minPasswordLengthForRole("admin"), 8);
     assert.equal(validators.minPasswordLengthForRole("super_admin"), 16);
-    assert.equal(validators.minPasswordLengthForRole("super_admin2"), 16);
+    assert.equal(validators.minPasswordLengthForRole("super_admin"), 16);
 
     assert.equal(validators.isValidPasswordForRole("12345678", "customer"), true);
     assert.equal(validators.isValidPasswordForRole("12345678", "admin"), true);
     assert.equal(validators.isValidPasswordForRole("123456789", "admin"), true);
     assert.equal(validators.isValidPasswordForRole("123456789012", "super_admin"), false);
     assert.equal(validators.isValidPasswordForRole("1234567890123456", "super_admin"), true);
-    assert.equal(validators.isValidPasswordForRole("1234567890123456", "super_admin2"), true);
+    assert.equal(validators.isValidPasswordForRole("1234567890123456", "super_admin"), true);
     assert.equal(validators.isValidPasswordForRole(undefined, "customer"), false);
 });
 
@@ -418,7 +416,7 @@ test("startup migrates the known super_admin1 typo to the canonical single super
 
     const count = calls.find((call) => /role IN \('super_admin', 'super_admin1'\)/.test(call.sql));
     assert.ok(count, "both canonical and legacy super-admin rows are counted before migration");
-    const migration = calls.find((call) => /UPDATE public\.users SET role = 'super_admin' WHERE role = 'super_admin1'/.test(call.sql));
+    const migration = calls.find((call) => /UPDATE public\.users SET role = 'super_admin' WHERE role IN ('super_admin1', 'super_admin2')/.test(call.sql));
     assert.ok(migration, "the known legacy role is normalized in the database");
     assert.ok(calls.indexOf(count) < calls.indexOf(migration), "duplicate check happens before role migration");
 });
@@ -429,10 +427,10 @@ test("role constraint allows canonical roles and existing legacy roles, nothing 
 
     const alter = calls.find((call) => /ADD CONSTRAINT users_role_check/.test(call.sql));
     assert.ok(alter, "constraint is rebuilt");
-    for (const role of ["customer", "restaurant", "rider", "admin", "super_admin", "super_admin2", "legacy_manager"]) {
+    for (const role of ["customer", "restaurant", "rider", "admin", "super_admin", "legacy_manager"]) {
         assert.match(alter.sql, new RegExp(`'${role}'`), role);
     }
-    for (const role of ["super_admin1", "admin1", "admin2", "market_owner2"]) {
+    for (const role of ["super_admin1", "super_admin2", "admin1", "admin2", "market_owner2"]) {
         assert.doesNotMatch(alter.sql, new RegExp(`'${role}'`), role);
     }
 });
